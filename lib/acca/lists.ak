@@ -1,4 +1,4 @@
-use aiken/list.{drop, head, reverse}
+use aiken/list.{concat, drop, head, reverse}
 
 /// Returns Some(item) or None given index, note that counting of index is starting from 0
 pub fn at(self: List<a>, index: Int) -> Option<a> {
@@ -87,4 +87,30 @@ test non_empty_1() {
 
 test non_empty_2() {
   non_empty([1]) == True
+}
+
+/// Prepends an element to the beginning of the list
+pub fn prepend(self: List<a>, item: a) -> List<a> {
+  concat([item], self)
+}
+
+test prepend_1() {
+  prepend([], 1) == [1]
+}
+
+test prepend_2() {
+  prepend([1, 2, 3], 0) == [0, 1, 2, 3]
+}
+
+/// Appends an element to the end of the list
+pub fn append(self: List<a>, item: a) -> List<a> {
+  concat(self, [item])
+}
+
+test append_1() {
+  prepend([], 1) == [1]
+}
+
+test append_2() {
+  append([1, 2, 3], 4) == [1, 2, 3, 4]
 }
