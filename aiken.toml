@@ -1,0 +1,13 @@
+name = "aiken-lang/acca"
+version = "0.0.1"
+licences = ["MIT"]
+description = "The Aiken Non Standard Library"
+
+dependencies = [
+  { name = "aiken-lang/stdlib", version = "4ec9bde9119aa7dbb466459d0b2224ed51d61c4a", source = "github" }
+]
+
+[repository]
+user = "Cardano-Fans"
+project = "acca"
+platform = "github"
