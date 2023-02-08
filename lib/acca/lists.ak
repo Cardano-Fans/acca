@@ -73,3 +73,18 @@ test is_empty_1() {
 test is_empty_2() {
   is_empty([1]) == False
 }
+
+pub fn non_empty(self: List<a>) -> Bool {
+  when self is {
+    [] -> False
+    _ -> True
+  }
+}
+
+test non_empty_1() {
+  non_empty([]) == False
+}
+
+test non_empty_2() {
+  non_empty([1]) == True
+}
