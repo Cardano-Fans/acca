@@ -1,5 +1,15 @@
 use aiken/option.{is_some}
 
+pub fn get(self: Option<a>) -> a {
+  expect Some(x) = self
+
+  x
+}
+
+test get_1() {
+  get(Some(1)) == 1
+}
+
 pub fn flat_map(self: Option<a>, with: fn(a) -> Option<b>) -> Option<b> {
   when self is {
     Some(a) -> with(a)

@@ -10,6 +10,26 @@ test either_1() {
   l == Left { value: 1 } && r == Right { value: "" }
 }
 
+pub fn left(self: Either<a, b>) {
+  expect Left { value } = self
+
+  value
+}
+
+test left_1() {
+  left(Left { value: 1 }) == 1
+}
+
+pub fn right(self: Either<a, b>) {
+  expect Right { value } = self
+
+  value
+}
+
+test right_1() {
+  right(Right { value: 1 }) == 1
+}
+
 pub fn contains(self: Either<a, b>, item: b) -> Bool {
   when self is {
     Left(_) -> False
