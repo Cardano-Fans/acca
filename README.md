@@ -18,7 +18,7 @@ pre-alpha, heavy development, API may still change a lot.
 ## Examples
 
 
-````
+```gleam
 use acca/list as alist
 
 let items: List<Option<Int>> = [Some(1), None, Some(2)] 
