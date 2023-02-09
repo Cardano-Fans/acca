@@ -1,3 +1,5 @@
+use aiken/option.{is_some}
+
 pub fn flat_map(self: Option<a>, with: fn(a) -> Option<b>) -> Option<b> {
   when self is {
     Some(a) -> with(a)
@@ -55,4 +57,16 @@ test filter_2() {
   let opt = Some(0)
 
   filter(opt, fn(x) { x == 1 }) == None
+}
+
+fn exists(self: Option<a>, with: fn(a) -> Bool) -> Bool {
+  is_some(filter(self, with))
+}
+
+test exists_1() {
+  exists(Some(1), with: fn(x) { x == 0 }) == False
+}
+
+test exists_2() {
+  exists(Some(1), with: fn(x) { x == 1 }) == True
 }
