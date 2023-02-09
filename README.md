@@ -7,10 +7,10 @@ Acca is Aiken's non standard library (https://github.com/aiken-lang/aiken).
 
 Creators of Aiken standard library are quite opinionated what is should be in there and what should not be there. They want to keep stdlib quite minimal. This library is simply an extension to standard library that is adding many useful / repetitive functions.
 
-## Including
+## Adding
 
-
-```aiken.toml
+aiken.toml
+```
 licences = ["Apache-2.0"]
 description = "Example project"
 
@@ -26,7 +26,6 @@ dependencies = [
 - Aiken's std library (https://github.com/aiken-lang/stdlib)
 
 ## Examples
-
 
 ```gleam
 use acca/list as alist
