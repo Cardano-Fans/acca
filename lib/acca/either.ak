@@ -92,3 +92,20 @@ test exists_2() {
 test exists_3() {
     exists(Right { value: -1 }, fn(x) { x > 0} ) == False
 }
+
+
+pub fn swap(self: Either<a, b>) -> Either<b, a> {
+    when self is {
+        Left(x) -> Right(x)
+        Right(y) -> Left(y)
+    }
+}
+
+
+test swap_1() {
+    swap(Right { value: 1 } ) == Left { value: 1 }
+}
+
+test swap_2() {
+    swap(Left { value: 1 } ) == Right { value: 1 }
+}
