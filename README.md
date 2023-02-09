@@ -14,3 +14,23 @@ pre-alpha, heavy development, API may still change a lot.
 ## Requirements
 - Aiken (https://github.com/aiken-lang/aiken)
 - Aiken's std library (https://github.com/aiken-lang/stdlib)
+
+## Examples
+
+
+````
+use acca/list as alist
+
+let items: List<Option<Int>> = [Some(1), None, Some(2)] 
+
+// resolve only Some and ignore None elements
+let resolved: List<Option<Int>> = alist.resolve(items)
+
+// resolved = [Some(1), Some(2)]
+
+// return last element
+let last: Option<Int> = alist.last(resolved)
+expect Some(x) = last
+
+// x = 2
+```

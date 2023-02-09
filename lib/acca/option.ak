@@ -1,3 +1,4 @@
+use aiken/list
 use aiken/option.{is_some}
 
 pub fn get(self: Option<a>) -> a {
@@ -79,4 +80,30 @@ test exists_1() {
 
 test exists_2() {
   exists(Some(1), with: fn(x) { x == 1 }) == True
+}
+
+// Resolves items from the list such that it keeps only Some items and filters out None items
+// e.g.
+// let list = [Some(1), None, Some(2)] 
+// resolve(list) == [Some(1), Some(2)]
+pub fn resolve(self: List<Option<a>>) -> List<Option<a>> {
+  list.filter(self, fn(opt) { is_some(opt) })
+}
+
+test resolve_1() {
+  let items: List<Option<Int>> = [Some(1), None, Some(2)]
+
+  resolve(items) == [Some(1), Some(2)]
+}
+
+test resolve_2() {
+  let items: List<Option<Int>> = [None]
+
+  resolve(items) == []
+}
+
+test resolve_3() {
+  let items: List<Option<Int>> = []
+
+  resolve(items) == []
 }
