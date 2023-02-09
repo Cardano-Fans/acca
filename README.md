@@ -17,7 +17,7 @@ description = "Example project"
 dependencies = []
 dependencies = [
   { name = "aiken-lang/stdlib", version = "1e82ccd5d30d68615b6c0f3b84947b5e93f23549", source = "github" },
-  { name = "Cardano-Fans/acca", version = "29cd18bc82ccbea71e5974d6d197681b1a49652e", source = "github" }
+  { name = "Cardano-Fans/acca", version = "1e90656ea756bc0344ed6ade6d5a4e79e2edc477", source = "github" }
 ]
 ```
 
