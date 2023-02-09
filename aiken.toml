@@ -4,7 +4,7 @@ licences = ["MIT"]
 description = "The Aiken Non Standard Library"
 
 dependencies = [
-  { name = "aiken-lang/stdlib", version = "4ec9bde9119aa7dbb466459d0b2224ed51d61c4a", source = "github" }
+  { name = "aiken-lang/stdlib", version = "1e82ccd5d30d68615b6c0f3b84947b5e93f23549", source = "github" }
 ]
 
 [repository]
