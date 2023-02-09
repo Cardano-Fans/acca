@@ -32,3 +32,27 @@ test fold_2() {
 
   fold(opt, fn() { False }, fn(_) { True }) == False
 }
+
+fn filter(self: Option<a>, with: fn(a) -> Bool) -> Option<a> {
+  when self is {
+    Some(x) ->
+      if with(x) {
+        Some(x)
+      } else {
+        None
+      }
+    None -> None
+  }
+}
+
+test filter_1() {
+  let opt = Some(1)
+
+  filter(opt, fn(x) { x == 1 }) == Some(1)
+}
+
+test filter_2() {
+  let opt = Some(0)
+
+  filter(opt, fn(x) { x == 1 }) == None
+}
