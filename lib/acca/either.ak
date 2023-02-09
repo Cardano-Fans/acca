@@ -10,6 +10,25 @@ test either_1() {
     l == Left { value: 1 } && r == Right { value: "" }
 }
 
+pub fn contains(self: Either<a, b>, item: b) -> Bool {
+    when self is {
+        Left(_) -> False
+        Right(x) -> x == item
+    }
+}
+
+test contains_1() {
+    contains(Left {value: 1}, 1) == False
+}
+
+test contains_2() {
+    contains(Left {value: 1}, 0) == False
+}
+
+test contains_4() {
+    contains(Right {value: 1}, 1)
+}
+
 pub fn fold(self: Either<a, b>, with_left: fn(a) -> c, with_right: fn(b) -> c) -> c {
     when self is {
         Left(a) -> with_left(a)
@@ -93,14 +112,12 @@ test exists_3() {
     exists(Right { value: -1 }, fn(x) { x > 0} ) == False
 }
 
-
 pub fn swap(self: Either<a, b>) -> Either<b, a> {
     when self is {
         Left(x) -> Right(x)
         Right(y) -> Left(y)
     }
 }
-
 
 test swap_1() {
     swap(Right { value: 1 } ) == Left { value: 1 }
