@@ -1,7 +1,5 @@
-use acca/option as aoption
 use acca/predicate.{not}
-use aiken/dict.{Dict}
-use aiken/list.{concat, head, reverse}
+use aiken/list.{at, concat, drop, head, reverse, take}
 
 pub fn first(self: List<a>) -> Option<a> {
   head(self)
@@ -197,28 +195,85 @@ test partition_3() {
   [1] == l && [2] == r
 }
 
-pub fn group_by(
-  self: List<a>,
-  predicate: fn(a) -> Bool,
-) -> Dict<ByteArray, List<a>> {
-  let (l, r) = partition(self, predicate)
+// pub fn group_by(
+//   self: List<a>,
+//   predicate: fn(a) -> Bool,
+// ) -> Dict<ByteArray, List<a>> {
+//   let (l, r) = partition(self, predicate)
 
-  dict.new()
-  |> dict.insert(#"00", l)
-  |> dict.insert(#"01", r)
+//   dict.new()
+//   |> dict.insert(#"00", l)
+//   |> dict.insert(#"01", r)
+// }
+
+// test group_by_1() {
+//   let d: Dict<ByteArray, List<Int>> =
+//     group_by([1, 2, 3, 4, 5], fn(x) { x <= 3 })
+
+//   let l =
+//     dict.get(d, #"00")
+//     |> aoption.get()
+
+//   let r =
+//     dict.get(d, #"01")
+//     |> aoption.get()
+
+//   l == [1, 2, 3] && r == [4, 5]
+// }
+
+fn do_grouped(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
+  when tail is {
+    [] -> accum
+    all -> {
+      let took = take(all, n)
+      let rest = drop(all, n)
+      do_grouped(rest, concat(accum, [took]), n)
+    }
+  }
 }
 
-test group_by_1() {
-  let d: Dict<ByteArray, List<Int>> =
-    group_by([1, 2, 3, 4, 5], fn(x) { x <= 3 })
+pub fn grouped(self: List<a>, n: Int) -> List<List<a>> {
+  if n <= 0 {
+    []
+  } else {
+    do_grouped(self, [], n)
+  }
+}
 
-  let l =
-    dict.get(d, #"00")
-    |> aoption.get()
+test grouped_1() {
+  grouped([], 2) == []
+}
 
-  let r =
-    dict.get(d, #"01")
-    |> aoption.get()
+test grouped_2() {
+  let items = grouped([1, 2, 3, 4, 5, 6], 2)
+  expect Some(g1) = at(items, 0)
+  expect Some(g2) = at(items, 1)
+  expect Some(g3) = at(items, 2)
 
-  l == [1, 2, 3] && r == [4, 5]
+  g1 == [1, 2] && g2 == [3, 4] && g3 == [5, 6]
+}
+
+test grouped_3() {
+  let items = grouped([1, 2, 3], 1)
+  expect Some(g1) = at(items, 0)
+  expect Some(g2) = at(items, 1)
+  expect Some(g3) = at(items, 2)
+
+  g1 == [1] && g2 == [2] && g3 == [3]
+}
+
+test grouped_4() {
+  let items = grouped([1, 2, 3, 4, 5, 6], 3)
+  expect Some(g1) = at(items, 0)
+  expect Some(g2) = at(items, 1)
+
+  g1 == [1, 2, 3] && g2 == [4, 5, 6]
+}
+
+test grouped_5() {
+  [] == grouped([1, 2, 3, 4, 5, 6], 0)
+}
+
+test grouped_6() {
+  [] == grouped([1, 2, 3, 4, 5, 6], -1)
 }
