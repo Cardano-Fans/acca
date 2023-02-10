@@ -1,4 +1,6 @@
+use acca/option as aoption
 use acca/predicate.{not}
+use aiken/dict.{Dict}
 use aiken/list.{concat, head, reverse}
 
 pub fn first(self: List<a>) -> Option<a> {
@@ -193,4 +195,30 @@ test partition_3() {
   let (l, r) = partition([1, 2], fn(x) { x <= 1 })
 
   [1] == l && [2] == r
+}
+
+pub fn group_by(
+  self: List<a>,
+  predicate: fn(a) -> Bool,
+) -> Dict<ByteArray, List<a>> {
+  let (l, r) = partition(self, predicate)
+
+  dict.new()
+  |> dict.insert(#"00", l)
+  |> dict.insert(#"01", r)
+}
+
+test group_by_1() {
+  let d: Dict<ByteArray, List<Int>> =
+    group_by([1, 2, 3, 4, 5], fn(x) { x <= 3 })
+
+  let l =
+    dict.get(d, #"00")
+    |> aoption.get()
+
+  let r =
+    dict.get(d, #"01")
+    |> aoption.get()
+
+  l == [1, 2, 3] && r == [4, 5]
 }
