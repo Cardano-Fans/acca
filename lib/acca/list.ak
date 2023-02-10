@@ -1,3 +1,4 @@
+use acca/predicate.{not}
 use aiken/list.{concat, head, reverse}
 
 pub fn first(self: List<a>) -> Option<a> {
@@ -148,4 +149,48 @@ test take_while_3() {
 
 test take_while_4() {
   take_while([1, 2, 3, 4, 5], fn(x) { x != 4 }) == [1, 2, 3, 5]
+}
+
+pub fn take_except(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
+  do_take_while(self, [], not(predicate))
+}
+
+test take_except_1() {
+  take_except([], fn(x) { x > 0 }) == []
+}
+
+test take_except_2() {
+  take_except([1, 2, 3, 4, 5], fn(x) { x <= 2 }) == [3, 4, 5]
+}
+
+test take_except_3() {
+  take_except([1, 2, 3, 4, 5], fn(x) { x < 4 }) == [4, 5]
+}
+
+test take_except_4() {
+  take_except([1, 2, 3, 4, 5], fn(x) { x != 4 }) == [4]
+}
+
+pub fn partition(self: List<a>, predicate: fn(a) -> Bool) -> (List<a>, List<a>) {
+  let l = take_while(self, predicate)
+  let r = take_except(self, predicate)
+  (l, r)
+}
+
+test partition_1() {
+  let (l, r) = partition([], fn(x) { x <= 3 })
+
+  [] == l && [] == r
+}
+
+test partition_2() {
+  let (l, r) = partition([1, 2, 3, 4, 5], fn(x) { x <= 3 })
+
+  [1, 2, 3] == l && [4, 5] == r
+}
+
+test partition_3() {
+  let (l, r) = partition([1, 2], fn(x) { x <= 1 })
+
+  [1] == l && [2] == r
 }
