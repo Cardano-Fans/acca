@@ -77,3 +77,35 @@ test append_1() {
 test append_2() {
   append([1, 2, 3], 4) == [1, 2, 3, 4]
 }
+
+fn do_take_until(
+  tail: List<a>,
+  accum: List<a>,
+  predicate: fn(a) -> Bool,
+) -> List<a> {
+  when tail is {
+    [] -> reverse(accum)
+    [h, ..t] ->
+      if predicate(h) {
+        do_take_until(t, prepend(accum, h), predicate)
+      } else {
+        do_take_until([], accum, predicate)
+      }
+  }
+}
+
+pub fn take_until(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
+  do_take_until(self, [], predicate)
+}
+
+test take_until_1() {
+  take_until([], fn(x) { x > 0 }) == []
+}
+
+test take_while_2() {
+  take_until([1, 2, 3, 4, 5], fn(x) { x <= 2 }) == [1, 2]
+}
+
+test take_while_3() {
+  take_until([1, 2, 3, 4, 5], fn(x) { x < 4 }) == [1, 2, 3]
+}
