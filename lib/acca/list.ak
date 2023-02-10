@@ -151,29 +151,29 @@ test take_while_4() {
   take_while([1, 2, 3, 4, 5], fn(x) { x != 4 }) == [1, 2, 3, 5]
 }
 
-pub fn take_except(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
+pub fn drop_while(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
   do_take_while(self, [], not(predicate))
 }
 
-test take_except_1() {
-  take_except([], fn(x) { x > 0 }) == []
+test drop_while_1() {
+  drop_while([], fn(x) { x > 0 }) == []
 }
 
-test take_except_2() {
-  take_except([1, 2, 3, 4, 5], fn(x) { x <= 2 }) == [3, 4, 5]
+test drop_while_2() {
+  drop_while([1, 2, 3, 4, 5], fn(x) { x <= 2 }) == [3, 4, 5]
 }
 
-test take_except_3() {
-  take_except([1, 2, 3, 4, 5], fn(x) { x < 4 }) == [4, 5]
+test drop_while_3() {
+  drop_while([1, 2, 3, 4, 5], fn(x) { x < 4 }) == [4, 5]
 }
 
-test take_except_4() {
-  take_except([1, 2, 3, 4, 5], fn(x) { x != 4 }) == [4]
+test drop_while_4() {
+  drop_while([1, 2, 3, 4, 5], fn(x) { x != 4 }) == [4]
 }
 
 pub fn partition(self: List<a>, predicate: fn(a) -> Bool) -> (List<a>, List<a>) {
   let l = take_while(self, predicate)
-  let r = take_except(self, predicate)
+  let r = drop_while(self, predicate)
   (l, r)
 }
 
