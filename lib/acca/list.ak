@@ -529,6 +529,64 @@ test max_3() {
 test max_4() {
   max([9, 8, 1, -1, 10]) == Some(10)
 }
+
+fn do_slice_until(
+  tail: List<a>,
+  from: Int,
+  to: Int,
+  index: Int,
+  accum: List<a>,
+) -> List<a> {
+  when tail is {
+    [] -> reverse(accum)
+    [h, ..t] ->
+      if index >= from && index < to {
+        do_slice_until(t, from, to, index + 1, push(accum, h))
+      } else {
+        do_slice_until([], from, to, index, accum)
+      }
+  }
+}
+
+pub fn slice(self: List<a>, from: Int, to: Int) -> List<a> {
+  if from < 0 || to < 0 || from == to {
+    []
+  } else {
+    do_slice_until(self, from, to, from, [])
+  }
+}
+
+test slice_1() {
+  slice([1, 3, 4], 1, -1) == []
+}
+
+test slice_2() {
+  slice([1, 3, 4], -1, 1) == []
+}
+
+test slice_3() {
+  slice([1, 3, 4], 0, 0) == []
+}
+
+test slice_4() {
+  slice([1, 3, 4], 0, 0) == []
+}
+
+test slice_5() {
+  slice([1, 3, 4], 0, 1) == [1]
+}
+
+test slice_6() {
+  slice([1, 3, 4], 0, 2) == [1, 3]
+}
+
+test slice_7() {
+  slice([1, 3, 4], 0, 10) == [1, 3, 4]
+}
+
+test slice_8() {
+  slice([1, 3, 4], 0, 3) == [1, 3, 4]
+}
 // Sort list by a certain predicate.
 // pub fn sort_by(xs: List<a>, f: fn(a, a) -> Int) -> List<a> {
 //   do_merge_all(do_sequences(xs, f), f)
