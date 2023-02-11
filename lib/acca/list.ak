@@ -320,7 +320,7 @@ pub fn product(self: List<Int>) -> Int {
 }
 
 test product_1() {
-  product([]) == 0
+  product([]) == 1
 }
 
 test product_2() {
@@ -329,4 +329,26 @@ test product_2() {
 
 test product_3() {
   product([1, 2, 3, 4]) == 24
+}
+
+fn indices(self: List<a>) -> List<Int> {
+  when self is {
+    [] -> []
+    _ -> {
+      let len = list.length(self)
+      list.range(0, len - 1)
+    }
+  }
+}
+
+test indices_1() {
+  indices([]) == []
+}
+
+test indices_2() {
+  indices([1]) == [0]
+}
+
+test indices_3() {
+  indices([1, 2, 3]) == [0, 1, 2]
 }
