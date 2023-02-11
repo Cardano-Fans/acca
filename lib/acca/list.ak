@@ -1,5 +1,7 @@
 use acca/predicate.{not}
-use aiken/list.{at, concat, drop, foldl, has, head, push, reverse, take}
+use aiken/list.{
+  at, concat, drop, filter, foldl, has, head, push, reverse, take, unique,
+}
 use aiken/math
 
 pub fn first(self: List<a>) -> Option<a> {
@@ -37,6 +39,10 @@ test non_empty_1() {
 
 test non_empty_2() {
   non_empty([1]) == True
+}
+
+pub fn prepend(self: List<a>, item: a) -> List<a> {
+  push(self, item)
 }
 
 /// Appends an element to the end of the list
@@ -142,6 +148,14 @@ test drop_while_3() {
 
 test drop_while_4() {
   drop_while([1, 2, 3, 4, 5], fn(x) { x != 4 }) == [4]
+}
+
+pub fn filter_not(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
+  filter(self, not(predicate))
+}
+
+test filter_not_1() {
+  filter_not([1, 2, 3], fn(x) { x == 1 }) == [2, 3]
 }
 
 pub fn partition(self: List<a>, predicate: fn(a) -> Bool) -> (List<a>, List<a>) {
@@ -251,6 +265,47 @@ test grouped_6() {
   [] == grouped([1, 2, 3, 4, 5, 6], -1)
 }
 
+pub fn diff(self1: List<a>, self2: List<a>) -> List<a> {
+  let diff = filter(self1, fn(x) { !has(self2, x) })
+
+  unique(diff)
+}
+
+test diff_1() {
+  diff([1, 2], [1, 3]) == [2]
+}
+
+test diff_2() {
+  diff([1, 2, 3], [1, 2, 3]) == []
+}
+
+test diff_3() {
+  diff([], []) == []
+}
+
+test diff_4() {
+  diff([1, 2, 3, 4], [1, 3]) == [2, 4]
+}
+
+pub fn bi_diff(self1: List<a>, self2: List<a>) -> List<a> {
+  let diff1 = filter(self1, fn(x) { !has(self2, x) })
+  let diff2 = filter(self2, fn(x) { !has(self1, x) })
+
+  unique(concat(diff1, diff2))
+}
+
+test bi_diff_1() {
+  bi_diff([1, 2], [1, 3]) == [2, 3]
+}
+
+test bi_diff_2() {
+  bi_diff([1, 2, 3], [1, 2, 3]) == []
+}
+
+test bi_diff_3() {
+  bi_diff([], []) == []
+}
+
 // pub fn sliding(self: List<a>, n: Int) -> List<List<a>> {
 //   if n <= 0 {
 //     []
@@ -264,7 +319,7 @@ test grouped_6() {
 //     [] -> accum
 //     all -> {
 //       let took = take(all, n)
-//       let rest = drop(all, n)
+//       //let rest = drop(all, n)
 //       let l = last(took)
 //       when l is {
 //         Some(ll) -> do_sliding(push(rest, ll), concat(accum, [took]), n)
