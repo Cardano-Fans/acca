@@ -351,7 +351,7 @@ fn do_index_of(tail: List<a>, item: a, acc: Int) -> Int {
   }
 }
 
-fn indexOf(self: List<a>, item: a) -> Option<Int> {
+fn index_of(self: List<a>, item: a) -> Option<Int> {
   if has(self, item) {
     Some(do_index_of(self, item, 0))
   } else {
@@ -359,28 +359,28 @@ fn indexOf(self: List<a>, item: a) -> Option<Int> {
   }
 }
 
-test indexOf_1() {
-  let sth = indexOf([], 2)
+test index_of_1() {
+  let sth = index_of([], 2)
 
   sth == None
 }
 
-test indexOf_2() {
-  let sth = indexOf([1, 2, 3], 2)
+test index_Of_2() {
+  let sth = index_of([1, 2, 3], 2)
   expect Some(s) = sth
 
   s == 1
 }
 
-test indexOf_3() {
-  let sth = indexOf([1, 2, 3], 3)
+test index_of_3() {
+  let sth = index_of([1, 2, 3], 3)
   expect Some(s) = sth
 
   s == 2
 }
 
-test indexOf_4() {
-  let sth = indexOf([1, 3], 3)
+test index_of_4() {
+  let sth = index_of([1, 3], 3)
   expect Some(s) = sth
 
   s == 1
@@ -433,3 +433,5 @@ test max_3() {
 test max_4() {
   max([9, 8, 1, -1, 10]) == Some(10)
 }
+// TODO
+// sliding, scanLeft, scan, scanRight, takeRight, diff, permutations, combinations, sorted, sortWith
