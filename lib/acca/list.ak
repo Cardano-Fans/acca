@@ -1,5 +1,6 @@
 use acca/predicate.{not}
-use aiken/list.{at, concat, drop, has, head, push, reverse, take}
+use aiken/list.{at, concat, drop, foldl, has, head, push, reverse, take}
+use aiken/math
 
 pub fn first(self: List<a>) -> Option<a> {
   head(self)
@@ -21,21 +22,6 @@ test last_2() {
 
 test last_3() {
   last([1, 2, 3]) == Some(3)
-}
-
-pub fn is_empty(self: List<a>) -> Bool {
-  when self is {
-    [] -> True
-    _ -> False
-  }
-}
-
-test is_empty_1() {
-  is_empty([])
-}
-
-test is_empty_2() {
-  is_empty([1]) == False
 }
 
 pub fn non_empty(self: List<a>) -> Bool {
@@ -391,4 +377,59 @@ test indexOf_3() {
   expect Some(s) = sth
 
   s == 2
+}
+
+test indexOf_4() {
+  let sth = indexOf([1, 3], 3)
+  expect Some(s) = sth
+
+  s == 1
+}
+
+fn min(self: List<Int>) -> Option<Int> {
+  when self is {
+    [] -> None
+    [first] -> Some(first)
+    [h, ..t] -> Some(foldl(t, fn(a, b) { math.min(a, b) }, h))
+  }
+}
+
+test min_1() {
+  min([]) == None
+}
+
+test min_2() {
+  min([9]) == Some(9)
+}
+
+test min_3() {
+  min([9, 8, 1]) == Some(1)
+}
+
+test min_4() {
+  min([9, 8, 1, -1]) == Some(-1)
+}
+
+fn max(self: List<Int>) -> Option<Int> {
+  when self is {
+    [] -> None
+    [first] -> Some(first)
+    [h, ..t] -> Some(foldl(t, fn(a, b) { math.max(a, b) }, h))
+  }
+}
+
+test max_1() {
+  max([]) == None
+}
+
+test max_2() {
+  max([9]) == Some(9)
+}
+
+test max_3() {
+  max([9, 8, 1]) == Some(9)
+}
+
+test max_4() {
+  max([9, 8, 1, -1, 10]) == Some(10)
 }
