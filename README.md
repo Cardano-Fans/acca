@@ -41,6 +41,34 @@ let last: Option<Int> = alist.last(resolved)
 expect Some(x) = last
 
 // x = 2
+
+let min: Option<Int> = alist.min([1, 2, 3])
+expect Some(x) = min
+
+// x = 1
+
+let max: Option<Int> = alist.max([1, 2, 3])
+expect Some(x) = max
+
+// x = 3
+
+
+let indexOf: Option<Int> = alist.indexOf([1, 2, 3], 3)
+expect Some(x) = indexOf
+
+// x = 2
+
+let sum: Option<Int> = alist.sum([1, 2, 3])
+expect Some(x) = sum
+
+// x = 6
+
+let product: Option<Int> = alist.product([1, 2, 3, 4])
+expect Some(x) = product
+
+// x = 24
+
+// and many more functions...
 ```
 
 ## Status
