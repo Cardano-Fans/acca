@@ -1,5 +1,5 @@
 use acca/predicate.{not}
-use aiken/list.{at, concat, drop, head, reverse, take}
+use aiken/list.{at, concat, drop, head, push, reverse, take}
 
 pub fn first(self: List<a>) -> Option<a> {
   head(self)
@@ -53,26 +53,13 @@ test non_empty_2() {
   non_empty([1]) == True
 }
 
-/// Prepends an element to the beginning of the list
-pub fn prepend(self: List<a>, item: a) -> List<a> {
-  concat([item], self)
-}
-
-test prepend_1() {
-  prepend([], 1) == [1]
-}
-
-test prepend_2() {
-  prepend([1, 2, 3], 0) == [0, 1, 2, 3]
-}
-
 /// Appends an element to the end of the list
 pub fn append(self: List<a>, item: a) -> List<a> {
   concat(self, [item])
 }
 
 test append_1() {
-  prepend([], 1) == [1]
+  append([], 1) == [1]
 }
 
 test append_2() {
@@ -88,7 +75,7 @@ fn do_take_until(
     [] -> reverse(accum)
     [h, ..t] ->
       if predicate(h) {
-        do_take_until(t, prepend(accum, h), predicate)
+        do_take_until(t, push(accum, h), predicate)
       } else {
         do_take_until([], accum, predicate)
       }
@@ -124,7 +111,7 @@ fn do_take_while(
     [] -> reverse(accum)
     [h, ..t] ->
       if predicate(h) {
-        do_take_while(t, prepend(accum, h), predicate)
+        do_take_while(t, push(accum, h), predicate)
       } else {
         do_take_while(t, accum, predicate)
       }
@@ -277,3 +264,36 @@ test grouped_5() {
 test grouped_6() {
   [] == grouped([1, 2, 3, 4, 5, 6], -1)
 }
+// pub fn sliding(self: List<a>, n: Int) -> List<List<a>> {
+//   if n <= 0 {
+//     []
+//   } else {
+//     do_sliding(self, [], n)
+//   }
+// }
+
+// fn do_sliding(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
+//   when tail is {
+//     [] -> accum
+//     all -> {
+//       let took = take(all, n)
+//       let rest = drop(all, n)
+//       let l = last(took)
+//       when l is {
+//         Some(ll) -> do_sliding(push(rest, ll), concat(accum, [took]), n)
+//         None -> do_sliding(rest, concat(accum, [took]), n)
+//       }
+//     }
+//   }
+// }
+
+// test sliding_1() {
+//   sliding([], 2) == []
+// }
+
+// test sliding_2() {
+//   let items = sliding([1, 2, 3], 2)
+//   expect Some(g1) = at(items, 0)
+
+//   g1 == [1, 2]
+// }
