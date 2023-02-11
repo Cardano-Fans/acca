@@ -264,6 +264,7 @@ test grouped_5() {
 test grouped_6() {
   [] == grouped([1, 2, 3, 4, 5, 6], -1)
 }
+
 // pub fn sliding(self: List<a>, n: Int) -> List<List<a>> {
 //   if n <= 0 {
 //     []
@@ -297,3 +298,35 @@ test grouped_6() {
 
 //   g1 == [1, 2]
 // }
+
+pub fn sum(self: List<Int>) -> Int {
+  list.foldl(self, fn(a, b) { a + b }, 0)
+}
+
+test sum_1() {
+  sum([]) == 0
+}
+
+test sum_2() {
+  sum([1, 2, 3]) == 6
+}
+
+test sum_3() {
+  sum([1, 2, 3, 4]) == 10
+}
+
+pub fn product(self: List<Int>) -> Int {
+  list.foldl(self, fn(a, b) { a * b }, 1)
+}
+
+test product_1() {
+  product([]) == 0
+}
+
+test product_2() {
+  product([1, 2, 3]) == 6
+}
+
+test product_3() {
+  product([1, 2, 3, 4]) == 24
+}
