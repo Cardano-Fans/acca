@@ -1,5 +1,5 @@
 use acca/predicate.{not}
-use aiken/list.{at, concat, drop, head, push, reverse, take}
+use aiken/list.{at, concat, drop, has, head, push, reverse, take}
 
 pub fn first(self: List<a>) -> Option<a> {
   head(self)
@@ -351,4 +351,44 @@ test indices_2() {
 
 test indices_3() {
   indices([1, 2, 3]) == [0, 1, 2]
+}
+
+fn do_index_of(tail: List<a>, item: a, acc: Int) -> Int {
+  when tail is {
+    [] -> acc
+    [h, ..t] ->
+      if h == item {
+        do_index_of([], item, acc)
+      } else {
+        do_index_of(t, item, acc + 1)
+      }
+  }
+}
+
+fn indexOf(self: List<a>, item: a) -> Option<Int> {
+  if has(self, item) {
+    Some(do_index_of(self, item, 0))
+  } else {
+    None
+  }
+}
+
+test indexOf_1() {
+  let sth = indexOf([], 2)
+
+  sth == None
+}
+
+test indexOf_2() {
+  let sth = indexOf([1, 2, 3], 2)
+  expect Some(s) = sth
+
+  s == 1
+}
+
+test indexOf_3() {
+  let sth = indexOf([1, 2, 3], 3)
+  expect Some(s) = sth
+
+  s == 2
 }
