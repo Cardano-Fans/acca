@@ -2,6 +2,9 @@
 
 ## Introduction
 
+![image](https://user-images.githubusercontent.com/93382834/218308494-b9ac9dc4-40dd-441e-9b6c-303114ad5b85.png)
+
+
 Acca is Aiken's non standard library (https://github.com/aiken-lang/aiken).
 
 
