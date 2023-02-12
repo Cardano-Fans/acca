@@ -1,3 +1,6 @@
+use aiken/list.{foldl}
+use aiken/math
+
 fn max(self: List<Int>) -> Option<Int> {
   when self is {
     [] -> None

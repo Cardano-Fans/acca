@@ -1,8 +1,6 @@
 use acca/predicate.{not}
-use aiken/list.{
-  at, concat, drop, filter, foldl, has, head, push, reverse, take, unique,
-}
-use aiken/math
+use aiken/list.{at,
+  concat, drop, filter, has, head, push, reverse, take, unique}
 
 pub fn first(self: List<a>) -> Option<a> {
   head(self)
@@ -492,7 +490,7 @@ test slice_4() {
   slice([1, 3, 4], 0, 1) == [1]
 }
 
-test slice_5()) {
+test slice_5() {
   slice([1, 3, 4], 0, 2) == [1, 3]
 }
 
@@ -507,7 +505,6 @@ test slice_7() {
 test slice_8() {
   slice([1, 3, 4], 0, 3) == [1, 3, 4]
 }
-
 // Sort list by a certain predicate.
 // pub fn sort_by(xs: List<a>, f: fn(a, a) -> Int) -> List<a> {
 //   do_merge_all(do_sequences(xs, f), f)
