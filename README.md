@@ -2,8 +2,6 @@
 
 ## Introduction
 
-![image](https://user-images.githubusercontent.com/93382834/218308519-0b82de79-ad13-45dd-94a8-6083f55897c5.png)
-
 Acca is Aiken's non standard library (https://github.com/aiken-lang/aiken).
 
 
@@ -72,6 +70,9 @@ expect Some(x) = product
 
 // and many more functions...
 ```
+
+## Why acca?
+Acca (Acca sellowiana) is brazilian guava fruit. The name is not accidental, this library is a tribute to well known Google's java library called guava.
 
 ## Status
 Project under heavy development, API subject to change.
