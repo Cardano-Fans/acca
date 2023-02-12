@@ -37,22 +37,15 @@ let resolved: List<Option<Int>> = alist.resolve(items)
 
 // resolved = [Some(1), Some(2)]
 
-// return last element
-let last: Option<Int> = alist.last(resolved)
-expect Some(x) = last
-
-// x = 2
-
-let min: Option<Int> = alist.min([1, 2, 3])
+let min: Option<Int> = amath.min([1, 2, 3])
 expect Some(x) = min
 
 // x = 1
 
-let max: Option<Int> = alist.max([1, 2, 3])
+let max: Option<Int> = amath.max([1, 2, 3])
 expect Some(x) = max
 
 // x = 3
-
 
 let indexOf: Option<Int> = alist.index_of([1, 2, 3], 3)
 expect Some(x) = indexOf
