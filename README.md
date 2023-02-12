@@ -28,6 +28,7 @@ dependencies = [
 
 ```gleam
 use acca/list as alist
+use acca/math as amath
 
 let items: List<Option<Int>> = [Some(1), None, Some(2)] 
 
@@ -53,17 +54,17 @@ expect Some(x) = max
 // x = 3
 
 
-let indexOf: Option<Int> = alist.indexOf([1, 2, 3], 3)
+let indexOf: Option<Int> = alist.index_of([1, 2, 3], 3)
 expect Some(x) = indexOf
 
 // x = 2
 
-let sum: Option<Int> = alist.sum([1, 2, 3])
+let sum: Option<Int> = amath.sum([1, 2, 3])
 expect Some(x) = sum
 
 // x = 6
 
-let product: Option<Int> = alist.product([1, 2, 3, 4])
+let product: Option<Int> = amath.product([1, 2, 3, 4])
 expect Some(x) = product
 
 // x = 24

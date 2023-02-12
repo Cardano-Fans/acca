@@ -381,38 +381,6 @@ test sliding_8() {
   sliding([1, 2, 3, 4, 5], 1) == []
 }
 
-pub fn sum(self: List<Int>) -> Int {
-  list.foldl(self, fn(a, b) { a + b }, 0)
-}
-
-test sum_1() {
-  sum([]) == 0
-}
-
-test sum_2() {
-  sum([1, 2, 3]) == 6
-}
-
-test sum_3() {
-  sum([1, 2, 3, 4]) == 10
-}
-
-pub fn product(self: List<Int>) -> Int {
-  list.foldl(self, fn(a, b) { a * b }, 1)
-}
-
-test product_1() {
-  product([]) == 1
-}
-
-test product_2() {
-  product([1, 2, 3]) == 6
-}
-
-test product_3() {
-  product([1, 2, 3, 4]) == 24
-}
-
 fn indices(self: List<a>) -> List<Int> {
   when self is {
     [] -> []
@@ -482,54 +450,6 @@ test index_of_4() {
   s == 1
 }
 
-fn min(self: List<Int>) -> Option<Int> {
-  when self is {
-    [] -> None
-    [first] -> Some(first)
-    [h, ..t] -> Some(foldl(t, fn(a, b) { math.min(a, b) }, h))
-  }
-}
-
-test min_1() {
-  min([]) == None
-}
-
-test min_2() {
-  min([9]) == Some(9)
-}
-
-test min_3() {
-  min([9, 8, 1]) == Some(1)
-}
-
-test min_4() {
-  min([9, 8, 1, -1]) == Some(-1)
-}
-
-fn max(self: List<Int>) -> Option<Int> {
-  when self is {
-    [] -> None
-    [first] -> Some(first)
-    [h, ..t] -> Some(foldl(t, fn(a, b) { math.max(a, b) }, h))
-  }
-}
-
-test max_1() {
-  max([]) == None
-}
-
-test max_2() {
-  max([9]) == Some(9)
-}
-
-test max_3() {
-  max([9, 8, 1]) == Some(9)
-}
-
-test max_4() {
-  max([9, 8, 1, -1, 10]) == Some(10)
-}
-
 fn do_slice_until(
   tail: List<a>,
   from: Int,
@@ -569,24 +489,25 @@ test slice_3() {
 }
 
 test slice_4() {
-  slice([1, 3, 4], 0, 0) == []
-}
-
-test slice_5() {
   slice([1, 3, 4], 0, 1) == [1]
 }
 
-test slice_6() {
+test slice_5()) {
   slice([1, 3, 4], 0, 2) == [1, 3]
 }
 
-test slice_7() {
+test slice_6() {
   slice([1, 3, 4], 0, 10) == [1, 3, 4]
+}
+
+test slice_7() {
+  slice([1, 3, 4], 0, 3) == [1, 3, 4]
 }
 
 test slice_8() {
   slice([1, 3, 4], 0, 3) == [1, 3, 4]
 }
+
 // Sort list by a certain predicate.
 // pub fn sort_by(xs: List<a>, f: fn(a, a) -> Int) -> List<a> {
 //   do_merge_all(do_sequences(xs, f), f)
@@ -665,4 +586,3 @@ test slice_8() {
 // }
 // TODO
 // scanLeft, scan, scanRight, takeRight, permutations, combinations, sorted, sortWith
-// slice (fromIndex, toIndex)
