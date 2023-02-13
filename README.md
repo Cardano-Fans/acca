@@ -15,7 +15,6 @@ licences = ["Apache-2.0"]
 description = "Example project"
 
 dependencies = [
-  { name = "aiken-lang/stdlib", version = "1e82ccd5d30d68615b6c0f3b84947b5e93f23549", source = "github" },
   { name = "Cardano-Fans/acca", version = "1e90656ea756bc0344ed6ade6d5a4e79e2edc477", source = "github" }
 ]
 ```
