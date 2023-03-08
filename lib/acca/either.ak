@@ -5,9 +5,9 @@ pub type Either<a, b> {
 
 test either_1() {
   let l: Either<Int, String> = Left { value: 1 }
-  let r: Either<Int, String> = Right { value: "" }
+  let r: Either<Int, String> = Right { value: @"" }
 
-  l == Left { value: 1 } && r == Right { value: "" }
+  l == Left { value: 1 } && r == Right { value: @"" }
 }
 
 pub fn left(self: Either<a, b>) {
