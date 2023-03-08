@@ -3,10 +3,6 @@ version = "0.0.1"
 licences = ["MIT"]
 description = "The Aiken Non Standard Library"
 
-dependencies = [
-  { name = "aiken-lang/stdlib", version = "1b335e309ca3fff742db9277364aa3f056ee38be", source = "github" }
-]
-
 [repository]
 user = "Cardano-Fans"
 project = "acca"
