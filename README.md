@@ -67,4 +67,4 @@ expect Some(x) = product
 Acca (Acca sellowiana) is brazilian guava fruit. The name is not accidental, this library is a tribute to well known Google's java library called guava.
 
 ## Status
-Project under heavy development, API subject to change.
+Project under development, API subject to change.
