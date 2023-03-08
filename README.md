@@ -15,13 +15,12 @@ licences = ["Apache-2.0"]
 description = "Example project"
 
 dependencies = [
-  { name = "Cardano-Fans/acca", version = "80ba91fa1b21953b9044c595d3c382665d976043", source = "github" }
+  { name = "Cardano-Fans/acca", version = "7dc92c2509e3c82123cd73a3b3f545ae57b51dca", source = "github" }
 ]
 ```
 
 ## Requirements
 - Aiken (https://github.com/aiken-lang/aiken)
-- Aiken's std library (https://github.com/aiken-lang/stdlib)
 
 ## Examples
 
