@@ -19,6 +19,11 @@ dependencies = [
 ]
 ```
 
+## Std lib
+Since Aiken doesn't support libraries which both include the same std library (or any other library), this project simply clones std library. In other words Aiken's std lib is inlined in this project and there is no plan to make any changes to it.
+
+Current std lib SHA1 version: a66c9bd2c30aa199aa2b6968db09f1cf4b5b7ac0
+
 ## Requirements
 - Aiken (https://github.com/aiken-lang/aiken)
 
