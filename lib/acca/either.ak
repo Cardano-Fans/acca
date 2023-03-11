@@ -1,3 +1,8 @@
+use aiken/list
+
+// A common use of Either is as an alternative to an Option for dealing with possibly missing values. In this usage, None is replaced with a `Left` which can contain useful information. `Right` takes the place of scala.Some. Convention dictates that `Left` is used for failure and `Right` is used for success.
+// For example, you could use Either<String, Int> to indicate whether a received input is a String or an Int.
+/// Represents a value of one of two possible types (a disjoint union). An instance of Either is an instance of either `Left` or `Right`.
 pub type Either<a, b> {
   Left { value: a }
   Right { value: b }
@@ -7,9 +12,10 @@ test either_1() {
   let l: Either<Int, String> = Left { value: 1 }
   let r: Either<Int, String> = Right { value: @"" }
 
-  l == Left { value: 1 } && r == Right { value: @"" }
+  list.and([l == Left { value: 1 }, r == Right { value: @"" }])
 }
 
+/// Forces either to be `Left`, fails with an error otherwise.
 pub fn left(self: Either<a, b>) {
   expect Left { value } = self
 
@@ -20,6 +26,7 @@ test left_1() {
   left(Left { value: 1 }) == 1
 }
 
+/// Forces either to be `Right`, fails with an error otherwise
 pub fn right(self: Either<a, b>) {
   expect Right { value } = self
 
@@ -30,6 +37,7 @@ test right_1() {
   right(Right { value: 1 }) == 1
 }
 
+/// Provides information whether either contains a particular element
 pub fn contains(self: Either<a, b>, item: b) -> Bool {
   when self is {
     Left(_) -> False
@@ -45,10 +53,11 @@ test contains_2() {
   contains(Left { value: 1 }, 0) == False
 }
 
-test contains_4() {
+test contains_3() {
   contains(Right { value: 1 }, 1)
 }
 
+/// Fold allows to reduce either to one value, there is a with_left function to reduce which reduces `Left` either and with_right which is used to reduce `Right` either.
 pub fn fold(
   self: Either<a, b>,
   with_left: fn(a) -> c,
@@ -72,6 +81,8 @@ test fold_2() {
   fold(self: either, with_left: fn(x) { x > 0 }, with_right: fn(y) { y < 0 }) == False
 }
 
+/// Allows to convert either to Option, where `Left` part is converted to None and `Right` part to Some.
+/// Notice that coversion of `Left` to None means we are loosing value wrapped in `Left`.
 pub fn to_option(self: Either<a, b>) -> Option<b> {
   when self is {
     Left(_) -> None
@@ -87,6 +98,9 @@ test to_option_2() {
   to_option(Right { value: 1 }) == Some(1)
 }
 
+/// Convert Either to a list.
+/// `Left` (usually represents errors) will be converted to an empty list
+/// `Right` will be converted to a list of one element
 pub fn to_list(self: Either<a, b>) -> List<b> {
   when self is {
     Left(_) -> []
@@ -102,6 +116,7 @@ test to_list_2() {
   to_list(Right { value: 1 }) == [1]
 }
 
+/// Whether this either is in fact `Left`.
 pub fn is_left(self: Either<a, b>) -> Bool {
   when self is {
     Left(_) -> True
@@ -109,6 +124,7 @@ pub fn is_left(self: Either<a, b>) -> Bool {
   }
 }
 
+/// Whether this either is in fact `Right`.
 pub fn is_right(self: Either<a, b>) -> Bool {
   when self is {
     Right(_) -> True
@@ -116,6 +132,7 @@ pub fn is_right(self: Either<a, b>) -> Bool {
   }
 }
 
+/// Applies the predicate to the `Right` part, in case Either is `Left`, it returns negative.
 pub fn exists(self: Either<a, b>, with: fn(b) -> Bool) -> Bool {
   when self is {
     Left(_) -> False
@@ -140,6 +157,7 @@ test exists_3() {
   exists(Right { value: -1 }, fn(x) { x > 0 }) == False
 }
 
+/// Swap and replace a `Left` side with a `Right` side.
 pub fn swap(self: Either<a, b>) -> Either<b, a> {
   when self is {
     Left(x) -> Right(x)
@@ -155,6 +173,7 @@ test swap_2() {
   swap(Left { value: 1 }) == Right { value: 1 }
 }
 
+/// Ability to transform (map) `Right` `Left` with a given mapping function. `Left` returns value without transformation / mapping.
 pub fn map(self: Either<a, b>, with: fn(b) -> c) {
   when self is {
     Left(x) -> Left(x)
@@ -169,14 +188,3 @@ test map_1() {
 test map_2() {
   map(Left { value: 12 }, fn(x) { x + 1 }) == Left { value: 12 }
 }
-// fn identity_fold(self: Either<a, b>) -> c {
-//   fold(self, fn(x: a) { x }, fn(x: b) { x })
-// }
-
-// test identity_fold_1() {
-//   identity_fold(Left { value: 1 }) == 1
-// }
-
-// test identity_fold_2() {
-//   identity_fold(Right { value: 1 }) == 1
-// }
