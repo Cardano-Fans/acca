@@ -15,14 +15,14 @@ licences = ["Apache-2.0"]
 description = "Example project"
 
 dependencies = [
-  { name = "Cardano-Fans/acca", version = "d6bd9c418716d06f125e85b30dd9abc08385cd87", source = "github" }
+  { name = "Cardano-Fans/acca", version = "8bd1b545822a05d7d2295ec794ecb2a4e1aadc7e", source = "github" }
 ]
 ```
 
 ## Std lib
 Since Aiken doesn't support libraries which both include the same std library (or any other library), this project simply clones std library. In other words Aiken's std lib is inlined in this project and there is no plan to make any changes to it.
 
-Current std lib SHA1 version: a66c9bd2c30aa199aa2b6968db09f1cf4b5b7ac0
+Current std lib SHA1 version: e5efc59e3ec763dfc30948ebcac46eb232307ce8
 
 ## Requirements
 - Aiken (https://github.com/aiken-lang/aiken)
