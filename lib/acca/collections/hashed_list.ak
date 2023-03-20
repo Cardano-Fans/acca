@@ -22,33 +22,42 @@ pub fn from(
     items
       |> list.map(fn(item) { hash_fn(item) })
 
-  let zero = sha2_256(#"")
+  let zero =
+    sha2_256(#"")
 
-  let reducer = fn(a, b) { combine_hash(a, b) }
+  let reducer =
+    fn(a, b) { combine_hash(a, b) }
 
-  let hash = list.foldl(hashed_items, reducer, zero)
+  let hash =
+    list.foldl(hashed_items, reducer, zero)
 
   HashedList { inner: hashed_items, hash }
 }
 
 test from_1() {
-  let items = []
+  let items =
+    []
 
-  let hashed_list = from(items, create_string_item_serialise_fn())
+  let hashed_list =
+    from(items, create_string_item_serialise_fn())
 
   hashed_list.hash == #"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 }
 
 test from_2() {
-  let dog = @"dog"
-  let cat = @"cat"
-  let items = [dog, cat]
+  let dog =
+    @"dog"
+  let cat =
+    @"cat"
+  let items =
+    [dog, cat]
 
-  let hashed_list = from(items, create_string_item_serialise_fn())
+  let hashed_list =
+    from(items, create_string_item_serialise_fn())
 
-  hashed_list.hash == #"e0437181546685b18b3d8ce1cd181fe63e0b05e5cafe9757b04dbf8edb7996e2"
+  hashed_list.hash == #"540707dfc061c721e5506e93f568cae6bd6a5609ea67a445a1cc62c3b2e64ffa"
 }
 
 fn create_string_item_serialise_fn() -> fn(String) -> ByteArray {
-  fn(x: String) { bytearray.from_string(x) }
+  fn(x: String) { sha2_256(bytearray.from_string(x)) }
 }
