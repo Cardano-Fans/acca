@@ -1,3 +1,4 @@
+use aiken/builtin
 use aiken/bytearray
 use aiken/hash.{Hash, Sha2_256, sha2_256}
 use aiken/list
@@ -47,6 +48,18 @@ test from_1() {
 test from_2() {
   let dog =
     @"dog"
+  let items =
+    [dog]
+
+  let hashed_list =
+    from(items, create_string_item_serialise_fn())
+
+  hashed_list.hash == #"c333744e9953ea4990e00a00806a596f6b1a0fc39a8fdf2e9e9bfa622fb58099"
+}
+
+test from_3() {
+  let dog =
+    @"dog"
   let cat =
     @"cat"
   let items =
@@ -56,6 +69,19 @@ test from_2() {
     from(items, create_string_item_serialise_fn())
 
   hashed_list.hash == #"540707dfc061c721e5506e93f568cae6bd6a5609ea67a445a1cc62c3b2e64ffa"
+}
+
+test fold() {
+  let chars =
+    [@"a", @"b", @"c"]
+
+  let zero =
+    @"0"
+
+  let reducer =
+    fn(a, b) { builtin.append_string(a, b) }
+
+  @"cba0" == list.foldl(chars, reducer, zero)
 }
 
 fn create_string_item_serialise_fn() -> fn(String) -> ByteArray {
