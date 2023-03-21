@@ -71,6 +71,25 @@ test from_3() {
   hashed_list.hash == #"abc48c555c2e7fb968c02bf0a6e6854b7239b3ede1d5745152cc656e430ae845"
 }
 
+test from_4() {
+  let dog =
+    @"dog"
+  let cat =
+    @"cat"
+  let horse =
+    @"horse"
+  let mouse =
+    @"mouse"
+
+  let items =
+    [dog, cat, horse, mouse]
+
+  let hashed_list =
+    from(items, create_string_item_serialise_fn())
+
+  hashed_list.hash == #"f3b80d721103a0a321bc3b88a946c9c9fc86f5721b61cf012d731b6a1d9efe3b"
+}
+
 fn create_string_item_serialise_fn() -> fn(String) -> ByteArray {
   fn(x: String) { sha2_256(bytearray.from_string(x)) }
 }

@@ -11,7 +11,7 @@ use aiken/math
 /// list.reduce_left([1, 2, 3], fn(n, total) { n + total }, 0) == 6
 /// list.reduce_left(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b), "0" } ) == "0123"
 /// ```
-pub fn reduce_left(self: List<a>, with: fn(a, a) -> a, zero: a) -> a {
+pub fn reduce_left(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
   list.foldl(self, flip(with), zero)
 }
 
@@ -47,8 +47,8 @@ test reduce_left_2() {
 /// list.reduce_right([1, 2, 3], fn(n, total) { n + total }, 0) == 6
 /// list.reduce_right(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b) },  "0" ) == "0321"
 /// ```
-pub fn reduce_right(self: List<a>, with: fn(a, a) -> a, zero: a) -> a {
-  list.foldr(self, flip(with), zero)
+pub fn reduce_right(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
+  list.foldl(list.reverse(self), flip(with), zero)
 }
 
 test reduce_right_1() {
