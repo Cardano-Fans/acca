@@ -1,4 +1,4 @@
-use aiken/builtin
+use acca/list as alist
 use aiken/bytearray
 use aiken/hash.{Hash, Sha2_256, sha2_256}
 use aiken/list
@@ -30,7 +30,7 @@ pub fn from(
     fn(a, b) { combine_hash(a, b) }
 
   let hash =
-    list.foldl(hashed_items, reducer, zero)
+    alist.reduce_left(hashed_items, reducer, zero)
 
   HashedList { inner: hashed_items, hash }
 }
@@ -54,7 +54,7 @@ test from_2() {
   let hashed_list =
     from(items, create_string_item_serialise_fn())
 
-  hashed_list.hash == #"c333744e9953ea4990e00a00806a596f6b1a0fc39a8fdf2e9e9bfa622fb58099"
+  hashed_list.hash == #"778a58564343a3eb1b4f22abde3ee16a1846ed730365d32334c5b64338c35a2c"
 }
 
 test from_3() {
@@ -68,20 +68,7 @@ test from_3() {
   let hashed_list =
     from(items, create_string_item_serialise_fn())
 
-  hashed_list.hash == #"540707dfc061c721e5506e93f568cae6bd6a5609ea67a445a1cc62c3b2e64ffa"
-}
-
-test fold() {
-  let chars =
-    [@"a", @"b", @"c"]
-
-  let zero =
-    @"0"
-
-  let reducer =
-    fn(a, b) { builtin.append_string(a, b) }
-
-  @"cba0" == list.foldl(chars, reducer, zero)
+  hashed_list.hash == #"abc48c555c2e7fb968c02bf0a6e6854b7239b3ede1d5745152cc656e430ae845"
 }
 
 fn create_string_item_serialise_fn() -> fn(String) -> ByteArray {
