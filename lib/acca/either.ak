@@ -1,8 +1,9 @@
+//// Represents a value of one of two possible types (a disjoint union). An instance of Either is an instance of either `Left` or `Right`.
+
 use aiken/list
 
-// A common use of Either is as an alternative to an Option for dealing with possibly missing values. In this usage, None is replaced with a `Left` which can contain useful information. `Right` takes the place of scala.Some. Convention dictates that `Left` is used for failure and `Right` is used for success.
-// For example, you could use Either<String, Int> to indicate whether a received input is a String or an Int.
-/// Represents a value of one of two possible types (a disjoint union). An instance of Either is an instance of either `Left` or `Right`.
+/// A common use of Either is as an alternative to an Option for dealing with possibly missing values. In this usage, None is replaced with a `Left` which can contain useful information. `Right` takes the place of scala.Some. Convention dictates that `Left` is used for failure and `Right` is used for success.
+/// For example, you could use Either<String, Int> to indicate whether a received input is a String or an Int.
 pub type Either<a, b> {
   Left { value: a }
   Right { value: b }
@@ -26,7 +27,7 @@ test left_1() {
   left(Left { value: 1 }) == 1
 }
 
-/// Forces either to be `Right`, fails with an error otherwise
+/// Forces either to be `Right`, fails with an error otherwise.
 pub fn right(self: Either<a, b>) {
   expect Right { value } = self
 
@@ -37,7 +38,7 @@ test right_1() {
   right(Right { value: 1 }) == 1
 }
 
-/// Provides information whether either contains a particular element
+/// Provides information whether `Either` contains a particular element.
 pub fn contains(self: Either<a, b>, item: b) -> Bool {
   when self is {
     Left(_) -> False
@@ -57,7 +58,7 @@ test contains_3() {
   contains(Right { value: 1 }, 1)
 }
 
-/// Fold allows to reduce either to one value, there is a with_left function to reduce which reduces `Left` either and with_right which is used to reduce `Right` either.
+/// Fold allows to reduce `Either` to one value, there is a with_left function to reduce which reduces `Left` either and with_right which is used to reduce `Right` either.
 pub fn fold(
   self: Either<a, b>,
   with_left: fn(a) -> c,
