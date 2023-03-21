@@ -5,15 +5,6 @@ use aiken/list.{
 }
 use aiken/math
 
-fn do_reduce_left(self: List<a>, acc: a, with: fn(a, a) -> a) -> a {
-  when self is {
-    [] ->
-      acc
-    [h, ..t] ->
-      do_reduce_left(t, with(acc, h), with)
-  }
-}
-
 /// Reduce a list from left to right.
 ///
 /// ```aiken
@@ -21,7 +12,7 @@ fn do_reduce_left(self: List<a>, acc: a, with: fn(a, a) -> a) -> a {
 /// list.reduce_left(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b), "0" } ) == "0123"
 /// ```
 pub fn reduce_left(self: List<a>, with: fn(a, a) -> a, zero: a) -> a {
-  do_reduce_left(self, zero, with)
+  list.foldl(self, flip(with), zero)
 }
 
 test reduce_left_1() {
@@ -50,15 +41,6 @@ test reduce_left_2() {
   @"0abcd" == reduce_left(chars, reducer, zero)
 }
 
-fn do_reduce_right(self: List<a>, acc: a, with: fn(a, a) -> a) -> a {
-  when self is {
-    [] ->
-      acc
-    [h, ..t] ->
-      do_reduce_right(t, with(acc, h), with)
-  }
-}
-
 /// Reduce a list from right to left.
 ///
 /// ```aiken
@@ -66,7 +48,7 @@ fn do_reduce_right(self: List<a>, acc: a, with: fn(a, a) -> a) -> a {
 /// list.reduce_right(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b) },  "0" ) == "0321"
 /// ```
 pub fn reduce_right(self: List<a>, with: fn(a, a) -> a, zero: a) -> a {
-  do_reduce_right(list.reverse(self), zero, with)
+  list.foldr(self, flip(with), zero)
 }
 
 test reduce_right_1() {
