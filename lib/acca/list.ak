@@ -18,7 +18,7 @@ fn do_reduce_left(self: List<a>, acc: a, with: fn(a, a) -> a) -> a {
 ///
 /// ```aiken
 /// list.reduce_left([1, 2, 3], fn(n, total) { n + total }, 0) == 6
-/// list.reduce_left(["0", "1", "2", "3"], fn(a, b) { builtin.append_string(a, b) } ) == "0123"
+/// list.reduce_left(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b), "0" } ) == "0123"
 /// ```
 pub fn reduce_left(self: List<a>, with: fn(a, a) -> a, zero: a) -> a {
   do_reduce_left(self, zero, with)
@@ -74,7 +74,7 @@ fn do_reduce_right(self: List<a>, acc: a, zero: a, with: fn(a, a) -> a) -> a {
 ///
 /// ```aiken
 /// list.reduce_right([1, 2, 3], fn(n, total) { n + total }, 0) == 6
-/// list.reduce_right(["0", "1", "2", "3"], fn(a, b) { builtin.append_string(a, b) } ) == "0123"
+/// list.reduce_right(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b) },  "0" ) == "0321"
 /// ```
 pub fn reduce_right(self: List<a>, with: fn(a, a) -> a, zero: a) -> a {
   do_reduce_right(self, zero, zero, with)
