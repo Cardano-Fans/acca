@@ -50,23 +50,12 @@ test reduce_left_2() {
   @"0abcd" == reduce_left(chars, reducer, zero)
 }
 
-// TODO while this implementation is correct it feels clunky,
-// there is probably more elegant way to do this
-// PRs welcome
-fn do_reduce_right(self: List<a>, acc: a, zero: a, with: fn(a, a) -> a) -> a {
+fn do_reduce_right(self: List<a>, acc: a, with: fn(a, a) -> a) -> a {
   when self is {
     [] ->
-      if acc == zero {
-        zero
-      } else {
-        with(zero, acc)
-      }
+      acc
     [h, ..t] ->
-      if acc == zero {
-        do_reduce_right(t, h, zero, with)
-      } else {
-        do_reduce_right(t, with(h, acc), zero, with)
-      }
+      do_reduce_right(t, with(acc, h), with)
   }
 }
 
@@ -77,7 +66,7 @@ fn do_reduce_right(self: List<a>, acc: a, zero: a, with: fn(a, a) -> a) -> a {
 /// list.reduce_right(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b) },  "0" ) == "0321"
 /// ```
 pub fn reduce_right(self: List<a>, with: fn(a, a) -> a, zero: a) -> a {
-  do_reduce_right(self, zero, zero, with)
+  do_reduce_right(list.reverse(self), zero, with)
 }
 
 test reduce_right_1() {
