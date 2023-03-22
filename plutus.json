@@ -2,7 +2,7 @@
   "preamble": {
     "title": "Cardano-Fans/acca",
     "description": "The Aiken Non Standard Library",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "plutusVersion": "v2"
   },
   "validators": []

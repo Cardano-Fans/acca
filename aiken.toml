@@ -1,5 +1,5 @@
 name = "Cardano-Fans/acca"
-version = "0.0.2"
+version = "0.0.3"
 licences = ["MIT"]
 description = "The Aiken Non Standard Library"
 
