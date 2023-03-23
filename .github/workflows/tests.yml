@@ -1,0 +1,23 @@
+name: Tests
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Aiken
+        run: cargo install --force --git https://github.com/aiken-lang/aiken.git
+      - name: Run Aiken check on acca
+        working-directory: ./
+        run: aiken check
+        shell: bash
