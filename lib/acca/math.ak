@@ -39,7 +39,7 @@ pub fn max(left: a, right: a, compare: fn(a, a) -> Ordering) -> a {
 }
 
 test max_0() {
-  max(-1, 0, int.compare) == -1
+  max(-1, 0, int.compare) == 0
 }
 
 test max_1() {
