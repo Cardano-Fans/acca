@@ -1,5 +1,15 @@
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Cardano-Fans/acca/main/branding/acca.jpeg?sanitize=true#gh-dark-mode-only" alt="Acca" height="150" />
+  <img src="https://raw.githubusercontent.com/Cardano-Fans/acca/main/branding/acca.jpeg?sanitize=true#gh-light-mode-only" alt="Acca" height="150" />
+    <h2 align="center" style="border-bottom: none">An alternative standard library for Aiken.</h2>
+
 [![Build](https://github.com/Cardano-Fans/acca/actions/workflows/tests.yml/badge.svg)](https://github.com/Cardano-Fans/acca/actions/workflows/tests.yml)
 [![License](https://img.shields.io:/github/license/Cardano-Fans/acca?label=license)](https://github.com/Cardano-Fans/acca/blob/master/LICENSE)
+
+  <hr/>
+</div>
+
 
 ## Introduction
 
