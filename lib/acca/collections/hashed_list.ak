@@ -21,16 +21,13 @@ pub fn from(
 ) -> HashedList<a> {
   let hashed_items =
     items
-      |> list.map(fn(item) { hash_fn(item) })
+      |> list.map(hash_fn)
 
   let zero =
     sha2_256(#"")
 
-  let reducer =
-    fn(a, b) { combine_hash(a, b) }
-
   let hash =
-    alist.reduce_left(hashed_items, reducer, zero)
+    alist.reduce_left(hashed_items, combine_hash, zero)
 
   HashedList { inner: hashed_items, hash }
 }
