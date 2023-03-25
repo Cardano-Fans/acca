@@ -261,7 +261,7 @@ fn do_grouped(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
     all -> {
       let took = list.take(all, n)
       let rest = list.drop(all, n)
-      do_grouped(rest, list.concat(accum, [took]), n)
+      do_grouped(rest, append(accum, took), n)
     }
   }
 }
@@ -366,8 +366,8 @@ fn do_sliding(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
       let maybe_last_item = list.last(took)
       when maybe_last_item is {
         Some(last_item) ->
-          do_sliding(list.push(rest, last_item), list.concat(accum, [took]), n)
-        _ -> do_sliding([], list.concat(accum, [took]), n)
+          do_sliding(list.push(rest, last_item), append(accum, took), n)
+        _ -> do_sliding([], append(accum, took), n)
       }
     }
   }
@@ -624,7 +624,7 @@ pub fn combinations(self: List<a>, n: Int) -> List<List<a>> {
     let tail: List<a> = force_tail(self)
     let combs_without_head: List<List<a>> = combinations(tail, n - 1)
     let combs_with_head: List<List<a>> =
-      list.map(combs_without_head, fn(comb) { list.concat([head], comb) })
+      list.map(combs_without_head, fn(comb) { prepend(comb, head) })
     let combs_without_head = combinations(tail, n)
 
     list.concat(combs_with_head, combs_without_head)
@@ -678,7 +678,7 @@ pub fn permutations(self: List<a>) -> List<List<a>> {
         fn(elem) {
           let remaining = list.filter(self, fn(x) { x != elem })
           let subperms = permutations(remaining)
-          list.map(subperms, fn(subperm) { list.concat([elem], subperm) })
+          list.map(subperms, fn(subperm) { prepend(subperm, elem) })
         },
       )
 
