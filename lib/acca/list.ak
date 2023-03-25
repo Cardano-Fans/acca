@@ -245,14 +245,60 @@ test take_until_4() {
 /// Filters out elements matching a given predicate.
 ///
 /// ```aiken
-/// alist.filter_them([1, 2, 3], fn(x) { x == 1 }) == [2, 3]
+/// alist.reject([1, 2, 3], fn(x) { x == 1 }) == [2, 3]
 /// ```
-pub fn filter_them(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
+pub fn reject(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
   list.filter(self, not(predicate))
 }
 
-test filter_them_1() {
-  filter_them([1, 2, 3], fn(x) { x == 1 }) == [2, 3]
+test reject_0() {
+  reject([], fn(x) { x == 1 }) == []
+}
+
+test reject_1() {
+  reject([1, 2, 3], fn(x) { x == 1 }) == [2, 3]
+}
+
+/// Returns list without a passed in element.
+///
+/// ```aiken
+/// alist.without([1, 2, 3], 1) == [2, 3]
+/// ```
+pub fn without(self: List<a>, item: a) -> List<a> {
+  reject(self, fn(i) { i == item })
+}
+
+test without_0() {
+  without([], 1) == []
+}
+
+test without_1() {
+  without([0], 1) == [0]
+}
+
+test without_2() {
+  without([0, 1, 2], 1) == [0, 2]
+}
+
+/// Returns list without all passed in elements.
+///
+/// ```aiken
+/// alist.without_all([1, 2, 3], [2, 3]) == [1]
+/// ```
+pub fn without_all(self: List<a>, items: List<a>) -> List<a> {
+  reject(self, fn(i) { list.has(items, i) })
+}
+
+test without_all_0() {
+  without_all([], [1]) == []
+}
+
+test without_all_1() {
+  without_all([0], [1]) == [0]
+}
+
+test without_all_2() {
+  without_all([0, 1, 2], [1, 2]) == [0]
 }
 
 fn do_grouped(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
