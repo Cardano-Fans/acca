@@ -1,18 +1,84 @@
 use acca/math as amath
+use acca/option as aoption
 use acca/predicate.{not}
 use aiken/builtin
 use aiken/bytearray
 use aiken/int
-use aiken/list.{
-  at, concat, drop, filter, foldl, has, head, last, push, reverse, take, unique,
+use aiken/list
+
+/// Returns head of a list or error
+///
+/// ```aiken
+/// alist.force_at([1, 2, 3], 0) == 1
+/// alist.force_at(["1"], 0) == "1"
+/// alist.force_at([1, 2], 3) == error
+/// alist.force_at([], 0) == error
+/// ```
+pub fn force_at(self: List<a>, n: Int) -> a {
+  list.at(self, n)
+  |> aoption.force_get
+}
+
+test force_at_0() {
+  force_at([1, 2, 3], 0) == 1
+}
+
+test force_at_1() {
+  force_at([1, 2, 3], 0) == 1
+}
+
+/// Returns head of a list or error
+///
+/// ```aiken
+/// alist.force_head([1, 2, 3]) == 1
+/// alist.force_head(["1"]) == "1"
+/// alist.force_head([]) == error
+/// ```
+pub fn force_head(self: List<a>) -> a {
+  list.head(self)
+  |> aoption.force_get
+}
+
+test force_head_0() {
+  force_head([1, 2, 3]) == 1
+}
+
+test force_head_1() {
+  force_head(["1"]) == "1"
+}
+
+/// Returns tail of a list or empty list in case there is no tail.
+///
+/// ```aiken
+/// alist.force_tail([1, 2, 3]) == [2, 3]
+/// alist.force_tail(["1"] ) == []
+/// alist.force_tail([]) == []
+/// ```
+pub fn force_tail(self: List<a>) -> List<a> {
+  when list.tail(self) is {
+    Some(item) -> item
+    None -> []
+  }
+}
+
+test force_tail_0() {
+  force_tail([1, 2, 3]) == [2, 3]
+}
+
+test force_tail_1() {
+  force_tail(["1"]) == []
+}
+
+test force_tail_2() {
+  force_tail([]) == []
 }
 
 /// Reduce a list from left to right.
 ///
 /// ```aiken
-/// list.reduce_left([1, 2, 3], fn(n, total) { n + total }, 0) == 6
-/// list.reduce_left(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b), "0" } ) == "0123"
-/// list.reduce_left([#[1], #[2], #[3]], fn(left, right) { bytearray.concat(left, right) }, #[9]) == #[9, 1, 2, 3]
+/// alist.reduce_left([1, 2, 3], fn(n, total) { n + total }, 0) == 6
+/// alist.reduce_left(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b), "0" } ) == "0123"
+/// alist.reduce_left([#[1], #[2], #[3]], fn(left, right) { bytearray.concat(left, right) }, #[9]) == #[9, 1, 2, 3]
 /// ```
 pub fn reduce_left(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
   list.foldl(self, flip(with), zero)
@@ -49,8 +115,8 @@ test reduce_left_3() {
 /// Reduce a list from right to left.
 ///
 /// ```aiken
-/// list.reduce_right([1, 2, 3], fn(n, total) { n + total }, 0) == 6
-/// list.reduce_right(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b) },  "0" ) == "0321"
+/// alist.reduce_right([1, 2, 3], fn(n, total) { n + total }, 0) == 6
+/// alist.reduce_right(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b) },  "0" ) == "0321"
 /// ```
 pub fn reduce_right(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
   list.foldl(list.reverse(self), flip(with), zero)
@@ -83,7 +149,7 @@ test reduce_right_2() {
 /// alist.first([1, 2, 3]) == Some(1)
 /// ```
 pub fn first(self: List<a>) -> Option<a> {
-  head(self)
+  list.head(self)
 }
 
 /// Returns whether this list is NOT empty.
@@ -114,7 +180,7 @@ test non_empty_2() {
 /// alist.prepend([1, 2, 3], 0) == [0, 1, 2, 3]
 /// ```
 pub fn prepend(self: List<a>, item: a) -> List<a> {
-  push(self, item)
+  list.push(self, item)
 }
 
 /// Appends an element to the end of the list.
@@ -124,7 +190,7 @@ pub fn prepend(self: List<a>, item: a) -> List<a> {
 /// alist.append([1, 2, 3], 0) == [0, 1, 2, 3]
 /// ```
 pub fn append(self: List<a>, item: a) -> List<a> {
-  concat(self, [item])
+  list.concat(self, [item])
 }
 
 test append_1() {
@@ -141,10 +207,10 @@ fn do_take_until(
   predicate: fn(a) -> Bool,
 ) -> List<a> {
   when tail is {
-    [] -> reverse(accum)
+    [] -> list.reverse(accum)
     [h, ..t] ->
       if predicate(h) {
-        do_take_until(t, push(accum, h), predicate)
+        do_take_until(t, list.push(accum, h), predicate)
       } else {
         do_take_until([], accum, predicate)
       }
@@ -182,7 +248,7 @@ test take_until_4() {
 /// alist.filter_them([1, 2, 3], fn(x) { x == 1 }) == [2, 3]
 /// ```
 pub fn filter_them(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
-  filter(self, not(predicate))
+  list.filter(self, not(predicate))
 }
 
 test filter_them_1() {
@@ -193,9 +259,9 @@ fn do_grouped(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
   when tail is {
     [] -> accum
     all -> {
-      let took = take(all, n)
-      let rest = drop(all, n)
-      do_grouped(rest, concat(accum, [took]), n)
+      let took = list.take(all, n)
+      let rest = list.drop(all, n)
+      do_grouped(rest, list.concat(accum, [took]), n)
     }
   }
 }
@@ -220,26 +286,26 @@ test grouped_1() {
 
 test grouped_2() {
   let items = grouped([1, 2, 3, 4, 5, 6], 2)
-  expect Some(g1) = at(items, 0)
-  expect Some(g2) = at(items, 1)
-  expect Some(g3) = at(items, 2)
+  expect Some(g1) = list.at(items, 0)
+  expect Some(g2) = list.at(items, 1)
+  expect Some(g3) = list.at(items, 2)
 
   list.and([(g1 == [1, 2])?, (g2 == [3, 4])?, (g3 == [5, 6])?])
 }
 
 test grouped_3() {
   let items = grouped([1, 2, 3], 1)
-  expect Some(g1) = at(items, 0)
-  expect Some(g2) = at(items, 1)
-  expect Some(g3) = at(items, 2)
+  expect Some(g1) = list.at(items, 0)
+  expect Some(g2) = list.at(items, 1)
+  expect Some(g3) = list.at(items, 2)
 
   list.and([(g1 == [1])?, (g2 == [2])?, (g3 == [3])?])
 }
 
 test grouped_4() {
   let items = grouped([1, 2, 3, 4, 5, 6], 3)
-  expect Some(g1) = at(items, 0)
-  expect Some(g2) = at(items, 1)
+  expect Some(g1) = list.at(items, 0)
+  expect Some(g2) = list.at(items, 1)
 
   g1 == [1, 2, 3] && g2 == [4, 5, 6]
 }
@@ -252,18 +318,16 @@ test grouped_6() {
   [] == grouped([1, 2, 3, 4, 5, 6], -1)
 }
 
-// TODO test case for grouped with odd elements
-
 /// Returns diff of two lists such that differences are returned from both lists.
 ///
 /// ```aiken
 /// alist.bi_diff([1, 2], [1, 3]) == [2, 3]
 /// ```
 pub fn bi_diff(self1: List<a>, self2: List<a>) -> List<a> {
-  let diff1 = filter(self1, fn(x) { !has(self2, x) })
-  let diff2 = filter(self2, fn(x) { !has(self1, x) })
+  let diff1 = list.filter(self1, fn(x) { !list.has(self2, x) })
+  let diff2 = list.filter(self2, fn(x) { !list.has(self1, x) })
 
-  unique(concat(diff1, diff2))
+  list.unique(list.concat(diff1, diff2))
 }
 
 test bi_diff_1() {
@@ -297,12 +361,13 @@ fn do_sliding(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
     [] -> accum
     [_] -> accum
     all -> {
-      let took = take(all, n)
-      let rest = drop(all, n)
-      let l = last(took)
-      when l is {
-        Some(ll) -> do_sliding(push(rest, ll), concat(accum, [took]), n)
-        _ -> do_sliding([], concat(accum, [took]), n)
+      let took = list.take(all, n)
+      let rest = list.drop(all, n)
+      let maybe_last_item = list.last(took)
+      when maybe_last_item is {
+        Some(last_item) ->
+          do_sliding(list.push(rest, last_item), list.concat(accum, [took]), n)
+        _ -> do_sliding([], list.concat(accum, [took]), n)
       }
     }
   }
@@ -322,35 +387,35 @@ test sliding_3() {
 
 test sliding_4() {
   let items = sliding([1, 2, 3], 2)
-  expect Some(g1) = at(items, 0)
-  expect Some(g2) = at(items, 1)
+  expect Some(g1) = list.at(items, 0)
+  expect Some(g2) = list.at(items, 1)
 
   list.and([(g1 == [1, 2])?, (g2 == [2, 3])?])
 }
 
 test sliding_5() {
   let items = sliding([1, 2, 3, 4, 5], 2)
-  expect Some(g1) = at(items, 0)
-  expect Some(g2) = at(items, 1)
-  expect Some(g3) = at(items, 2)
-  expect Some(g4) = at(items, 3)
+  expect Some(g1) = list.at(items, 0)
+  expect Some(g3) = list.at(items, 2)
+  expect Some(g2) = list.at(items, 1)
+  expect Some(g4) = list.at(items, 3)
 
   list.and([(g1 == [1, 2])?, (g2 == [2, 3])?, (g3 == [3, 4])?, (g4 == [4, 5])?])
 }
 
 test sliding_6() {
   let items = sliding([1, 2, 3, 4, 5, 6], 3)
-  expect Some(g1) = at(items, 0)
-  expect Some(g2) = at(items, 1)
-  expect Some(g3) = at(items, 2)
+  expect Some(g1) = list.at(items, 0)
+  expect Some(g2) = list.at(items, 1)
+  expect Some(g3) = list.at(items, 2)
 
   list.and([(g1 == [1, 2, 3])?, (g2 == [3, 4, 5])?, (g3 == [5, 6])?])
 }
 
 test sliding_7() {
   let items = sliding([1, 2, 3, 4, 5], 3)
-  expect Some(g1) = at(items, 0)
-  expect Some(g2) = at(items, 1)
+  expect Some(g1) = list.at(items, 0)
+  expect Some(g2) = list.at(items, 1)
 
   list.and([(g1 == [1, 2, 3])?, (g2 == [3, 4, 5])?])
 }
@@ -405,7 +470,7 @@ fn do_index_of(tail: List<a>, item: a, acc: Int) -> Int {
 /// alist.index_of(["a", "b", c"], "d") == None
 /// ```
 pub fn index_of(self: List<a>, item: a) -> Option<Int> {
-  if has(self, item) {
+  if list.has(self, item) {
     Some(do_index_of(self, item, 0))
   } else {
     None
@@ -449,7 +514,7 @@ pub fn max(self: List<a>, compare: fn(a, a) -> Ordering) -> Option<a> {
   when self is {
     [] -> None
     [first] -> Some(first)
-    [h, ..t] -> Some(foldl(t, fn(a, b) { amath.max(a, b, compare) }, h))
+    [h, ..t] -> Some(list.foldl(t, fn(a, b) { amath.max(a, b, compare) }, h))
   }
 }
 
@@ -479,7 +544,7 @@ pub fn min(self: List<a>, compare: fn(a, a) -> Ordering) -> Option<a> {
   when self is {
     [] -> None
     [first] -> Some(first)
-    [h, ..t] -> Some(foldl(t, fn(a, b) { amath.min(a, b, compare) }, h))
+    [h, ..t] -> Some(list.foldl(t, fn(a, b) { amath.min(a, b, compare) }, h))
   }
 }
 
@@ -542,6 +607,113 @@ test product_2() {
 test product_3() {
   product([1, 2, 3, 4]) == 24
 }
+
+/// Computes combinations of items in a given list.
+///
+/// ```aiken
+/// alist.combinations([3, 6, 9], 2) == [[3, 6], [6, 9], [9, 3]]
+/// alist.combinations([]) == []
+/// ```
+pub fn combinations(self: List<a>, n: Int) -> List<List<a>> {
+  if n <= 0 {
+    [[]]
+  } else if list.is_empty(self) {
+    []
+  } else {
+    let head: a = force_head(self)
+    let tail: List<a> = force_tail(self)
+    let combs_without_head: List<List<a>> = combinations(tail, n - 1)
+    let combs_with_head: List<List<a>> =
+      list.map(combs_without_head, fn(comb) { list.concat([head], comb) })
+    let combs_without_head = combinations(tail, n)
+
+    list.concat(combs_with_head, combs_without_head)
+  }
+}
+
+test combinations_0() {
+  combinations([], 2) == []
+}
+
+test combinations_1() {
+  combinations([], -1) == [[]]
+}
+
+test combinations_2() {
+  combinations([1, 2, 3], 2) == [[1, 2], [1, 3], [2, 3]]
+}
+
+test combinations_3() {
+  combinations([1,
+      2,
+      3,
+      4,
+      5], 3) == [
+    [1, 2, 3],
+    [1, 2, 4],
+    [1, 2, 5],
+    [1, 3, 4],
+    [1, 3, 5],
+    [1, 4, 5],
+    [2, 3, 4],
+    [2, 3, 5],
+    [2, 4, 5],
+    [3, 4, 5],
+  ]
+}
+
+/// Computes permutations of items in a given list.
+///
+/// ```aiken
+/// alist.permutations([1, 2, 3]) == [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1] ]
+/// alist.permutations([]) == [[]]
+/// ```
+pub fn permutations(self: List<a>) -> List<List<a>> {
+  if self == [] {
+    [[]]
+  } else {
+    let perms =
+      list.flat_map(
+        self,
+        fn(elem) {
+          let remaining = list.filter(self, fn(x) { x != elem })
+          let subperms = permutations(remaining)
+          list.map(subperms, fn(subperm) { list.concat([elem], subperm) })
+        },
+      )
+
+    perms
+  }
+}
+
+test permutations_0() {
+  permutations([]) == [[]]
+}
+
+test permutations_1() {
+  let items = [1, 2, 3]
+  permutations(items) == [
+    [1, 2, 3],
+    [1, 3, 2],
+    [2, 1, 3],
+    [2, 3, 1],
+    [3, 1, 2],
+    [3, 2, 1],
+  ]
+}
+
+test permutations_2() {
+  let items = ["a", "b", "c"]
+  permutations(items) == [
+    ["a", "b", "c"],
+    ["a", "c", "b"],
+    ["b", "a", "c"],
+    ["b", "c", "a"],
+    ["c", "a", "b"],
+    ["c", "b", "a"],
+  ]
+}
+// TODO
 // @ List(1, 2, 3, 4).groupBy(x  => x> 2)
 // res1: Map[Boolean, List[Int]] = HashMap(false -> List(1, 2), true -> List(3, 4))
 

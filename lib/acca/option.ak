@@ -8,9 +8,10 @@ use aiken/option.{is_some}
 /// afold.force_get(None) // fails
 /// ```
 pub fn force_get(self: Option<a>) -> a {
-  expect Some(x) = self
-
-  x
+  when self is {
+    Some(item) -> item
+    None -> error @"Error while getting element"
+  }
 }
 
 test force_get_1() {
@@ -103,6 +104,28 @@ test exists_1() {
 
 test exists_2() {
   exists(Some(1), fn(x) { x == 1 }) == True
+}
+
+/// Forces resolution of head, in case list is empty it will throw an error
+///
+/// ```aiken
+/// aoption.force_head([]) == error
+/// aoption.force_head([1]) == 1
+/// ```
+pub fn force_head(self: List<a>) -> a {
+  list.head(self)
+  |> force_get
+}
+
+/// Forces resolution of tail, in case list is empty or has only one element it will throw an error
+///
+/// ```aiken
+/// aoption.force_tail([1]) == error
+/// aoption.force_tail([1, 2, 3]) == [2, 3]
+/// ```
+pub fn force_tail(self: List<a>) -> List<a> {
+  list.tail(self)
+  |> force_get
 }
 
 /// Resolves items from the list such that it keeps only Some items and filters out None items.
