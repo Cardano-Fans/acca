@@ -1,10 +1,13 @@
 use acca/math as amath
 use acca/option as aoption
 use acca/predicate.{not}
+use acca/string as astring
 use aiken/builtin
 use aiken/bytearray
+use aiken/dict.{Dict}
 use aiken/int
 use aiken/list
+use aiken/string
 
 /// Returns head of a list or error
 ///
@@ -758,6 +761,82 @@ test permutations_2() {
     ["c", "a", "b"],
     ["c", "b", "a"],
   ]
+}
+
+fn do_count_by(
+  self: List<a>,
+  with: fn(a) -> b,
+  acc: Dict<b, Int>,
+  compare: fn(b, b) -> Ordering,
+) -> Dict<b, Int> {
+  when self is {
+    [] -> acc
+    [h, ..t] -> {
+      let comp: Dict<b, Int> = {
+        let key = with(h)
+        when dict.get(acc, key) is {
+          None -> dict.insert(acc, key, 1, compare)
+          Some(count) -> dict.insert(acc, key, count + 1, compare)
+        }
+      }
+      do_count_by(t, with, comp, compare)
+    }
+  }
+}
+
+pub fn count_by(
+  self: List<a>,
+  with: fn(a) -> b,
+  compare: fn(b, b) -> Ordering,
+) -> Dict<b, Int> {
+  do_count_by(self, with, dict.new(), compare)
+}
+
+test count_by_0() {
+  count_by([], list.length, int.compare) == dict.new()
+}
+
+test count_by_1() {
+  let items = [#"ffff", #"ffff", #"00", #"00", #"00"]
+
+  let result =
+    dict.new()
+    |> dict.insert(2, 2, int.compare)
+    |> dict.insert(1, 3, int.compare)
+
+  count_by(items, builtin.length_of_bytearray, int.compare) == result
+}
+
+test count_by_2() {
+  let items = [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
+
+  let result =
+    dict.new()
+    |> dict.insert(@"dog", 2, astring.compare)
+    |> dict.insert(@"cat", 3, astring.compare)
+    |> dict.insert(@"horse", 1, astring.compare)
+
+  count_by(items, identity, astring.compare) == result
+}
+
+pub fn count(self: List<a>, compare: fn(a, a) -> Ordering) -> Dict<a, Int> {
+  count_by(self, identity, compare)
+}
+
+test count_0() {
+  count_by([], list.length, int.compare) == dict.new()
+}
+
+test count_1() {
+  let items = [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
+
+  let result =
+    dict.new()
+    |> dict.insert(@"dog", 2, astring.compare)
+    |> dict.insert(@"cat", 3, astring.compare)
+    |> dict.insert(@"horse", 1, astring.compare)
+
+  count(items, astring.compare) == result
 }
 // TODO
 // @ List(1, 2, 3, 4).groupBy(x  => x> 2)
