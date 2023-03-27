@@ -8,8 +8,10 @@ use aiken/int
 /// ```
 pub fn min(left: a, right: a, compare: fn(a, a) -> Ordering) -> a {
   when compare(left, right) is {
-    Greater -> right
-    _ -> left
+    Greater ->
+      right
+    _ ->
+      left
   }
 }
 
@@ -33,8 +35,10 @@ test min_2() {
 /// ```
 pub fn max(left: a, right: a, compare: fn(a, a) -> Ordering) -> a {
   when compare(left, right) is {
-    Greater -> left
-    _ -> right
+    Greater ->
+      left
+    _ ->
+      right
   }
 }
 
