@@ -7,6 +7,7 @@ use aiken/bytearray
 use aiken/dict.{Dict}
 use aiken/int
 use aiken/list
+use aiken/option
 
 /// Returns head of a list or error
 ///
@@ -18,7 +19,7 @@ use aiken/list
 /// ```
 pub fn force_at(self: List<a>, n: Int) -> a {
   list.at(self, n)
-  |> aoption.force_get
+    |> aoption.force_get
 }
 
 test force_at_0() {
@@ -38,7 +39,7 @@ test force_at_1() {
 /// ```
 pub fn force_head(self: List<a>) -> a {
   list.head(self)
-  |> aoption.force_get
+    |> aoption.force_get
 }
 
 test force_head_0() {
@@ -58,8 +59,10 @@ test force_head_1() {
 /// ```
 pub fn force_tail(self: List<a>) -> List<a> {
   when list.tail(self) is {
-    Some(item) -> item
-    None -> []
+    Some(item) ->
+      item
+    None ->
+      []
   }
 }
 
@@ -89,21 +92,27 @@ pub fn reduce_left(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
 }
 
 test reduce_left_1() {
-  let chars = []
+  let chars =
+    []
 
-  let zero = @"0"
+  let zero =
+    @"0"
 
-  let reducer = fn(a, b) { builtin.append_string(a, b) }
+  let reducer =
+    fn(a, b) { builtin.append_string(a, b) }
 
   @"0" == reduce_left(chars, reducer, zero)
 }
 
 test reduce_left_2() {
-  let chars = [@"a", @"b", @"c", @"d"]
+  let chars =
+    [@"a", @"b", @"c", @"d"]
 
-  let zero = @"0"
+  let zero =
+    @"0"
 
-  let reducer = fn(a, b) { builtin.append_string(a, b) }
+  let reducer =
+    fn(a, b) { builtin.append_string(a, b) }
 
   @"0abcd" == reduce_left(chars, reducer, zero)
 }
@@ -127,21 +136,27 @@ pub fn reduce_right(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
 }
 
 test reduce_right_1() {
-  let chars = []
+  let chars =
+    []
 
-  let zero = @"0"
+  let zero =
+    @"0"
 
-  let reducer = fn(a, b) { builtin.append_string(a, b) }
+  let reducer =
+    fn(a, b) { builtin.append_string(a, b) }
 
   @"0" == reduce_right(chars, reducer, zero)
 }
 
 test reduce_right_2() {
-  let chars = [@"a", @"b", @"c", @"d"]
+  let chars =
+    [@"a", @"b", @"c", @"d"]
 
-  let zero = @"0"
+  let zero =
+    @"0"
 
-  let reducer = fn(a, b) { builtin.append_string(a, b) }
+  let reducer =
+    fn(a, b) { builtin.append_string(a, b) }
 
   @"0dcba" == reduce_right(chars, reducer, zero)
 }
@@ -163,8 +178,10 @@ pub fn first(self: List<a>) -> Option<a> {
 /// ```
 pub fn non_empty(self: List<a>) -> Bool {
   when self is {
-    [] -> False
-    _ -> True
+    [] ->
+      False
+    _ ->
+      True
   }
 }
 
@@ -211,7 +228,8 @@ fn do_take_until(
   predicate: fn(a) -> Bool,
 ) -> List<a> {
   when tail is {
-    [] -> list.reverse(accum)
+    [] ->
+      list.reverse(accum)
     [h, ..t] ->
       if predicate(h) {
         do_take_until(t, list.push(accum, h), predicate)
@@ -307,10 +325,13 @@ test without_all_2() {
 
 fn do_grouped(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
   when tail is {
-    [] -> accum
+    [] ->
+      accum
     all -> {
-      let took = list.take(all, n)
-      let rest = list.drop(all, n)
+      let took =
+        list.take(all, n)
+      let rest =
+        list.drop(all, n)
       do_grouped(rest, append(accum, took), n)
     }
   }
@@ -335,27 +356,38 @@ test grouped_1() {
 }
 
 test grouped_2() {
-  let items = grouped([1, 2, 3, 4, 5, 6], 2)
-  expect Some(g1) = list.at(items, 0)
-  expect Some(g2) = list.at(items, 1)
-  expect Some(g3) = list.at(items, 2)
+  let items =
+    grouped([1, 2, 3, 4, 5, 6], 2)
+  expect Some(g1) =
+    list.at(items, 0)
+  expect Some(g2) =
+    list.at(items, 1)
+  expect Some(g3) =
+    list.at(items, 2)
 
   list.and([(g1 == [1, 2])?, (g2 == [3, 4])?, (g3 == [5, 6])?])
 }
 
 test grouped_3() {
-  let items = grouped([1, 2, 3], 1)
-  expect Some(g1) = list.at(items, 0)
-  expect Some(g2) = list.at(items, 1)
-  expect Some(g3) = list.at(items, 2)
+  let items =
+    grouped([1, 2, 3], 1)
+  expect Some(g1) =
+    list.at(items, 0)
+  expect Some(g2) =
+    list.at(items, 1)
+  expect Some(g3) =
+    list.at(items, 2)
 
   list.and([(g1 == [1])?, (g2 == [2])?, (g3 == [3])?])
 }
 
 test grouped_4() {
-  let items = grouped([1, 2, 3, 4, 5, 6], 3)
-  expect Some(g1) = list.at(items, 0)
-  expect Some(g2) = list.at(items, 1)
+  let items =
+    grouped([1, 2, 3, 4, 5, 6], 3)
+  expect Some(g1) =
+    list.at(items, 0)
+  expect Some(g2) =
+    list.at(items, 1)
 
   g1 == [1, 2, 3] && g2 == [4, 5, 6]
 }
@@ -374,8 +406,10 @@ test grouped_6() {
 /// alist.bi_diff([1, 2], [1, 3]) == [2, 3]
 /// ```
 pub fn bi_diff(self1: List<a>, self2: List<a>) -> List<a> {
-  let diff1 = list.filter(self1, fn(x) { !list.has(self2, x) })
-  let diff2 = list.filter(self2, fn(x) { !list.has(self1, x) })
+  let diff1 =
+    list.filter(self1, fn(x) { !list.has(self2, x) })
+  let diff2 =
+    list.filter(self2, fn(x) { !list.has(self1, x) })
 
   list.unique(list.concat(diff1, diff2))
 }
@@ -408,16 +442,22 @@ pub fn sliding(self: List<a>, n: Int) -> List<List<a>> {
 
 fn do_sliding(tail: List<a>, accum: List<List<a>>, n: Int) -> List<List<a>> {
   when tail is {
-    [] -> accum
-    [_] -> accum
+    [] ->
+      accum
+    [_] ->
+      accum
     all -> {
-      let took = list.take(all, n)
-      let rest = list.drop(all, n)
-      let maybe_last_item = list.last(took)
+      let took =
+        list.take(all, n)
+      let rest =
+        list.drop(all, n)
+      let maybe_last_item =
+        list.last(took)
       when maybe_last_item is {
         Some(last_item) ->
           do_sliding(list.push(rest, last_item), append(accum, took), n)
-        _ -> do_sliding([], append(accum, took), n)
+        _ ->
+          do_sliding([], append(accum, took), n)
       }
     }
   }
@@ -436,36 +476,51 @@ test sliding_3() {
 }
 
 test sliding_4() {
-  let items = sliding([1, 2, 3], 2)
-  expect Some(g1) = list.at(items, 0)
-  expect Some(g2) = list.at(items, 1)
+  let items =
+    sliding([1, 2, 3], 2)
+  expect Some(g1) =
+    list.at(items, 0)
+  expect Some(g2) =
+    list.at(items, 1)
 
   list.and([(g1 == [1, 2])?, (g2 == [2, 3])?])
 }
 
 test sliding_5() {
-  let items = sliding([1, 2, 3, 4, 5], 2)
-  expect Some(g1) = list.at(items, 0)
-  expect Some(g3) = list.at(items, 2)
-  expect Some(g2) = list.at(items, 1)
-  expect Some(g4) = list.at(items, 3)
+  let items =
+    sliding([1, 2, 3, 4, 5], 2)
+  expect Some(g1) =
+    list.at(items, 0)
+  expect Some(g3) =
+    list.at(items, 2)
+  expect Some(g2) =
+    list.at(items, 1)
+  expect Some(g4) =
+    list.at(items, 3)
 
   list.and([(g1 == [1, 2])?, (g2 == [2, 3])?, (g3 == [3, 4])?, (g4 == [4, 5])?])
 }
 
 test sliding_6() {
-  let items = sliding([1, 2, 3, 4, 5, 6], 3)
-  expect Some(g1) = list.at(items, 0)
-  expect Some(g2) = list.at(items, 1)
-  expect Some(g3) = list.at(items, 2)
+  let items =
+    sliding([1, 2, 3, 4, 5, 6], 3)
+  expect Some(g1) =
+    list.at(items, 0)
+  expect Some(g2) =
+    list.at(items, 1)
+  expect Some(g3) =
+    list.at(items, 2)
 
   list.and([(g1 == [1, 2, 3])?, (g2 == [3, 4, 5])?, (g3 == [5, 6])?])
 }
 
 test sliding_7() {
-  let items = sliding([1, 2, 3, 4, 5], 3)
-  expect Some(g1) = list.at(items, 0)
-  expect Some(g2) = list.at(items, 1)
+  let items =
+    sliding([1, 2, 3, 4, 5], 3)
+  expect Some(g1) =
+    list.at(items, 0)
+  expect Some(g2) =
+    list.at(items, 1)
 
   list.and([(g1 == [1, 2, 3])?, (g2 == [3, 4, 5])?])
 }
@@ -481,9 +536,11 @@ test sliding_8() {
 /// ```
 pub fn indices(self: List<a>) -> List<Int> {
   when self is {
-    [] -> []
+    [] ->
+      []
     _ -> {
-      let len = list.length(self)
+      let len =
+        list.length(self)
       list.range(0, len - 1)
     }
   }
@@ -503,7 +560,8 @@ test indices_3() {
 
 fn do_index_of(tail: List<a>, item: a, acc: Int) -> Int {
   when tail is {
-    [] -> acc
+    [] ->
+      acc
     [h, ..t] ->
       if h == item {
         do_index_of([], item, acc)
@@ -528,28 +586,35 @@ pub fn index_of(self: List<a>, item: a) -> Option<Int> {
 }
 
 test index_of_1() {
-  let sth = index_of([], 2)
+  let sth =
+    index_of([], 2)
 
   sth == None
 }
 
 test index_Of_2() {
-  let sth = index_of([1, 2, 3], 2)
-  expect Some(s) = sth
+  let sth =
+    index_of([1, 2, 3], 2)
+  expect Some(s) =
+    sth
 
   s == 1
 }
 
 test index_of_3() {
-  let sth = index_of([1, 2, 3], 3)
-  expect Some(s) = sth
+  let sth =
+    index_of([1, 2, 3], 3)
+  expect Some(s) =
+    sth
 
   s == 2
 }
 
 test index_of_4() {
-  let sth = index_of([1, 3], 3)
-  expect Some(s) = sth
+  let sth =
+    index_of([1, 3], 3)
+  expect Some(s) =
+    sth
 
   s == 1
 }
@@ -562,9 +627,12 @@ test index_of_4() {
 /// ```
 pub fn max(self: List<a>, compare: fn(a, a) -> Ordering) -> Option<a> {
   when self is {
-    [] -> None
-    [first] -> Some(first)
-    [h, ..t] -> Some(list.foldl(t, fn(a, b) { amath.max(a, b, compare) }, h))
+    [] ->
+      None
+    [first] ->
+      Some(first)
+    [h, ..t] ->
+      Some(list.foldl(t, fn(a, b) { amath.max(a, b, compare) }, h))
   }
 }
 
@@ -592,9 +660,12 @@ test max_4() {
 /// ```
 pub fn min(self: List<a>, compare: fn(a, a) -> Ordering) -> Option<a> {
   when self is {
-    [] -> None
-    [first] -> Some(first)
-    [h, ..t] -> Some(list.foldl(t, fn(a, b) { amath.min(a, b, compare) }, h))
+    [] ->
+      None
+    [first] ->
+      Some(first)
+    [h, ..t] ->
+      Some(list.foldl(t, fn(a, b) { amath.min(a, b, compare) }, h))
   }
 }
 
@@ -670,12 +741,16 @@ pub fn combinations(self: List<a>, n: Int) -> List<List<a>> {
   } else if list.is_empty(self) {
     []
   } else {
-    let head: a = force_head(self)
-    let tail: List<a> = force_tail(self)
-    let combs_without_head: List<List<a>> = combinations(tail, n - 1)
+    let head: a =
+      force_head(self)
+    let tail: List<a> =
+      force_tail(self)
+    let combs_without_head: List<List<a>> =
+      combinations(tail, n - 1)
     let combs_with_head: List<List<a>> =
       list.map(combs_without_head, fn(comb) { prepend(comb, head) })
-    let combs_without_head = combinations(tail, n)
+    let combs_without_head =
+      combinations(tail, n)
 
     list.concat(combs_with_head, combs_without_head)
   }
@@ -726,8 +801,10 @@ pub fn permutations(self: List<a>) -> List<List<a>> {
       list.flat_map(
         self,
         fn(elem) {
-          let remaining = list.filter(self, fn(x) { x != elem })
-          let subperms = permutations(remaining)
+          let remaining =
+            list.filter(self, fn(x) { x != elem })
+          let subperms =
+            permutations(remaining)
           list.map(subperms, fn(subperm) { prepend(subperm, elem) })
         },
       )
@@ -741,7 +818,8 @@ test permutations_0() {
 }
 
 test permutations_1() {
-  let items = [1, 2, 3]
+  let items =
+    [1, 2, 3]
   permutations(items) == [
     [1, 2, 3],
     [1, 3, 2],
@@ -753,7 +831,8 @@ test permutations_1() {
 }
 
 test permutations_2() {
-  let items = ["a", "b", "c"]
+  let items =
+    ["a", "b", "c"]
   permutations(items) == [
     ["a", "b", "c"],
     ["a", "c", "b"],
@@ -771,13 +850,17 @@ fn do_count_by(
   compare: fn(b, b) -> Ordering,
 ) -> Dict<b, Int> {
   when self is {
-    [] -> acc
+    [] ->
+      acc
     [h, ..t] -> {
       let comp: Dict<b, Int> = {
-        let key = with(h)
+        let key =
+          with(h)
         when dict.get(acc, key) is {
-          None -> dict.insert(acc, key, 1, compare)
-          Some(count) -> dict.insert(acc, key, count + 1, compare)
+          None ->
+            dict.insert(acc, key, 1, compare)
+          Some(count) ->
+            dict.insert(acc, key, count + 1, compare)
         }
       }
       do_count_by(t, with, comp, compare)
@@ -798,24 +881,26 @@ test count_by_0() {
 }
 
 test count_by_1() {
-  let items = [#"ffff", #"ffff", #"00", #"00", #"00"]
+  let items =
+    [#"ffff", #"ffff", #"00", #"00", #"00"]
 
   let result =
     dict.new()
-    |> dict.insert(2, 2, int.compare)
-    |> dict.insert(1, 3, int.compare)
+      |> dict.insert(2, 2, int.compare)
+      |> dict.insert(1, 3, int.compare)
 
   count_by(items, builtin.length_of_bytearray, int.compare) == result
 }
 
 test count_by_2() {
-  let items = [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
+  let items =
+    [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
 
   let result =
     dict.new()
-    |> dict.insert(@"dog", 2, astring.compare)
-    |> dict.insert(@"cat", 3, astring.compare)
-    |> dict.insert(@"horse", 1, astring.compare)
+      |> dict.insert(@"dog", 2, astring.compare)
+      |> dict.insert(@"cat", 3, astring.compare)
+      |> dict.insert(@"horse", 1, astring.compare)
 
   count_by(items, identity, astring.compare) == result
 }
@@ -829,15 +914,76 @@ test count_0() {
 }
 
 test count_1() {
-  let items = [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
+  let items =
+    [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
 
   let result =
     dict.new()
-    |> dict.insert(@"dog", 2, astring.compare)
-    |> dict.insert(@"cat", 3, astring.compare)
-    |> dict.insert(@"horse", 1, astring.compare)
+      |> dict.insert(@"dog", 2, astring.compare)
+      |> dict.insert(@"cat", 3, astring.compare)
+      |> dict.insert(@"horse", 1, astring.compare)
 
   count(items, astring.compare) == result
+}
+
+/// Flattens items from the list such that it keeps only Some items and filters out None items.
+///
+/// ```aiken
+/// aoption.flatten([Some(1), None, Some(2)]) == [1, 2]
+/// ```
+pub fn flatten(self: List<Option<a>>) -> List<a> {
+  resolve(self) |> list.map(aoption.force_get)
+}
+
+test flatten_1() {
+  let items: List<Option<Int>> =
+    [Some(1), None, Some(2)]
+
+  flatten(items) == [1, 2]
+}
+
+test flatten_2() {
+  let items: List<Option<Int>> =
+    [None]
+
+  flatten(items) == []
+}
+
+test flatten_3() {
+  let items: List<Option<Int>> =
+    []
+
+  flatten(items) == []
+}
+
+/// Resolves items from the list such that it keeps only Some items and filters out None items.
+///
+/// ```aiken
+/// aoption.resolve([Some(1), None, Some(2)]) == [Some(1), Some(2)]
+/// ```
+pub fn resolve(self: List<Option<a>>) -> List<Option<a>> {
+  list.filter(self, fn(opt) { option.is_some(opt) })
+}
+
+test resolve_1() {
+  let items: List<Option<Int>> =
+    [Some(1), None, Some(2)]
+
+  resolve(items) == [Some(1), Some(2)]
+}
+
+test resolve_2() {
+  let items: List<Option<Int>> =
+    [None]
+
+  resolve(items) == []
+}
+
+test resolve_3() {
+  let items: List<Option<Int>> =
+    []
+
+  resolve(items) == []
 }
 // TODO
 // @ List(1, 2, 3, 4).groupBy(x  => x> 2)

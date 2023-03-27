@@ -9,8 +9,10 @@ use aiken/option.{is_some}
 /// ```
 pub fn force_get(self: Option<a>) -> a {
   when self is {
-    Some(item) -> item
-    None -> error @"Error while getting element"
+    Some(item) ->
+      item
+    None ->
+      error @"Error while getting element"
   }
 }
 
@@ -27,8 +29,10 @@ test force_get_1() {
 /// ```
 pub fn flat_map(self: Option<a>, with: fn(a) -> Option<b>) -> Option<b> {
   when self is {
-    Some(a) -> with(a)
-    None -> None
+    Some(a) ->
+      with(a)
+    None ->
+      None
   }
 }
 
@@ -49,8 +53,10 @@ test flat_map_2() {
 /// ```
 fn fold(self: Option<a>, with_empty: fn() -> b, with_present: fn(a) -> b) -> b {
   when self is {
-    Some(x) -> with_present(x)
-    None -> with_empty()
+    Some(x) ->
+      with_present(x)
+    None ->
+      with_empty()
   }
 }
 
@@ -76,7 +82,8 @@ fn filter(self: Option<a>, with: fn(a) -> Bool) -> Option<a> {
       } else {
         None
       }
-    None -> None
+    None ->
+      None
   }
 }
 
@@ -114,7 +121,7 @@ test exists_2() {
 /// ```
 pub fn force_head(self: List<a>) -> a {
   list.head(self)
-  |> force_get
+    |> force_get
 }
 
 /// Forces resolution of tail, in case list is empty or has only one element it will throw an error
@@ -125,32 +132,5 @@ pub fn force_head(self: List<a>) -> a {
 /// ```
 pub fn force_tail(self: List<a>) -> List<a> {
   list.tail(self)
-  |> force_get
-}
-
-/// Resolves items from the list such that it keeps only Some items and filters out None items.
-///
-/// ```aiken
-/// aoption.resolve([Some(1), None, Some(2)]) == [Some(1), Some(2)]
-/// ```
-pub fn resolve(self: List<Option<a>>) -> List<Option<a>> {
-  list.filter(self, fn(opt) { is_some(opt) })
-}
-
-test resolve_1() {
-  let items: List<Option<Int>> = [Some(1), None, Some(2)]
-
-  resolve(items) == [Some(1), Some(2)]
-}
-
-test resolve_2() {
-  let items: List<Option<Int>> = [None]
-
-  resolve(items) == []
-}
-
-test resolve_3() {
-  let items: List<Option<Int>> = []
-
-  resolve(items) == []
+    |> force_get
 }
