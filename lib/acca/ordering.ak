@@ -1,3 +1,5 @@
+use acca/string as astring
+use aiken/int
 use aiken/list
 use aiken/option
 
@@ -146,4 +148,42 @@ test force_reduce_2() {
 
 test force_reduce_3() {
   force_reduce([Greater, Equal]) == Greater
+}
+
+/// Compares two tuples with a given compare functions for both left and right side of the tuple.
+///
+/// ```aiken
+/// aordering.compare_tuple((1, 2), (1, 2)) == Equal
+/// aordering.compare_tuple((0, 1), (1, 2)) == Less
+/// aordering.compare_tuple((2, 1), (1, 2)) == Greater
+/// aordering.compare_tuple((1, @"a"), (1, @"a")) == Equal
+/// ```
+pub fn compare_tuple(
+  left: (a, b),
+  right: (a, b),
+  first_compare: fn(a, a) -> Ordering,
+  second_compare: fn(b, b) -> Ordering,
+) -> Ordering {
+  let (cp1, r1) =
+    left
+  let (cp2, r2) =
+    right
+
+  force_reduce([first_compare(cp1, cp2), second_compare(r1, r2)])
+}
+
+test compare_tuple_0() {
+  compare_tuple((1, 2), (1, 2), int.compare, int.compare) == Equal
+}
+
+test compare_tuple_1() {
+  compare_tuple((0, 2), (1, 2), int.compare, int.compare) == Less
+}
+
+test compare_tuple_2() {
+  compare_tuple((2, 2), (1, 2), int.compare, int.compare) == Greater
+}
+
+test compare_tuple_3() {
+  compare_tuple((1, @"a"), (1, @"a"), int.compare, astring.compare) == Equal
 }
