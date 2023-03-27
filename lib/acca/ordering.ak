@@ -121,29 +121,29 @@ test reduce_8() {
 /// Note that reduction is left biased and function returns `Equal` for an empty list.
 ///
 /// ```aiken
-/// aordering.force_compare([]) == Equal
-/// aordering.force_compare([Less, Greater, Less]) == Less
-/// aordering.force_compare([Equal, Less, Greater]) == Less
-/// aordering.force_compare([Equal, Equal, Equal]) == Equal
-/// aordering.force_compare([Equal, Equal, Equal, Greater]) == Greater
+/// aordering.force_reduce([]) == Equal
+/// aordering.force_reduce([Less, Greater, Less]) == Less
+/// aordering.force_reduce([Equal, Less, Greater]) == Less
+/// aordering.force_reduce([Equal, Equal, Equal]) == Equal
+/// aordering.force_reduce([Equal, Equal, Equal, Greater]) == Greater
 /// ```
-pub fn force_compare(self: List<Ordering>) -> Ordering {
+pub fn force_reduce(self: List<Ordering>) -> Ordering {
   reduce(self)
     |> option.or_else(Equal)
 }
 
-test force_compare_0() {
-  force_compare([]) == Equal
+test force_reduce_0() {
+  force_reduce([]) == Equal
 }
 
-test force_compare_1() {
-  force_compare([Less]) == Less
+test force_reduce_1() {
+  force_reduce([Less]) == Less
 }
 
-test force_compare_2() {
-  force_compare([Greater, Less]) == Less
+test force_reduce_2() {
+  force_reduce([Greater, Less]) == Less
 }
 
-test force_compare_3() {
-  force_compare([Greater, Equal]) == Greater
+test force_reduce_3() {
+  force_reduce([Greater, Equal]) == Greater
 }
