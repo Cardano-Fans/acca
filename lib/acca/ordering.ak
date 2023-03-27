@@ -187,3 +187,32 @@ test compare_tuple_2() {
 test compare_tuple_3() {
   compare_tuple((1, @"a"), (1, @"a"), int.compare, astring.compare) == Equal
 }
+
+/// Serialises ordering to string
+/// ```aiken
+/// aordering.to_string(Less) == @"Less"
+/// aordering.to_string(Equal) == @"Equal"
+/// aordering.to_string(Greater) == @"Greater"
+/// ```
+pub fn to_string(ord: Ordering) {
+  when ord is {
+    Less ->
+      @"Less"
+    Equal ->
+      @"Equal"
+    Greater ->
+      @"Greater"
+  }
+}
+
+test to_string_0() {
+  to_string(Less) == @"Less"
+}
+
+test to_string_1() {
+  to_string(Equal) == @"Equal"
+}
+
+test to_string_2() {
+  to_string(Greater) == @"Greater"
+}
