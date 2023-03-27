@@ -77,13 +77,15 @@ test force_tail_2() {
 
 /// Reduce a list from left to right.
 ///
+/// Deprecated: please use list.reduce from stdlib.
+///
 /// ```aiken
 /// alist.reduce_left([1, 2, 3], fn(n, total) { n + total }, 0) == 6
 /// alist.reduce_left(["1", "2", "3"], fn(a, b) { builtin.append_string(a, b), "0" } ) == "0123"
 /// alist.reduce_left([#[1], #[2], #[3]], fn(left, right) { bytearray.concat(left, right) }, #[9]) == #[9, 1, 2, 3]
 /// ```
 pub fn reduce_left(self: List<a>, with: fn(b, a) -> b, zero: b) -> b {
-  list.foldl(self, flip(with), zero)
+  list.reduce(self, with, zero)
 }
 
 test reduce_left_1() {

@@ -1,12 +1,8 @@
 use aiken/interval.{Finite, Interval, IntervalBound, PositiveInfinity}
-
+use aiken/time.{PosixTime}
 use aiken/transaction.{ValidityRange}
 
-pub type POSIXTime =
-  Int
-
-
-pub fn must_start_after(range: ValidityRange, lower_bound: POSIXTime) -> Bool {
+pub fn must_start_after(range: ValidityRange, lower_bound: PosixTime) -> Bool {
   when range.lower_bound.bound_type is {
     Finite(now) -> now > lower_bound
     _ -> False
@@ -39,7 +35,7 @@ test must_start_after_2() {
   must_start_after(validity_range, lower_bound) == False
 }
 
-pub fn must_start_before(range: ValidityRange, lower_bound: POSIXTime) -> Bool {
+pub fn must_start_before(range: ValidityRange, lower_bound: PosixTime) -> Bool {
   when range.lower_bound.bound_type is {
     Finite(now) -> now < lower_bound
     _ -> False
@@ -67,7 +63,7 @@ test must_start_before_2() {
       lower_bound: IntervalBound(Finite(now), True),
       upper_bound: IntervalBound(PositiveInfinity, True),
     }
-    
+
   let lower_bound = 1
   must_start_before(validity_range, lower_bound) == False
 }
