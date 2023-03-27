@@ -1,6 +1,6 @@
 use acca/math as amath
 use acca/option as aoption
-use acca/predicate.{not}
+use acca/predicate as apredicate
 use acca/string as astring
 use aiken/builtin
 use aiken/bytearray
@@ -270,7 +270,7 @@ test take_until_4() {
 /// alist.reject([1, 2, 3], fn(x) { x == 1 }) == [2, 3]
 /// ```
 pub fn reject(self: List<a>, predicate: fn(a) -> Bool) -> List<a> {
-  list.filter(self, not(predicate))
+  list.filter(self, apredicate.not(predicate))
 }
 
 test reject_0() {
