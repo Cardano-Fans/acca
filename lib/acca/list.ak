@@ -7,7 +7,6 @@ use aiken/bytearray
 use aiken/dict.{Dict}
 use aiken/int
 use aiken/list
-use aiken/string
 
 /// Returns head of a list or error
 ///
