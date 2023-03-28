@@ -157,6 +157,7 @@ test force_reduce_3() {
 /// aordering.compare_tuple((0, 1), (1, 2)) == Less
 /// aordering.compare_tuple((2, 1), (1, 2)) == Greater
 /// aordering.compare_tuple((1, @"a"), (1, @"a")) == Equal
+/// aordering.compare_tuple((1, @"a"), (1, @"b")) == Less
 /// ```
 pub fn compare_tuple(
   left: (a, b),
@@ -186,6 +187,48 @@ test compare_tuple_2() {
 
 test compare_tuple_3() {
   compare_tuple((1, @"a"), (1, @"a"), int.compare, astring.compare) == Equal
+}
+
+test compare_tuple_4() {
+  compare_tuple((1, @"a"), (1, @"b"), int.compare, astring.compare) == Less
+}
+
+/// Compares two tuples with a given compare functions for both left and right side of the tuple.
+/// This function will only look at left side of the tuple.
+///
+/// ```aiken
+/// aordering.compare_tuple_left((1, 2), (1, 2)) == Equal
+/// aordering.compare_tuple_left((0, 1), (1, 2)) == Less
+/// aordering.compare_tuple_left((2, 1), (1, 2)) == Greater
+/// aordering.compare_tuple_left((1, @"a"), (1, @"b")) == Equal
+/// ```
+pub fn compare_tuple_left(
+  left: (a, b),
+  right: (a, b),
+  first_compare: fn(a, a) -> Ordering,
+) -> Ordering {
+  let (cp1, _r1) =
+    left
+  let (cp2, _r2) =
+    right
+
+  first_compare(cp1, cp2)
+}
+
+test compare_tuple_left_0() {
+  compare_tuple_left((1, 2), (1, 2), int.compare) == Equal
+}
+
+test compare_tuple_left_1() {
+  compare_tuple_left((0, 2), (1, 2), int.compare) == Less
+}
+
+test compare_tuple_left_2() {
+  compare_tuple_left((2, 2), (1, 2), int.compare) == Greater
+}
+
+test compare_tuple_left_3() {
+  compare_tuple_left((1, @"a"), (1, @"b"), int.compare) == Equal
 }
 
 /// Serialises ordering to string
