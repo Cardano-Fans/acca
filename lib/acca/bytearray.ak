@@ -1,6 +1,4 @@
-use aiken/bytearray.{length}
-use aiken/math
-use aiken/builtin
+use aiken/bytearray
 
 /// Convert a `ByteArray` from hexadecimal into the integer representation.
 /// This implementation uses BigEndian notation (also called network order),
@@ -12,22 +10,7 @@ use aiken/builtin
 /// bytearray.to_int(#"414243") == 4276803
 /// ```
 pub fn to_int(self: ByteArray) -> Int {
-  recursive_product(self, 0 , 0)
-}
-
-fn recursive_product(
-  input: ByteArray,
-  counter: Int,
-  value: Int
-) -> Int {
-  let len = length(input)
-  if counter < len {
-    let num = builtin.index_bytearray(input, counter)
-    let new_value = value + num * math.pow(256, len - counter - 1)
-    recursive_product(input, counter + 1, new_value)
-  } else {
-    value
-  }
+  bytearray.foldl(self, fn(byte, acc) { acc * 256 + byte }, 0)
 }
 
 test empty_bytearray_to_int() {
