@@ -18,7 +18,7 @@ Acca is Aiken's utility library (https://github.com/aiken-lang/aiken).
 
 Creators of Aiken standard library are quite opinionated what is should be in there and what should not be there. They want to keep stdlib quite minimal. This library is simply an extension / utility library that is adding many useful / repetitive functions.
 
-## Adding
+## Usage
 
 aiken.toml
 ```
@@ -30,7 +30,7 @@ dependencies = [
 ]
 ```
 
-## Std lib
+## Limitations
 Since Aiken doesn't support libraries which both include the same std library (or any other library), this project simply clones std library. In other words Aiken's std lib is inlined in this project and there is no plan to make any changes to it.
 
 Current std lib SHA1 version: 760019bef7aa076fc95f9b73fe2fbbc0b00514e3
