@@ -27,6 +27,10 @@ test min_2() {
   min(9, 1, int.compare) == 1
 }
 
+test min_3() {
+  min(9, 9, int.compare) == 9
+}
+
 /// Returns a max of two elements.
 ///
 /// ```aiken
@@ -53,3 +57,8 @@ test max_1() {
 test max_2() {
   max(9, 1, int.compare) == 9
 }
+
+test max_3() {
+  max(9, 9, int.compare) == 9
+}
+
