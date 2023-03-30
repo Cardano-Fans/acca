@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/collections/mt - Cardano-Fans/acca</title>
+    <title>acca/collections/hash_tree - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../../favicon.svg"/>
@@ -197,15 +197,15 @@
 	  
 	  </a></li>
         
-	  <li><a href="../../acca/collections/hashed_list.html">
+	  <li><a href="../../acca/collections/hash_tree.html">
 	  
-	  acca/collections/hashed_list
+	  <strong>acca/collections/hash_tree</strong>
 	  
 	  </a></li>
         
-	  <li><a href="../../acca/collections/mt.html">
+	  <li><a href="../../acca/collections/hashed_list.html">
 	  
-	  <strong>acca/collections/mt</strong>
+	  acca/collections/hashed_list
 	  
 	  </a></li>
         
@@ -390,7 +390,7 @@
 <h2>Types</h2>
 <ul>
   
-  <li><a href="#MerkleElement">MerkleElement</a></li>
+  <li><a href="#HashTree">HashTree</a></li>
   
   <li><a href="#Proof">Proof</a></li>
   
@@ -423,8 +423,6 @@
   
   <li><a href="#member_from_tree">member_from_tree</a></li>
   
-  <li><a href="#member_from_tree2">member_from_tree2</a></li>
-  
   <li><a href="#size">size</a></li>
   
 </ul>
@@ -435,7 +433,7 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/collections/mt</a>
+  <a href="#module-name">acca/collections/hash_tree</a>
 </h1>
 
 
@@ -448,9 +446,9 @@
   
   <div class="member">
     <div class="member-name">
-      <h2 id="MerkleElement">
-        <a href="#MerkleElement">
-	  MerkleElement&lt;a&gt;
+      <h2 id="HashTree">
+        <a href="#HashTree">
+	  HashTree&lt;a&gt;
         </a>
       </h2>
       
@@ -549,7 +547,7 @@
   
   <div class="member">
     <div class="member-name">
-      <h2 id="element_hash"><pre class="hljs language-aiken">element_hash(self: MerkleElement&lt;a&gt;) -&gt; Hash&lt;Sha2_256, a&gt;</pre></h2>
+      <h2 id="element_hash"><pre class="hljs language-aiken">element_hash(self: HashTree&lt;a&gt;) -&gt; Hash&lt;Sha2_256, a&gt;</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -563,7 +561,7 @@
   
   <div class="member">
     <div class="member-name">
-      <h2 id="from_hashes_list"><pre class="hljs language-aiken">from_hashes_list(items: List&lt;Hash&lt;Sha2_256, a&gt;&gt;) -&gt; MerkleElement&lt;a&gt;</pre></h2>
+      <h2 id="from_hashes_list"><pre class="hljs language-aiken">from_hashes_list(items: List&lt;Hash&lt;Sha2_256, a&gt;&gt;) -&gt; HashTree&lt;a&gt;</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -572,7 +570,7 @@
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Construct a ‘MerkleTree’ from a list of hashes.
+    <div class="rendered-markdown"><p>Construct a ‘HashTree’ from a list of hashes.
 Note that, while this operation is doable on-chain, it is expensive and
 preferably done off-chain.</p>
 </div>
@@ -580,7 +578,7 @@ preferably done off-chain.</p>
   
   <div class="member">
     <div class="member-name">
-      <h2 id="from_list"><pre class="hljs language-aiken">from_list(items: List&lt;a&gt;, serialise_fn: fn(a) -&gt; ByteArray) -&gt; MerkleElement&lt;a&gt;</pre></h2>
+      <h2 id="from_list"><pre class="hljs language-aiken">from_list(items: List&lt;a&gt;, serialise_fn: fn(a) -&gt; ByteArray) -&gt; HashTree&lt;a&gt;</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -589,7 +587,7 @@ preferably done off-chain.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Construct a ‘MerkleTree’ from a list of elements.
+    <div class="rendered-markdown"><p>Construct a ‘HashTree’ from a list of elements.
 Note that, while this operation is doable on-chain, it is expensive and
 preferably done off-chain.</p>
 </div>
@@ -598,7 +596,7 @@ preferably done off-chain.</p>
   <div class="member">
     <div class="member-name">
       <h2 id="get_proof"><pre class="hljs language-aiken">get_proof(
-  self: MerkleElement&lt;a&gt;,
+  self: HashTree&lt;a&gt;,
   item: a,
   serialise_fn: fn(a) -&gt; ByteArray,
 ) -&gt; Option&lt;Proof&lt;a&gt;&gt;</pre></h2>
@@ -610,7 +608,7 @@ preferably done off-chain.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Construct a membership ‘Proof’ from an element and a ‘MerkleTree’. Returns
+    <div class="rendered-markdown"><p>Construct a membership ‘Proof’ from an element and a ‘HashTree’. Returns
 ‘None’ if the element isn’t a member of the tree to begin with.
 Note function will return Some([]) in case root of the tree is also it’s only one and only element</p>
 </div>
@@ -618,7 +616,7 @@ Note function will return Some([]) in case root of the tree is also it’s only 
   
   <div class="member">
     <div class="member-name">
-      <h2 id="is_empty"><pre class="hljs language-aiken">is_empty(self: MerkleElement&lt;a&gt;) -&gt; Bool</pre></h2>
+      <h2 id="is_empty"><pre class="hljs language-aiken">is_empty(self: HashTree&lt;a&gt;) -&gt; Bool</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -633,7 +631,7 @@ Note function will return Some([]) in case root of the tree is also it’s only 
   
   <div class="member">
     <div class="member-name">
-      <h2 id="is_equal"><pre class="hljs language-aiken">is_equal(left: MerkleElement&lt;a&gt;, right: MerkleElement&lt;a&gt;) -&gt; Bool</pre></h2>
+      <h2 id="is_equal"><pre class="hljs language-aiken">is_equal(left: HashTree&lt;a&gt;, right: HashTree&lt;a&gt;) -&gt; Bool</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -642,7 +640,7 @@ Note function will return Some([]) in case root of the tree is also it’s only 
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Function atests whether two Merkle Tress are equal, this is the case when their root hashes match.</p>
+    <div class="rendered-markdown"><p>Function atests whether two Hash Tress are equal, this is the case when their root hashes match.</p>
 </div>
   </div>
   
@@ -687,7 +685,7 @@ Note function will return Some([]) in case root of the tree is also it’s only 
   <div class="member">
     <div class="member-name">
       <h2 id="member_from_tree"><pre class="hljs language-aiken">member_from_tree(
-  tree: MerkleElement&lt;a&gt;,
+  tree: HashTree&lt;a&gt;,
   item: a,
   serialise_fn: fn(a) -&gt; ByteArray,
 ) -&gt; Bool</pre></h2>
@@ -704,25 +702,7 @@ Note function will return Some([]) in case root of the tree is also it’s only 
   
   <div class="member">
     <div class="member-name">
-      <h2 id="member_from_tree2"><pre class="hljs language-aiken">member_from_tree2(
-  tree: MerkleElement&lt;a&gt;,
-  item: a,
-  serialise_fn: fn(a) -&gt; ByteArray,
-) -&gt; Bool</pre></h2>
-      
-      <!-- TODO: support source linking
-      <a class="member-source" alt="View Source" title="View Source" href="#todo">
-        &lt;/&gt;
-      </a>
-      -->
-      
-    </div>
-    <div class="rendered-markdown"></div>
-  </div>
-  
-  <div class="member">
-    <div class="member-name">
-      <h2 id="size"><pre class="hljs language-aiken">size(self: MerkleElement&lt;a&gt;) -&gt; Int</pre></h2>
+      <h2 id="size"><pre class="hljs language-aiken">size(self: HashTree&lt;a&gt;) -&gt; Int</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -808,8 +788,8 @@ Note function will return Some([]) in case root of the tree is also it’s only 
       });
     </script>
     <script src="../../js/lunr.min.js?v=0.0.29"></script>
-    <script src="../../js/index.js?v=1680203825"></script>
+    <script src="../../js/index.js?v=1680206240"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../../search-data.js?v=1680203825"></script>
+    <script src="../../search-data.js?v=1680206240"></script>
   </body>
 </html>
