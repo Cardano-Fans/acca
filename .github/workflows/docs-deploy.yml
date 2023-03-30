@@ -24,7 +24,7 @@ jobs:
       - name: Install Aiken
         run: cargo install --git https://github.com/aiken-lang/aiken.git
 
-      - name: Run Aiken check on acca
+      - name: Run Aiken docs on acca
         working-directory: ./
         run: aiken docs
         shell: bash
