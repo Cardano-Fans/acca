@@ -1,15 +1,18 @@
+/// Data structure similar to Merkle Tree called, which we call colloquially `Hash Tree`
+/// but without storing the original element.
+
 use aiken/bytearray.{from_string}
 use aiken/hash.{Hash, Sha2_256, sha2_256}
 use aiken/list
 use aiken/option.{choice, is_none}
 
-pub opaque type MerkleElement<a> {
+pub opaque type HashTree<a> {
   Empty
   Leaf { hash: Hash<Sha2_256, a> }
   Node {
     hash: Hash<Sha2_256, a>,
-    left: MerkleElement<a>,
-    right: MerkleElement<a>,
+    left: HashTree<a>,
+    right: HashTree<a>,
   }
 }
 
@@ -21,8 +24,8 @@ pub type ProofItem<a> {
   Right { hash: Hash<Sha2_256, a> }
 }
 
-// Function returning a hash of a given Merkle Tree element
-pub fn element_hash(self: MerkleElement<a>) -> Hash<Sha2_256, a> {
+// Function returning a hash of a given Hash Tree element
+pub fn element_hash(self: HashTree<a>) -> Hash<Sha2_256, a> {
   when self is {
     Empty ->
       #""
@@ -95,13 +98,13 @@ test element_hash_2() {
   element_hash(mt) == node_hash
 }
 
-/// Function atests whether two Merkle Tress are equal, this is the case when their root hashes match.
-pub fn is_equal(left: MerkleElement<a>, right: MerkleElement<a>) -> Bool {
+/// Function atests whether two Hash Tress are equal, this is the case when their root hashes match.
+pub fn is_equal(left: HashTree<a>, right: HashTree<a>) -> Bool {
   element_hash(left) == element_hash(right)
 }
 
 /// Function returns a total numbers of leaves in the tree.
-pub fn size(self: MerkleElement<a>) -> Int {
+pub fn size(self: HashTree<a>) -> Int {
   when self is {
     Empty ->
       0
@@ -186,7 +189,7 @@ fn combine_hash(
 }
 
 /// Function that returns whether merkle tree has any elements
-pub fn is_empty(self: MerkleElement<a>) -> Bool {
+pub fn is_empty(self: HashTree<a>) -> Bool {
   when self is {
     Empty ->
       True
@@ -215,7 +218,7 @@ test is_empty_2() {
 }
 
 fn do_proof(
-  self: MerkleElement<a>,
+  self: HashTree<a>,
   item_hash: Hash<Sha2_256, a>,
   proof: Proof<a>,
   serialise_fn: fn(a) -> ByteArray,
@@ -253,11 +256,11 @@ fn do_proof(
   }
 }
 
-/// Construct a membership 'Proof' from an element and a 'MerkleTree'. Returns
+/// Construct a membership 'Proof' from an element and a 'HashTree'. Returns
 /// 'None' if the element isn't a member of the tree to begin with.
 /// Note function will return Some([]) in case root of the tree is also it's only one and only element
 pub fn get_proof(
-  self: MerkleElement<a>,
+  self: HashTree<a>,
   item: a,
   serialise_fn: fn(a) -> ByteArray,
 ) -> Option<Proof<a>> {
@@ -412,7 +415,7 @@ fn do_from_list(
   items: List<a>,
   len: Int,
   serialise_fn: fn(a) -> ByteArray,
-) -> MerkleElement<a> {
+) -> HashTree<a> {
   when items is {
     [] ->
       Empty
@@ -439,13 +442,13 @@ fn do_from_list(
   }
 }
 
-/// Construct a 'MerkleTree' from a list of elements.
+/// Construct a 'HashTree' from a list of elements.
 /// Note that, while this operation is doable on-chain, it is expensive and
 /// preferably done off-chain.
 pub fn from_list(
   items: List<a>,
   serialise_fn: fn(a) -> ByteArray,
-) -> MerkleElement<a> {
+) -> HashTree<a> {
   do_from_list(items, list.length(items), serialise_fn)
 }
 
@@ -586,7 +589,7 @@ test from_5() {
 fn do_from_hashes_list(
   items: List<Hash<Sha2_256, a>>,
   len: Int,
-) -> MerkleElement<a> {
+) -> HashTree<a> {
   when items is {
     [] ->
       Empty
@@ -610,10 +613,10 @@ fn do_from_hashes_list(
   }
 }
 
-/// Construct a 'MerkleTree' from a list of hashes.
+/// Construct a 'HashTree' from a list of hashes.
 /// Note that, while this operation is doable on-chain, it is expensive and
 /// preferably done off-chain.
-pub fn from_hashes_list(items: List<Hash<Sha2_256, a>>) -> MerkleElement<a> {
+pub fn from_hashes_list(items: List<Hash<Sha2_256, a>>) -> HashTree<a> {
   do_from_hashes_list(items, list.length(items))
 }
 
@@ -668,7 +671,7 @@ test from_hashes_list_5() {
   } == mt
 }
 
-// Check whether a hashed element is part of a 'MerkleTree' using only its root hash
+// Check whether a hashed element is part of a 'HashTree' using only its root hash
 // and a 'Proof'. The proof is guaranteed to be in log(n) of the size of the
 // tree, which is why we are interested in such data-structure in the first
 // place.
@@ -701,7 +704,7 @@ pub fn member_from_hash(
   }
 }
 
-// Check whether an element is part of a 'MerkleTree' using only its root hash
+// Check whether an element is part of a 'HashTree' using only its root hash
 // and a 'Proof'.
 pub fn member(
   item: a,
@@ -869,7 +872,7 @@ test member_6() {
 }
 
 pub fn member_from_tree(
-  tree: MerkleElement<a>,
+  tree: HashTree<a>,
   item: a,
   serialise_fn: fn(a) -> ByteArray,
 ) -> Bool {
@@ -953,24 +956,6 @@ fn get_proof_item_value(proof_item: ProofItem<a>) -> Hash<Sha2_256, a> {
       hash
     Right(hash) ->
       hash
-  }
-}
-
-pub fn member_from_tree2(
-  tree: MerkleElement<a>,
-  item: a,
-  serialise_fn: fn(a) -> ByteArray,
-) -> Bool {
-  let proof: Option<Proof<a>> =
-    get_proof(tree, item, serialise_fn)
-  let rh =
-    element_hash(tree)
-
-  when proof is {
-    Some(p) ->
-      member(item, rh, p, serialise_fn)
-    None ->
-      False
   }
 }
 
