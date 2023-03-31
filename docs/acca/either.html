@@ -421,6 +421,10 @@
   
   <li><a href="#map">map</a></li>
   
+  <li><a href="#map_left">map_left</a></li>
+  
+  <li><a href="#map_right">map_right</a></li>
+  
   <li><a href="#right">right</a></li>
   
   <li><a href="#swap">swap</a></li>
@@ -605,7 +609,37 @@ For example, you could use Either&lt;String, Int&gt; to indicate whether a recei
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Ability to transform (map) <code>Right</code> <code>Left</code> with a given mapping function. <code>Left</code> returns value without transformation / mapping.</p>
+    <div class="rendered-markdown"><p>Ability to transform (map) <code>Right</code> <code>Left</code> with a given mapping function. <code>Left</code> returns value without transformation / mapping.
+Note that map is right biased, if you need to map over left, you should use map_left function.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="map_left"><pre class="hljs language-aiken">map_left(self: Either&lt;a, b&gt;, with: fn(a) -&gt; c) -&gt; Either&lt;a, b&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"></div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="map_right"><pre class="hljs language-aiken">map_right(self: Either&lt;a, b&gt;, with: fn(b) -&gt; c) -&gt; Either&lt;a, b&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Alias for map</p>
 </div>
   </div>
   
@@ -745,8 +779,8 @@ Notice that coversion of <code>Left</code> to None means we are loosing value wr
       });
     </script>
     <script src="../js/lunr.min.js?v=0.0.29"></script>
-    <script src="../js/index.js?v=1680248864"></script>
+    <script src="../js/index.js?v=1680299209"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1680248864"></script>
+    <script src="../search-data.js?v=1680299209"></script>
   </body>
 </html>
