@@ -196,6 +196,7 @@ test swap_2() {
 }
 
 /// Ability to transform (map) `Right` `Left` with a given mapping function. `Left` returns value without transformation / mapping.
+/// Note that map is right biased, if you need to map over left, you should use map_left function.
 pub fn map(self: Either<a, b>, with: fn(b) -> c) {
   when self is {
     Left(x) ->
@@ -205,10 +206,32 @@ pub fn map(self: Either<a, b>, with: fn(b) -> c) {
   }
 }
 
+/// Alias for map
+pub fn map_right(self: Either<a, b>, with: fn(b) -> c) {
+  map(self, with)
+}
+
 test map_1() {
   map(Right { value: 12 }, fn(x) { x + 1 }) == Right { value: 13 }
 }
 
 test map_2() {
   map(Left { value: 12 }, fn(x) { x + 1 }) == Left { value: 12 }
+}
+
+pub fn map_left(self: Either<a, b>, with: fn(a) -> c) {
+  when self is {
+    Left(x) ->
+      Left(with(x))
+    Right(y) ->
+      Right(y)
+  }
+}
+
+test map_left_1() {
+  map_left(Right { value: 12 }, fn(x) { x + 1 }) == Right { value: 12 }
+}
+
+test map_left_2() {
+  map_left(Left { value: 12 }, fn(x) { x + 1 }) == Left { value: 13 }
 }
