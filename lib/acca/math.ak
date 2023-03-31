@@ -61,4 +61,3 @@ test max_2() {
 test max_3() {
   max(9, 9, int.compare) == 9
 }
-

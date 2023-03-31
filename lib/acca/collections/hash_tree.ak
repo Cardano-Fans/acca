@@ -1,19 +1,14 @@
-/// Data structure similar to Merkle Tree called, which we call colloquially `Hash Tree`
-/// but without storing the original element.
-
 use aiken/bytearray.{from_string}
 use aiken/hash.{Hash, Sha2_256, sha2_256}
 use aiken/list
 use aiken/option.{choice, is_none}
 
+/// Data structure similar to Merkle Tree called, which we call colloquially `Hash Tree`
+/// but without storing the original element.
 pub opaque type HashTree<a> {
   Empty
   Leaf { hash: Hash<Sha2_256, a> }
-  Node {
-    hash: Hash<Sha2_256, a>,
-    left: HashTree<a>,
-    right: HashTree<a>,
-  }
+  Node { hash: Hash<Sha2_256, a>, left: HashTree<a>, right: HashTree<a> }
 }
 
 pub type Proof<a> =
@@ -108,7 +103,7 @@ pub fn size(self: HashTree<a>) -> Int {
   when self is {
     Empty ->
       0
-    Leaf{..} ->
+    Leaf { .. } ->
       1
     Node { left, right, .. } ->
       size(left) + size(right)
@@ -586,10 +581,7 @@ test from_5() {
   } == mt
 }
 
-fn do_from_hashes_list(
-  items: List<Hash<Sha2_256, a>>,
-  len: Int,
-) -> HashTree<a> {
+fn do_from_hashes_list(items: List<Hash<Sha2_256, a>>, len: Int) -> HashTree<a> {
   when items is {
     [] ->
       Empty
