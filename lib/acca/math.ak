@@ -1,3 +1,4 @@
+use aiken/builtin.{mod_integer}
 use aiken/int
 
 /// Returns a min of two elements.
@@ -60,4 +61,28 @@ test max_2() {
 
 test max_3() {
   max(9, 9, int.compare) == 9
+}
+
+/// Computes greatest common divisor of two numbers
+/// https://en.wikipedia.org/wiki/Greatest_common_divisor
+///
+/// ```aiken
+/// amath.gcd(20, 15) == 5
+/// amath.gcd(54, 24) == 6
+/// ```
+pub fn gcd(a: Int, b: Int) -> Int {
+  when b is {
+    0 ->
+      a
+    _n ->
+      gcd(b, mod_integer(a, b))
+  }
+}
+
+test gcd_0() {
+  gcd(20, 15) == 5
+}
+
+test gcd_1() {
+  gcd(54, 24) == 6
 }
