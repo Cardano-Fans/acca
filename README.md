@@ -26,7 +26,7 @@ licences = ["Apache-2.0"]
 description = "Example project"
 
 dependencies = [
-  { name = "Cardano-Fans/acca", version = "f20aa7445d30376fe56adaf423a689a9ca11d2f8", source = "github" }
+  { name = "Cardano-Fans/acca", version = "469775f35b1d00317d4318bd6afc7310bb9d5838", source = "github" }
 ]
 ```
 
