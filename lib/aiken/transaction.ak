@@ -110,7 +110,7 @@ pub type Datum {
 }
 
 /// A type-alias for Redeemers, passed to scripts for validation. The `Data` is
-/// opaque because it is user-defined and it is the script's responsability to
+/// opaque because it is user-defined and it is the script's responsibility to
 /// parse it into its expected form.
 pub type Redeemer =
   Data
@@ -174,7 +174,7 @@ pub fn find_datum(
 /// contracts running over multiple transactions.
 pub fn find_script_outputs(
   transaction: Transaction,
-  script_hash: Hash<Blake2b_224, VerificationKey>,
+  script_hash: Hash<Blake2b_224, Script>,
 ) -> List<Output> {
   transaction.outputs
     |> list.filter(
