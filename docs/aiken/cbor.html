@@ -447,12 +447,12 @@ easy to read as plain Aiken code, but it is handy for troubleshooting values
 a good idea in the Cardano world.</p>
 <pre><code class="language-aiken">diagnostic(42) == &quot;42&quot;
 diagnostic(#&quot;a1b2&quot;) == &quot;h'A1B2'&quot;
-diagnostic([1, 2, 3]) == &quot;[1, 2, 3]&quot;
+diagnostic([1, 2, 3]) == &quot;[_ 1, 2, 3]&quot;
 diagnostic([]) == &quot;[]&quot;
-diagnostic((1, 2)) == &quot;[1, 2]&quot;
-diagnostic((1, #&quot;ff&quot;, 3)) == &quot;[1, h'FF', 3]&quot;
-diagnostic([(1, #&quot;ff&quot;)]) == &quot;{ 1: h'FF' }&quot;
-diagnostic(Some(42)) == &quot;121([42])&quot;
+diagnostic((1, 2)) == &quot;[_ 1, 2]&quot;
+diagnostic((1, #&quot;ff&quot;, 3)) == &quot;[_ 1, h'FF', 3]&quot;
+diagnostic([(1, #&quot;ff&quot;)]) == &quot;{_ 1: h'FF' }&quot;
+diagnostic(Some(42)) == &quot;121([_ 42])&quot;
 diagnostic(None) == &quot;122([])&quot;
 </code></pre>
 </div>
@@ -562,8 +562,8 @@ serialise(None) == #&quot;d87a80&quot;
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.0-alpha"></script>
-    <script src="../js/index.js?v=1681412992"></script>
+    <script src="../js/index.js?v=1681458157"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1681412992"></script>
+    <script src="../search-data.js?v=1681458157"></script>
   </body>
 </html>

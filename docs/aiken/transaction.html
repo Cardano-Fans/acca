@@ -640,7 +640,7 @@ that produced that output</p>
     </div>
     <div class="custom-type-constructors">
       <div class="rendered-markdown"><p>A type-alias for Redeemers, passed to scripts for validation. The <code>Data</code> is
-opaque because it is user-defined and it is the script’s responsability to
+opaque because it is user-defined and it is the script’s responsibility to
 parse it into its expected form.</p>
 </div>
       
@@ -963,7 +963,7 @@ input.</p>
     <div class="member-name">
       <h2 id="find_script_outputs"><pre class="hljs language-aiken">find_script_outputs(
   transaction: Transaction,
-  script_hash: Hash&lt;Blake2b_224, VerificationKey&gt;,
+  script_hash: Hash&lt;Blake2b_224, Script&gt;,
 ) -&gt; List&lt;Output&gt;</pre></h2>
       
       <!-- TODO: support source linking
@@ -1051,8 +1051,8 @@ contracts running over multiple transactions.</p>
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.0-alpha"></script>
-    <script src="../js/index.js?v=1681412992"></script>
+    <script src="../js/index.js?v=1681458157"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1681412992"></script>
+    <script src="../search-data.js?v=1681458157"></script>
   </body>
 </html>

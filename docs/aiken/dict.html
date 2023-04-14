@@ -453,10 +453,10 @@
 <h1 id="module-name" class="module-name">
   <a href="#module-name">aiken/dict</a>
 </h1>
-<p>A module for working with bytearray dictionnaries.</p>
-<p>These dictionnaries are fundamentally ordered lists of key-value pairs,
+<p>A module for working with bytearray dictionaries.</p>
+<p>These dictionaries are fundamentally ordered lists of key-value pairs,
 which preserve some invariants. In particular, each key is only present
-once in the dictionnary.</p>
+once in the dictionary.</p>
 
 
 
@@ -483,7 +483,7 @@ once in the dictionnary.</p>
     </div>
     <div class="custom-type-constructors">
       <div class="rendered-markdown"><p>An opaque <code>Dict</code>. The type is opaque because the module maintains some
-invariant, namely: there’s only one occurence of a given key in the dictionnary.</p>
+invariant, namely: there’s only one occurrence of a given key in the dictionary.</p>
 <p>Note that the <code>key</code> parameter is a phantom-type, and only present as a
 means of documentation. Keys can be any type, yet will need to comparable
 to use functions like <code>insert</code>.</p>
@@ -518,7 +518,7 @@ to use functions like <code>insert</code>.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Remove a key-value pair from the dictionnary. If the key is not found, no changes are made.</p>
+    <div class="rendered-markdown"><p>Remove a key-value pair from the dictionary. If the key is not found, no changes are made.</p>
 <pre><code class="language-aiken">dict.new()
   |&gt; dict.insert(key: 14, value: 42, int.compare)
   |&gt; dict.delete(key: 14)
@@ -554,7 +554,7 @@ to use functions like <code>insert</code>.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Finds a value in the dictionnary, and returns the first key found to have that value.</p>
+    <div class="rendered-markdown"><p>Finds a value in the dictionary, and returns the first key found to have that value.</p>
 <pre><code class="language-aiken">dict.new()
   |&gt; dict.insert(key: foo, value: 42, bytearray.compare)
   |&gt; dict.insert(key: bar, value: 14, bytearray.compare)
@@ -579,7 +579,7 @@ to use functions like <code>insert</code>.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Fold over the key-value pairs in a dictionnary.</p>
+    <div class="rendered-markdown"><p>Fold over the key-value pairs in a dictionary.</p>
 </div>
   </div>
   
@@ -621,8 +621,8 @@ considerably faster than</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Construct a dictionnary from a list of key-value pairs. Note that when a key is present
-multiple times, the first occurence prevails.</p>
+    <div class="rendered-markdown"><p>Construct a dictionary from a list of key-value pairs. Note that when a key is present
+multiple times, the first occurrence prevails.</p>
 </div>
   </div>
   
@@ -657,7 +657,7 @@ multiple times, the first occurence prevails.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Check if a key exists in the dictionnary.</p>
+    <div class="rendered-markdown"><p>Check if a key exists in the dictionary.</p>
 <pre><code class="language-aiken">dict.new()
   |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, bytearray.compare)
   |&gt; dict.has_key(foo)
@@ -682,7 +682,7 @@ multiple times, the first occurence prevails.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Insert a value in the dictionnary at a given key key. If the key already exists, its value is <strong>overridden</strong>.</p>
+    <div class="rendered-markdown"><p>Insert a value in the dictionary at a given key key. If the key already exists, its value is <strong>overridden</strong>.</p>
 <pre><code class="language-aiken">dict.new()
   |&gt; dict.insert(key: foo, value: &quot;Foo&quot;, bytearray.compare)
   |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, bytearray.compare)
@@ -703,7 +703,7 @@ multiple times, the first occurence prevails.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Efficiently checks whether a dictionnary is empty.</p>
+    <div class="rendered-markdown"><p>Efficiently checks whether a dictionary is empty.</p>
 </div>
   </div>
   
@@ -774,7 +774,7 @@ multiple times, the first occurence prevails.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Return the number of key-value pairs in the dictionnary.</p>
+    <div class="rendered-markdown"><p>Return the number of key-value pairs in the dictionary.</p>
 </div>
   </div>
   
@@ -789,7 +789,7 @@ multiple times, the first occurence prevails.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Get the inner list holding the dictionnary data.</p>
+    <div class="rendered-markdown"><p>Get the inner list holding the dictionary data.</p>
 </div>
   </div>
   
@@ -808,8 +808,8 @@ multiple times, the first occurence prevails.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Combine two dictionnaries. If the same key exist in both the left and
-right dictionnary, values from the left are preferred (i.e. left-biaised).</p>
+    <div class="rendered-markdown"><p>Combine two dictionaries. If the same key exist in both the left and
+right dictionary, values from the left are preferred (i.e. left-biaised).</p>
 </div>
   </div>
   
@@ -830,7 +830,7 @@ right dictionnary, values from the left are preferred (i.e. left-biaised).</p>
       
     </div>
     <div class="rendered-markdown"><p>Like <a href="#union"><code>union</code></a> but allows specifying the behavior to adopt when a key is present
-in both dictionnaries.</p>
+in both dictionaries.</p>
 <p>When passing <code>None</code>, the value is removed and not present in the union.</p>
 </div>
   </div>
@@ -846,8 +846,8 @@ in both dictionnaries.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Combine two dictionnaries using the provided strategy for combining values when the same
-key is found in both dictionnaries.
+    <div class="rendered-markdown"><p>Combine two dictionaries using the provided strategy for combining values when the same
+key is found in both dictionaries.
 Extract all the values present in a given <code>Dict</code>.</p>
 <pre><code class="language-aiken">dict.new()
   |&gt; dict.insert(foo, 14, bytearray.compare)
@@ -932,8 +932,8 @@ Extract all the values present in a given <code>Dict</code>.</p>
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.0-alpha"></script>
-    <script src="../js/index.js?v=1681412992"></script>
+    <script src="../js/index.js?v=1681458157"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1681412992"></script>
+    <script src="../search-data.js?v=1681458157"></script>
   </body>
 </html>

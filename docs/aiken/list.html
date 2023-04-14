@@ -537,7 +537,7 @@ list.all([1, 2, 3], fn(n) { n == 2 }) == False
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Like <a href="#and">all</a> but when elements are already booleans.</p>
+    <div class="rendered-markdown"><p>Like <a href="#all">all</a> but when elements are already booleans.</p>
 <p>Note: an empty list always satisfies the predicate.</p>
 <pre><code class="language-aiken">list.and([]) == True
 list.and([True, True]) == True
@@ -615,7 +615,7 @@ list.concat([1, 2, 3], [4, 5, 6]) == [1, 2, 3, 4, 5, 6]
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Remove the first occurence of the given element from the list.</p>
+    <div class="rendered-markdown"><p>Remove the first occurrence of the given element from the list.</p>
 <pre><code class="language-aiken">list.delete([1, 2, 3, 1], 1) == [2, 3, 1]
 list.delete([1, 2, 3], 14) == [1, 2, 3]
 </code></pre>
@@ -633,7 +633,7 @@ list.delete([1, 2, 3], 14) == [1, 2, 3]
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Remove the first occurence of each element of the second list from the first one.</p>
+    <div class="rendered-markdown"><p>Remove the first occurrence of each element of the second list from the first one.</p>
 <pre><code>list.difference([&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;], [&quot;l&quot;, &quot;e&quot;, &quot;l&quot;]) == [&quot;h&quot;, &quot;o&quot;]
 list.difference([1, 2, 3, 4, 5], [1, 1, 2]) == [3, 4, 5]
 list.difference([1, 2, 3], []) == [1, 2, 3]
@@ -690,7 +690,7 @@ list.drop_while([1, 2, 3], fn(x) { x == 3 }) == [1, 2, 3]
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Produce a list of elements that statisfy a predicate.</p>
+    <div class="rendered-markdown"><p>Produce a list of elements that satisfy a predicate.</p>
 <pre><code class="language-aiken">list.filter([1, 2, 3], fn(x) { x &gt;= 2 }) == [2, 3]
 list.filter([], fn(x) { x &gt; 2 }) == []
 list.filter([1, 2, 3], fn(x) { x == 3 }) == [3]
@@ -709,7 +709,7 @@ list.filter([1, 2, 3], fn(x) { x == 3 }) == [3]
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Produce a list of transformed elements that statisfy a predicate.</p>
+    <div class="rendered-markdown"><p>Produce a list of transformed elements that satisfy a predicate.</p>
 <pre><code class="language-aiken">let transform = fn(x) { if x % 2 == 0 { None } else { Some(3*x) } }
 list.filter_map([1, 2, 3], transform) == [3, 9]
 </code></pre>
@@ -1363,8 +1363,8 @@ list.take_while([1, 2, 3], fn(x) { x &lt; 2 }) == [1]
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.0-alpha"></script>
-    <script src="../js/index.js?v=1681412992"></script>
+    <script src="../js/index.js?v=1681458157"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1681412992"></script>
+    <script src="../search-data.js?v=1681458157"></script>
   </body>
 </html>
