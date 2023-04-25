@@ -3,6 +3,35 @@ use aiken/dict.{Dict}
 use aiken/int
 use aiken/list
 
+/// Gets a given value or returns fallback value in case it is not possible
+/// to find a value given the key.
+///
+/// ```aiken
+/// let d = dict.new() |> dict.insert(1, True, int.compare)
+/// adict.get_or_default(1, False) == True
+/// adict.get_or_default(2, False) == False
+/// ```
+pub fn get_or_default(self: Dict<key, value>, k: key, fallback: value) -> value {
+  when dict.get(self, k) is {
+    Some(v) ->
+      v
+    None ->
+      fallback
+  }
+}
+
+test get_or_default_1() {
+  let d =
+    dict.new() |> dict.insert(1, True, int.compare)
+  get_or_default(d, 1, False) == True
+}
+
+test get_or_default_2() {
+  let d =
+    dict.new() |> dict.insert(1, True, int.compare)
+  get_or_default(d, 2, False) == False
+}
+
 /// Sort dict given it's comparator for keys.
 /// 
 /// This method is useful in scenarios where offchain part passes
