@@ -1,4 +1,30 @@
+use aiken/builtin
 use aiken/bytearray
+
+/// Attest whether a given list of byte array is in fact sorted.
+///
+/// ```aiken
+/// abytearray.is_sorted([#"aa", #"bb"]) == True
+/// abytearray.is_sorted([#"bb", #"aa"]) == False
+/// ```
+fn is_sorted(l: List<ByteArray>) -> Bool {
+  when l is {
+    [] ->
+      True
+    [_x] ->
+      True
+    [x, y, ..xs] ->
+      builtin.less_than_bytearray(x, y) && is_sorted([y, ..xs])
+  }
+}
+
+test is_sorted_1() {
+  is_sorted([#"aa", #"bb"])
+}
+
+test is_sorted_2() {
+  is_sorted([#"bb", #"aa"]) == False
+}
 
 /// Convert a `ByteArray` from hexadecimal into the integer representation.
 /// This implementation uses BigEndian notation (also called network order),
@@ -6,8 +32,8 @@ use aiken/bytearray
 /// bit to the least significant.
 ///
 /// ```aiken
-/// bytearray.to_int(#"") == 0
-/// bytearray.to_int(#"414243") == 4276803
+/// abytearray.to_int(#"") == 0
+/// abytearray.to_int(#"414243") == 4276803
 /// ```
 pub fn to_int(self: ByteArray) -> Int {
   bytearray.foldl(self, fn(byte, acc) { acc * 256 + byte }, 0)
