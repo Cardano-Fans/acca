@@ -3,8 +3,8 @@ use aiken/hash.{Hash, Sha2_256, sha2_256}
 use aiken/list
 use aiken/option.{choice, is_none}
 
-/// Data structure similar to Merkle Tree called, which we call colloquially `Hash Tree`
-/// but without storing the original element.
+/// Data structure similar to Merkle Tree called colloquially `Hash Tree`. Contrary to the original
+/// it doesn't store the original element.
 pub opaque type HashTree<a> {
   Empty
   Leaf { hash: Hash<Sha2_256, a> }
