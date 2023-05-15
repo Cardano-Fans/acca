@@ -1,11 +1,12 @@
 use aiken/builtin
+use aiken/option
 
 /// Compare two bytearrays lexicographically.
 ///
 /// ```aiken
-/// bytearray.compare(#00, #FF) == Less
-/// bytearray.compare(#42, #42) == Equal
-/// bytearray.compare(#FF, #00) == Greater
+/// bytearray.compare(#"00", #"FF") == Less
+/// bytearray.compare(#"42", #"42") == Equal
+/// bytearray.compare(#"FF", #"00") == Greater
 /// ```
 pub fn compare(left: ByteArray, right: ByteArray) -> Ordering {
   if builtin.less_than_bytearray(left, right) {
@@ -78,7 +79,7 @@ test drop_4() {
 /// Left-fold over bytes of a [`ByteArray`](https://aiken-lang.github.io/prelude/aiken.html#ByteArray). Note that every byte given to the callback function is comprised between 0 and 255.
 ///
 /// ```aiken
-/// bytearray.foldl(#"acab", fn(byte, acc) { acc * 256 + bytes }, 0) == 44203
+/// bytearray.foldl(#"acab", fn(byte, acc) { acc * 256 + byte }, 0) == 44203
 /// bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #"") == #[3, 2, 1]
 /// ```
 pub fn foldl(
@@ -132,7 +133,7 @@ test foldl_4() {
 /// Right-fold over bytes of a [`ByteArray`](https://aiken-lang.github.io/prelude/aiken.html#ByteArray). Note that every byte given to the callback function is comprised between 0 and 255.
 ///
 /// ```aiken
-/// bytearray.foldr(#"acab", fn(byte, acc) { acc * 256 + bytes }, 0) == 44203
+/// bytearray.foldr(#"acab", fn(byte, acc) { acc * 256 + byte }, 0) == 43948
 /// bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #"") == #[1, 2, 3]
 /// ```
 pub fn foldr(
@@ -173,6 +174,61 @@ test foldr_3() {
   foldr(#[1, 2, 3, 4, 5], flip(push), #"") == #[1, 2, 3, 4, 5]
 }
 
+/// Search the start and end positions of a sub-array in a `ByteArray`.
+///
+/// ```aiken
+/// bytearray.index_of("Hello, World!", "World") == Some((7, 11))
+/// bytearray.index_of("Hello, World!", "foo") == None
+/// bytearray.index_of("Hello, World!", "!") == Some((12, 12))
+/// bytearray.index_of("Hello, World!", "o") == Some((4, 4))
+/// bytearray.index_of("Hello, World!", "Hello, World!") == Some((0, 12))
+/// ```
+pub fn index_of(self: ByteArray, bytes: ByteArray) -> Option<(Int, Int)> {
+  let offset =
+    length(bytes)
+
+  do_index_of(self, bytes, 0, offset, length(self))
+    |> option.map(fn(ix) { (ix, ix + offset - 1) })
+}
+
+fn do_index_of(
+  self: ByteArray,
+  bytes: ByteArray,
+  cursor: Int,
+  offset: Int,
+  size: Int,
+) -> Option<Int> {
+  if cursor + offset > size {
+    None
+  } else {
+    if builtin.slice_bytearray(cursor, offset, self) == bytes {
+      Some(cursor)
+    } else {
+      do_index_of(self, bytes, cursor + 1, offset, size)
+    }
+  }
+}
+
+test index_of_1() {
+  index_of("Hello, World!", "World") == Some((7, 11))
+}
+
+test index_of_2() {
+  index_of("Hello, World!", "foo") == None
+}
+
+test index_of_3() {
+  index_of("Hello, World!", "!") == Some((12, 12))
+}
+
+test index_of_4() {
+  index_of("Hello, World!", "o") == Some((4, 4))
+}
+
+test index_of_5() {
+  index_of("Hello, World!", "Hello, World!") == Some((0, 12))
+}
+
 /// Returns the number of bytes in a `ByteArray`.
 ///
 /// ```aiken
@@ -211,7 +267,7 @@ test is_empty_2() {
 /// Convert a `String` into a `ByteArray`.
 ///
 /// ```aiken
-/// bytearray.from_string("ABC") == #414243
+/// bytearray.from_string(@"ABC") == #"414243"
 /// ```
 pub fn from_string(str: String) -> ByteArray {
   builtin.encode_utf8(str)
@@ -282,7 +338,7 @@ test reduce_2() {
 /// bytearray.slice(#[0, 1, 2, 3, 4, 5, 6], start: 1, end: 3) == #[1, 2, 3]
 /// ```
 pub fn slice(self: ByteArray, start: Int, end: Int) -> ByteArray {
-  builtin.slice_bytearray(start, end, self)
+  builtin.slice_bytearray(start, end - start + 1, self)
 }
 
 test slice_1() {
@@ -295,6 +351,14 @@ test slice_2() {
 
 test slice_3() {
   slice(#"010203", 0, 42) == #"010203"
+}
+
+test slice_4() {
+  slice(#[0, 1, 2, 3, 4], 0, 3) == #[0, 1, 2, 3]
+}
+
+test slice_5() {
+  slice(#[0, 1, 2, 3, 4], 1, 2) == #[1, 2]
 }
 
 /// Returns the n-length prefix of a `ByteArray`.
