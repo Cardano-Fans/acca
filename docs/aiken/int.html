@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.0.2-alpha" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.2-alpha"/>
+    <link rel="stylesheet" href="../css/index.css?v=1.0.5-alpha" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.5-alpha"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
@@ -413,6 +413,8 @@
   
   <li><a href="#compare">compare</a></li>
   
+  <li><a href="#from_utf8">from_utf8</a></li>
+  
 </ul>
 
 
@@ -447,9 +449,31 @@
       
     </div>
     <div class="rendered-markdown"><p>Compare two integers.</p>
-<pre><code class="language-aiken">compare(14, 42) == Less
-compare(14, 14) == Equal
-compare(42, 14) == Greater
+<pre><code class="language-aiken">int.compare(14, 42) == Less
+int.compare(14, 14) == Equal
+int.compare(42, 14) == Greater
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="from_utf8"><pre class="hljs language-aiken">from_utf8(bytes: ByteArray) -&gt; Option&lt;Int&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Parse an integer from a utf-8 encoded ‘ByteArray’, when possible.</p>
+<pre><code class="language-aiken">int.from_utf8(&quot;14&quot;) == Some(14)
+int.from_utf8(&quot;-42&quot;) == Some(-42)
+int.from_utf8(&quot;007&quot;) == Some(7)
+int.from_utf8(&quot;foo&quot;) == None
+int.from_utf8(&quot;1.0&quot;) == None
+int.from_utf8(&quot;1-2&quot;) == None
 </code></pre>
 </div>
   </div>
@@ -506,8 +530,8 @@ compare(42, 14) == Greater
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.0.2-alpha"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.0.2-alpha"></script>
+    <script src="../js/highlight.min.js?v=1.0.5-alpha"></script>
+    <script src="../js/highlightjs-aiken.js?v=1.0.5-alpha"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -526,9 +550,9 @@ compare(42, 14) == Greater
 	el.prepend(a);
       });
     </script>
-    <script src="../js/lunr.min.js?v=1.0.2-alpha"></script>
-    <script src="../js/index.js?v=1682603700"></script>
+    <script src="../js/lunr.min.js?v=1.0.5-alpha"></script>
+    <script src="../js/index.js?v=1684306076"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1682603700"></script>
+    <script src="../search-data.js?v=1684306076"></script>
   </body>
 </html>

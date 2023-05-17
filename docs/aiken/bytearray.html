@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.0.2-alpha" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.2-alpha"/>
+    <link rel="stylesheet" href="../css/index.css?v=1.0.5-alpha" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.5-alpha"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
@@ -423,6 +423,8 @@
   
   <li><a href="#from_string">from_string</a></li>
   
+  <li><a href="#index_of">index_of</a></li>
+  
   <li><a href="#is_empty">is_empty</a></li>
   
   <li><a href="#length">length</a></li>
@@ -471,9 +473,9 @@
       
     </div>
     <div class="rendered-markdown"><p>Compare two bytearrays lexicographically.</p>
-<pre><code class="language-aiken">bytearray.compare(#00, #FF) == Less
-bytearray.compare(#42, #42) == Equal
-bytearray.compare(#FF, #00) == Greater
+<pre><code class="language-aiken">bytearray.compare(#&quot;00&quot;, #&quot;FF&quot;) == Less
+bytearray.compare(#&quot;42&quot;, #&quot;42&quot;) == Equal
+bytearray.compare(#&quot;FF&quot;, #&quot;00&quot;) == Greater
 </code></pre>
 </div>
   </div>
@@ -524,7 +526,7 @@ bytearray.compare(#FF, #00) == Greater
       
     </div>
     <div class="rendered-markdown"><p>Left-fold over bytes of a <a href="https://aiken-lang.github.io/prelude/aiken.html#ByteArray"><code>ByteArray</code></a>. Note that every byte given to the callback function is comprised between 0 and 255.</p>
-<pre><code class="language-aiken">bytearray.foldl(#&quot;acab&quot;, fn(byte, acc) { acc * 256 + bytes }, 0) == 44203
+<pre><code class="language-aiken">bytearray.foldl(#&quot;acab&quot;, fn(byte, acc) { acc * 256 + byte }, 0) == 44203
 bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #&quot;&quot;) == #[3, 2, 1]
 </code></pre>
 </div>
@@ -542,7 +544,7 @@ bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #&quot;&quot;) == #[3, 2, 1]
       
     </div>
     <div class="rendered-markdown"><p>Right-fold over bytes of a <a href="https://aiken-lang.github.io/prelude/aiken.html#ByteArray"><code>ByteArray</code></a>. Note that every byte given to the callback function is comprised between 0 and 255.</p>
-<pre><code class="language-aiken">bytearray.foldr(#&quot;acab&quot;, fn(byte, acc) { acc * 256 + bytes }, 0) == 44203
+<pre><code class="language-aiken">bytearray.foldr(#&quot;acab&quot;, fn(byte, acc) { acc * 256 + byte }, 0) == 43948
 bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #&quot;&quot;) == #[1, 2, 3]
 </code></pre>
 </div>
@@ -560,7 +562,28 @@ bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #&quot;&quot;) == #[1, 2, 3]
       
     </div>
     <div class="rendered-markdown"><p>Convert a <code>String</code> into a <code>ByteArray</code>.</p>
-<pre><code class="language-aiken">bytearray.from_string(&quot;ABC&quot;) == #414243
+<pre><code class="language-aiken">bytearray.from_string(@&quot;ABC&quot;) == #&quot;414243&quot;
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="index_of"><pre class="hljs language-aiken">index_of(self: ByteArray, bytes: ByteArray) -&gt; Option&lt;(Int, Int)&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Search the start and end positions of a sub-array in a <code>ByteArray</code>.</p>
+<pre><code class="language-aiken">bytearray.index_of(&quot;Hello, World!&quot;, &quot;World&quot;) == Some((7, 11))
+bytearray.index_of(&quot;Hello, World!&quot;, &quot;foo&quot;) == None
+bytearray.index_of(&quot;Hello, World!&quot;, &quot;!&quot;) == Some((12, 12))
+bytearray.index_of(&quot;Hello, World!&quot;, &quot;o&quot;) == Some((4, 4))
+bytearray.index_of(&quot;Hello, World!&quot;, &quot;Hello, World!&quot;) == Some((0, 12))
 </code></pre>
 </div>
   </div>
@@ -743,8 +766,8 @@ Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback 
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.0.2-alpha"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.0.2-alpha"></script>
+    <script src="../js/highlight.min.js?v=1.0.5-alpha"></script>
+    <script src="../js/highlightjs-aiken.js?v=1.0.5-alpha"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -763,9 +786,9 @@ Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback 
 	el.prepend(a);
       });
     </script>
-    <script src="../js/lunr.min.js?v=1.0.2-alpha"></script>
-    <script src="../js/index.js?v=1682603700"></script>
+    <script src="../js/lunr.min.js?v=1.0.5-alpha"></script>
+    <script src="../js/index.js?v=1684306076"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1682603700"></script>
+    <script src="../search-data.js?v=1684306076"></script>
   </body>
 </html>

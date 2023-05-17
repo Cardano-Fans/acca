@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.0.2-alpha" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.2-alpha"/>
+    <link rel="stylesheet" href="../css/index.css?v=1.0.5-alpha" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.5-alpha"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
@@ -530,11 +530,16 @@ to use functions like <code>insert</code>.</p>
       
     </div>
     <div class="rendered-markdown"><p>Remove a key-value pair from the dictionary. If the key is not found, no changes are made.</p>
-<pre><code class="language-aiken">dict.new()
-  |&gt; dict.insert(key: 14, value: 42, int.compare)
-  |&gt; dict.delete(key: 14)
-  |&gt; dict.get(14)
-// None
+<pre><code class="language-aiken">use aiken/int
+
+let result =
+  dict.new()
+    |&gt; dict.insert(key: 1, value: 100, compare: int.compare)
+    |&gt; dict.insert(key: 2, value: 200, compare: int.compare)
+    |&gt; dict.delete(key: 1)
+    |&gt; dict.to_list()
+
+result == [(2, 200)]
 </code></pre>
 </div>
   </div>
@@ -551,6 +556,18 @@ to use functions like <code>insert</code>.</p>
       
     </div>
     <div class="rendered-markdown"><p>Keep only the key-value pairs that pass the given predicate.</p>
+<pre><code class="language-aiken">use aiken/int
+
+let result =
+  dict.new()
+    |&gt; dict.insert(key: 1, value: 100, compare: int.compare)
+    |&gt; dict.insert(key: 2, value: 200, compare: int.compare)
+    |&gt; dict.insert(key: 3, value: 300, compare: int.compare)
+    |&gt; dict.filter(fn(k, _v) { k &gt; 1 })
+    |&gt; dict.to_list()
+
+result == [(2, 200), (3, 300)]
+</code></pre>
 </div>
   </div>
   
@@ -566,11 +583,20 @@ to use functions like <code>insert</code>.</p>
       
     </div>
     <div class="rendered-markdown"><p>Finds a value in the dictionary, and returns the first key found to have that value.</p>
-<pre><code class="language-aiken">dict.new()
-  |&gt; dict.insert(key: foo, value: 42, bytearray.compare)
-  |&gt; dict.insert(key: bar, value: 14, bytearray.compare)
-  |&gt; dict.find(42)
-// Some(foo)
+<pre><code class="language-aiken">use aiken/bytearray
+
+let foo: ByteArray = #&quot;00&quot;
+let bar: ByteArray = #&quot;11&quot;
+let baz: ByteArray = #&quot;22&quot;
+
+let result =
+  dict.new()
+    |&gt; dict.insert(key: foo, value: 42, compare: bytearray.compare)
+    |&gt; dict.insert(key: bar, value: 14, compare: bytearray.compare)
+    |&gt; dict.insert(key: baz, value: 42, compare: bytearray.compare)
+    |&gt; dict.find(42)
+
+result == Some(foo)
 </code></pre>
 </div>
   </div>
@@ -591,6 +617,17 @@ to use functions like <code>insert</code>.</p>
       
     </div>
     <div class="rendered-markdown"><p>Fold over the key-value pairs in a dictionary.</p>
+<pre><code class="language-aiken">use aiken/int
+
+let result =
+  dict.new()
+    |&gt; dict.insert(key: 1, value: 100, compare: int.compare)
+    |&gt; dict.insert(key: 2, value: 200, compare: int.compare)
+    |&gt; dict.insert(key: 3, value: 300, compare: int.compare)
+    |&gt; dict.fold(fn(_k, v, r) { v + r }, 0)
+
+result == 600
+</code></pre>
 </div>
   </div>
   
@@ -611,10 +648,20 @@ to use functions like <code>insert</code>.</p>
     <div class="rendered-markdown"><p>Like <a href="from_list">‘from_list’</a>, but from an already sorted list by ascending
 keys. This function fails (i.e. halt the program execution) if the list isn’t
 sorted.</p>
+<pre><code class="language-aiken">use aiken/int
+
+let list = [(1, 100), (2, 200), (3, 300)]
+
+let result =
+  dict.from_ascending_list(list, int.compare)
+    |&gt; dict.to_list()
+
+result == [(1, 100), (2, 200), (3, 300)]
+</code></pre>
 <p>This is meant to be used to turn a list constructed off-chain into a <code>Dict</code>
 which has taken care of maintaining interval invariants. This function still
 performs a sanity check on all keys to avoid silly mistakes. It is, however,
-considerably faster than</p>
+considerably faster than <a href="from_list">‘from_list’</a></p>
 </div>
   </div>
   
@@ -634,6 +681,16 @@ considerably faster than</p>
     </div>
     <div class="rendered-markdown"><p>Construct a dictionary from a list of key-value pairs. Note that when a key is present
 multiple times, the first occurrence prevails.</p>
+<pre><code class="language-aiken">use aiken/int
+
+let list = [(1, 100), (3, 300), (2, 200)]
+
+let result =
+  dict.from_list(list, int.compare)
+    |&gt; dict.to_list()
+
+result == [(1, 100), (2, 200), (3, 300)]
+</code></pre>
 </div>
   </div>
   
@@ -649,10 +706,16 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Get a value in the dict by its key.</p>
-<pre><code class="language-aiken">dict.new()
-  |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, bytearray.compare)
-  |&gt; dict.get(key: foo)
-// Some(&quot;Aiken&quot;)
+<pre><code class="language-aiken">use aiken/bytearray
+
+let foo: ByteArray = #&quot;00&quot;
+
+let result =
+  dict.new()
+    |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, compare: bytearray.compare)
+    |&gt; dict.get(key: foo)
+
+ result == Some(&quot;Aiken&quot;)
 </code></pre>
 </div>
   </div>
@@ -669,10 +732,16 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Check if a key exists in the dictionary.</p>
-<pre><code class="language-aiken">dict.new()
-  |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, bytearray.compare)
-  |&gt; dict.has_key(foo)
-// True
+<pre><code class="language-aiken">use aiken/bytearray
+
+let foo: ByteArray = #&quot;00&quot;
+
+let result =
+  dict.new()
+    |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, compare: bytearray.compare)
+    |&gt; dict.has_key(foo)
+
+result == True
 </code></pre>
 </div>
   </div>
@@ -694,11 +763,17 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Insert a value in the dictionary at a given key key. If the key already exists, its value is <strong>overridden</strong>.</p>
-<pre><code class="language-aiken">dict.new()
-  |&gt; dict.insert(key: foo, value: &quot;Foo&quot;, bytearray.compare)
-  |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, bytearray.compare)
-  |&gt; dict.to_list()
-// [(foo, &quot;Aiken&quot;)]
+<pre><code class="language-aiken">use aiken/bytearray
+
+let foo: ByteArray = #&quot;00&quot;
+
+let result =
+  dict.new()
+    |&gt; dict.insert(key: foo, value: &quot;Foo&quot;, compare: bytearray.compare)
+    |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, compare: bytearray.compare)
+    |&gt; dict.to_list()
+
+result == [(foo, &quot;Aiken&quot;)]
 </code></pre>
 </div>
   </div>
@@ -715,6 +790,8 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Efficiently checks whether a dictionary is empty.</p>
+<pre><code class="language-aiken">dict.is_empty(dict.new()) == True
+</code></pre>
 </div>
   </div>
   
@@ -730,12 +807,19 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Extract all the keys present in a given <code>Dict</code>.</p>
-<pre><code class="language-aiken">dict.new()
-  |&gt; dict.insert(foo, 14, bytearray.compare)
-  |&gt; dict.insert(bar, 42, bytearray.compare)
-  |&gt; dict.insert(foo, 1337, bytearray.compare)
-  |&gt; dict.keys()
-// [foo, bar]
+<pre><code class="language-aiken">use aiken/bytearray
+
+let foo: ByteArray = #&quot;00&quot;
+let bar: ByteArray = #&quot;11&quot;
+
+let result =
+  dict.new()
+    |&gt; dict.insert(foo, 14, bytearray.compare)
+    |&gt; dict.insert(bar, 42, bytearray.compare)
+    |&gt; dict.insert(foo, 1337, bytearray.compare)
+    |&gt; dict.keys()
+
+result == [foo, bar]
 </code></pre>
 </div>
   </div>
@@ -752,9 +836,17 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Apply a function to all key-value pairs in a map.</p>
-<pre><code class="language-aiken">pub fn celebrate_birthday(self: Dict&lt;ByteArray, Int&gt;, key: ByteArray) {
-  dict.map(self, with: fn(_key, value) { value + 1 })
-}
+<pre><code class="language-aiken">use aiken/int
+
+let result =
+  dict.new()
+    |&gt; dict.insert(1, 100, int.compare)
+    |&gt; dict.insert(2, 200, int.compare)
+    |&gt; dict.insert(3, 300, int.compare)
+    |&gt; dict.map(fn(_k, v) { v * 2 })
+    |&gt; dict.to_list()
+
+ result == [(1, 200), (2, 400), (3, 600)]
 </code></pre>
 </div>
   </div>
@@ -771,6 +863,8 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Create a new map</p>
+<pre><code class="language-aiken">dict.to_list(dict.new()) == []
+</code></pre>
 </div>
   </div>
   
@@ -786,6 +880,17 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Return the number of key-value pairs in the dictionary.</p>
+<pre><code class="language-aiken">use aiken/int
+
+let result =
+  dict.new()
+    |&gt; dict.insert(1, 100, int.compare)
+    |&gt; dict.insert(2, 200, int.compare)
+    |&gt; dict.insert(3, 300, int.compare)
+    |&gt; dict.size()
+
+result == 3
+</code></pre>
 </div>
   </div>
   
@@ -801,6 +906,17 @@ multiple times, the first occurrence prevails.</p>
       
     </div>
     <div class="rendered-markdown"><p>Get the inner list holding the dictionary data.</p>
+<pre><code class="language-aiken">use aiken/int
+
+let result =
+  dict.new()
+    |&gt; dict.insert(1, 100, int.compare)
+    |&gt; dict.insert(2, 200, int.compare)
+    |&gt; dict.insert(3, 300, int.compare)
+    |&gt; dict.to_list()
+
+result == [(1, 100), (2, 200), (3, 300)]
+</code></pre>
 </div>
   </div>
   
@@ -821,6 +937,16 @@ multiple times, the first occurrence prevails.</p>
     </div>
     <div class="rendered-markdown"><p>Combine two dictionaries. If the same key exist in both the left and
 right dictionary, values from the left are preferred (i.e. left-biaised).</p>
+<pre><code class="language-aiken">use aiken/int
+
+let left_dict = dict.from_list([(1, 100), (2, 200)], int.compare)
+let right_dict = dict.from_list([(1, 150), (3, 300)], int.compare)
+
+let result =
+  dict.union(left_dict, right_dict, int.compare) |&gt; dict.to_list()
+
+result == [(1, 100), (2, 200), (3, 300)]
+</code></pre>
 </div>
   </div>
   
@@ -843,6 +969,22 @@ right dictionary, values from the left are preferred (i.e. left-biaised).</p>
     <div class="rendered-markdown"><p>Like <a href="#union"><code>union</code></a> but allows specifying the behavior to adopt when a key is present
 in both dictionaries.</p>
 <p>When passing <code>None</code>, the value is removed and not present in the union.</p>
+<pre><code class="language-aiken">use aiken/int
+
+let left_dict = dict.from_list([(1, 100), (2, 200)], int.compare)
+let right_dict = dict.from_list([(1, 150), (3, 300)], int.compare)
+
+let result =
+  dict.union_with(
+    left_dict,
+    right_dict,
+    fn(_k, v1, v2) { Some(v1 + v2) },
+    int.compare,
+  )
+    |&gt; dict.to_list()
+
+result == [(1, 250), (2, 200), (3, 300)]
+</code></pre>
 </div>
   </div>
   
@@ -857,15 +999,20 @@ in both dictionaries.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Combine two dictionaries using the provided strategy for combining values when the same
-key is found in both dictionaries.
-Extract all the values present in a given <code>Dict</code>.</p>
-<pre><code class="language-aiken">dict.new()
-  |&gt; dict.insert(foo, 14, bytearray.compare)
-  |&gt; dict.insert(bar, 42, bytearray.compare)
-  |&gt; dict.insert(foo, 1337, bytearray.compare)
-  |&gt; dict.values()
-// [42, 1337]
+    <div class="rendered-markdown"><p>Extract all the values present in a given <code>Dict</code>.</p>
+<pre><code class="language-aiken">use aiken/bytearray
+
+let foo: ByteArray = #&quot;00&quot;
+let bar: ByteArray = #&quot;11&quot;
+
+let result =
+  dict.new()
+    |&gt; dict.insert(foo, 14, bytearray.compare)
+    |&gt; dict.insert(bar, 42, bytearray.compare)
+    |&gt; dict.insert(foo, 1337, bytearray.compare)
+    |&gt; dict.values()
+
+result == [1337, 42]
 </code></pre>
 </div>
   </div>
@@ -922,8 +1069,8 @@ Extract all the values present in a given <code>Dict</code>.</p>
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.0.2-alpha"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.0.2-alpha"></script>
+    <script src="../js/highlight.min.js?v=1.0.5-alpha"></script>
+    <script src="../js/highlightjs-aiken.js?v=1.0.5-alpha"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -942,9 +1089,9 @@ Extract all the values present in a given <code>Dict</code>.</p>
 	el.prepend(a);
       });
     </script>
-    <script src="../js/lunr.min.js?v=1.0.2-alpha"></script>
-    <script src="../js/index.js?v=1682603700"></script>
+    <script src="../js/lunr.min.js?v=1.0.5-alpha"></script>
+    <script src="../js/index.js?v=1684306076"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1682603700"></script>
+    <script src="../search-data.js?v=1684306076"></script>
   </body>
 </html>
