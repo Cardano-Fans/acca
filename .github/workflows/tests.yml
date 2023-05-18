@@ -16,11 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install Aiken
       - uses: aiken-lang/setup-aiken@v0.1.0
         with:
           version: v1.0.6-alpha
 
-      - name: Aiken check
+      - name: Aiken tests
         working-directory: ./
         run: aiken check
     
