@@ -9,12 +9,9 @@ use aiken/bytearray
 /// ```
 fn is_sorted(l: List<ByteArray>) -> Bool {
   when l is {
-    [] ->
-      True
-    [_x] ->
-      True
-    [x, y, ..xs] ->
-      builtin.less_than_bytearray(x, y) && is_sorted([y, ..xs])
+    [] -> True
+    [_x] -> True
+    [x, y, ..xs] -> builtin.less_than_bytearray(x, y) && is_sorted([y, ..xs])
   }
 }
 
@@ -36,7 +33,7 @@ test is_sorted_2() {
 /// abytearray.to_int(#"414243") == 4276803
 /// ```
 pub fn to_int(self: ByteArray) -> Int {
-  bytearray.foldl(self, fn(byte, acc) { acc * 256 + byte }, 0)
+  bytearray.foldl(self, 0, fn(byte, acc) { acc * 256 + byte })
 }
 
 test empty_bytearray_to_int() {
@@ -48,7 +45,6 @@ test short_bytearray_to_int() {
 }
 
 test bytearray_to_int() {
-  let x =
-    #"356cf088720a169dae0ce0bb1df8588944389fa43322f0d6ef4ed8c069bfd405"
+  let x = #"356cf088720a169dae0ce0bb1df8588944389fa43322f0d6ef4ed8c069bfd405"
   to_int(x) == 24165060555594911913195642527692216679757672038384202527929620681761931383813
 }

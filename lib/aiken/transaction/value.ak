@@ -1,6 +1,7 @@
 use aiken/bytearray
 use aiken/dict.{Dict}
 use aiken/hash.{Blake2b_224, Hash}
+use aiken/list
 use aiken/option
 use aiken/transaction/credential.{Script}
 
@@ -12,8 +13,7 @@ pub type PolicyId =
 /// possible to mint Ada!).
 ///
 /// By convention, it is an empty `ByteArray`.
-pub const ada_policy_id =
-  #""
+pub const ada_policy_id = #""
 
 /// A type-alias for 'AssetName`, which are free-form byte-arrays between
 /// 0 and 32 bytes.
@@ -24,8 +24,7 @@ pub type AssetName =
 /// possible to mint Ada!).
 ///
 /// By convention, it is an empty `ByteArray`.
-pub const ada_asset_name =
-  #""
+pub const ada_asset_name = #""
 
 /// A multi-asset output `Value`. Contains tokens indexed by [PolicyId](#PolicyId) and [AssetName](#AssetName).
 ///
@@ -74,25 +73,21 @@ pub fn without_lovelace(self: Value) -> Value {
 }
 
 test without_lovelace_1() {
-  let v =
-    from_lovelace(1000000)
+  let v = from_lovelace(1000000)
   without_lovelace(v) == zero()
 }
 
 test without_lovelace_2() {
-  let v =
-    from_lovelace(1000000)
-  let v2 =
-    from_lovelace(50000000)
+  let v = from_lovelace(1000000)
+  let v2 = from_lovelace(50000000)
   without_lovelace(v) == without_lovelace(v2)
 }
 
 test without_lovelace_3() {
   let v =
     from_asset(#"010203", #"040506", 100)
-      |> add(from_lovelace(100000000))
-  let v2 =
-    from_asset(#"010203", #"040506", 100)
+      |> add(ada_policy_id, ada_asset_name, 100000000)
+  let v2 = from_asset(#"010203", #"040506", 100)
   without_lovelace(v) == without_lovelace(v2) && without_lovelace(v) == v2
 }
 
@@ -101,7 +96,7 @@ test without_lovelace_3() {
 /// ```
 /// v1
 ///   |> value.negate
-///   |> value.add
+///   |> value.merge(v1)
 ///   |> value.is_zero
 /// // True
 /// ```
@@ -111,7 +106,7 @@ pub fn negate(self: Value) -> Value {
 }
 
 /// Combine two `Value` together.
-pub fn add(left v0: Value, right v1: Value) -> Value {
+pub fn merge(left v0: Value, right v1: Value) -> Value {
   dict.union_with(
     v0.inner,
     v1.inner,
@@ -121,8 +116,7 @@ pub fn add(left v0: Value, right v1: Value) -> Value {
           a0,
           a1,
           fn(_, q0, q1) {
-            let q =
-              q0 + q1
+            let q = q0 + q1
             if q == 0 {
               None
             } else {
@@ -143,26 +137,21 @@ pub fn add(left v0: Value, right v1: Value) -> Value {
     |> Value
 }
 
-test add_1() {
-  let v1 =
-    from_lovelace(1)
-  let v2 =
-    from_lovelace(-1)
-  add(v1, v2) == zero()
+test merge_1() {
+  let v1 = from_lovelace(1)
+  let v2 = from_lovelace(-1)
+  merge(v1, v2) == zero()
 }
 
-test add_2() {
-  let v1 =
-    from_asset(#"00", #"", 1)
-  let v2 =
-    from_asset(#"01", #"", 2)
-  let v3 =
-    from_asset(#"02", #"", 3)
+test merge_2() {
+  let v1 = from_asset(#"00", #"", 1)
+  let v2 = from_asset(#"01", #"", 2)
+  let v3 = from_asset(#"02", #"", 3)
   let v =
     from_lovelace(42)
-      |> add(v3)
-      |> add(v1)
-      |> add(v2)
+      |> merge(v3)
+      |> merge(v1)
+      |> merge(v2)
 
   flatten(v) == [
     (#"", #"", 42),
@@ -172,43 +161,53 @@ test add_2() {
   ]
 }
 
-test add_3() {
-  let v1 =
-    from_asset(#"00", #"", 1)
-  let v2 =
-    from_asset(#"00", #"", -1)
-  let v3 =
-    from_asset(#"01", #"", 1)
+test merge_3() {
+  let v1 = from_asset(#"00", #"", 1)
+  let v2 = from_asset(#"00", #"", -1)
+  let v3 = from_asset(#"01", #"", 1)
 
   let v =
     zero()
-      |> add(v1)
-      |> add(v2)
-      |> add(v3)
+      |> merge(v1)
+      |> merge(v2)
+      |> merge(v3)
 
   flatten(v) == [(#"01", #"", 1)]
 }
 
-/// Flatten a value as list of 3-tuple (PolicyId, AssetName, Quantity).
-///
-/// Handy to manipulate values as uniform lists.
-pub fn flatten(self: Value) -> List<(PolicyId, AssetName, Int)> {
-  dict.fold(
-    self.inner,
-    fn(policy_id, asset, assets) {
-      dict.fold(
-        asset,
-        fn(asset_name, quantity, xs) {
-          if quantity == 0 {
-            xs
-          } else {
-            [(policy_id, asset_name, quantity), ..xs]
-          }
-        },
-        assets,
-      )
-    },
-    [],
+/// Add a (positive or negative) quantity of a single token to a value.
+/// This is more efficient than [`merge`](#merge) for a single asset.
+pub fn add(
+  self: Value,
+  policy_id: PolicyId,
+  asset_name: AssetName,
+  quantity: Int,
+) -> Value {
+  Value(
+    dict.insert_with(
+      self.inner,
+      policy_id,
+      dict.from_ascending_list([(asset_name, quantity)], bytearray.compare),
+      fn(_, left, _right) {
+        Some(
+          dict.insert_with(
+            left,
+            asset_name,
+            quantity,
+            fn(_k, ql, qr) {
+              let q = ql + qr
+              if q == 0 {
+                None
+              } else {
+                Some(q)
+              }
+            },
+            bytearray.compare,
+          ),
+        )
+      },
+      bytearray.compare,
+    ),
   )
 }
 
@@ -241,30 +240,48 @@ pub fn policies(self: Value) -> List<PolicyId> {
   dict.keys(self.inner)
 }
 
+/// Flatten a value as list of 3-tuple (PolicyId, AssetName, Quantity).
+///
+/// Handy to manipulate values as uniform lists.
+pub fn flatten(self: Value) -> List<(PolicyId, AssetName, Int)> {
+  dict.foldr(
+    self.inner,
+    [],
+    fn(policy_id, asset_list, value) {
+      dict.foldr(
+        asset_list,
+        value,
+        fn(asset_name, quantity, xs) {
+          [(policy_id, asset_name, quantity), ..xs]
+        },
+      )
+    },
+  )
+}
+
 /// Flatten a value as a list of results, possibly discarding some along the way.
 ///
-/// When the `transform` function returns `None`, the result is discarded altogether.
+/// When the transform function returns `None`, the result is discarded altogether.
 pub fn flatten_with(
   self: Value,
-  transform: fn(PolicyId, AssetName, Int) -> Option<result>,
+  with: fn(PolicyId, AssetName, Int) -> Option<result>,
 ) -> List<result> {
-  dict.fold(
+  dict.foldr(
     self.inner,
-    fn(policy_id, asset, assets) {
-      dict.fold(
-        asset,
+    [],
+    fn(policy_id, asset_list, value) {
+      dict.foldr(
+        asset_list,
+        value,
         fn(asset_name, quantity, xs) {
-          when transform(policy_id, asset_name, quantity) is {
-            None ->
-              xs
+          when with(policy_id, asset_name, quantity) is {
+            None -> xs
             Some(x) ->
               [x, ..xs]
           }
         },
-        assets,
       )
     },
-    [],
   )
 }
 
@@ -275,9 +292,9 @@ test flatten_with_1() {
 test flatten_with_2() {
   let v =
     zero()
-      |> add(from_asset("a", "1", 14))
-      |> add(from_asset("b", "", 42))
-      |> add(from_asset("a", "2", 42))
+      |> add("a", "1", 14)
+      |> add("b", "", 42)
+      |> add("a", "2", 42)
 
   flatten_with(
     v,
@@ -289,4 +306,130 @@ test flatten_with_2() {
       }
     },
   ) == [("a", "2"), ("b", "")]
+}
+
+/// Convert the value into a dictionary of dictionaries.
+pub fn to_dict(self: Value) -> Dict<PolicyId, Dict<AssetName, Int>> {
+  self.inner
+}
+
+/// A multi-asset value that can be found when minting transaction. Note that
+/// because of historical reasons, this is slightly different from `Value` found
+/// in transaction outputs.
+///
+/// Note that you're never expected to construct a `MintedValue` yourself. If you need to
+/// manipulate multi-asset values, use [Value](/value.html#Value)
+///
+/// See also [`to_value`](#to_value).
+pub opaque type MintedValue {
+  inner: Dict<PolicyId, Dict<AssetName, Int>>,
+}
+
+/// Convert a [`MintedValue`](#MintedValue) into a [`Value`](#Value).
+pub fn from_minted_value(self: MintedValue) -> Value {
+  self.inner |> dict.delete(ada_policy_id) |> Value
+}
+
+/// Convert a [`Value`](#Value) into a [`MintedValue`](#MintedValue).
+pub fn to_minted_value(self: Value) -> MintedValue {
+  self.inner |> MintedValue
+}
+
+test from_minted_value_1() {
+  flatten(from_minted_value(from_list([]))) == []
+}
+
+test from_minted_value_2() {
+  flatten(from_minted_value(from_list([("p0", "a0", 1)]))) == [("p0", "a0", 1)]
+}
+
+test from_minted_value_3() {
+  let assets =
+    [("p0", "a0", 1), ("p1", "a0", 1), ("p0", "a0", 1), ("p1", "a1", 1)]
+
+  let result =
+    [("p0", "a0", 2), ("p1", "a0", 1), ("p1", "a1", 1)]
+
+  flatten(from_minted_value(from_list(assets))) == result
+}
+
+test from_minted_value_4() {
+  let assets =
+    [
+      ("", "", 0),
+      ("p0", "a0", 1),
+      ("p1", "a0", 1),
+      ("p0", "a0", 1),
+      ("p1", "a1", 1),
+    ]
+
+  let result =
+    [("p0", "a0", 2), ("p1", "a0", 1), ("p1", "a1", 1)]
+
+  flatten(from_minted_value(from_list(assets))) == result
+}
+
+test from_minted_value_5() {
+  let assets =
+    [
+      ("p0", "a0", 1),
+      ("p0", "a1", 1),
+      ("p1", "a0", 1),
+      ("p1", "a1", 1),
+      ("p1", "a2", 1),
+      ("p2", "a0", 1),
+      ("p2", "a1", 1),
+      ("p3", "a0", 1),
+      ("p3", "a1", 1),
+      ("p3", "a2", 1),
+      ("p3", "a3", 1),
+      ("p3", "a4", 1),
+      ("p3", "a5", 1),
+      ("p3", "a6", 1),
+      ("p3", "a7", 1),
+    ]
+
+  flatten(from_minted_value(from_list(assets))) == assets
+}
+
+/// Convert a list of tokens into a `MintedValue`.
+///
+/// NOTE: Not exposed because we do not want people to construct `MintedValue`. Only
+/// get them from the script context.
+fn from_list(xs: List<(PolicyId, AssetName, Int)>) -> MintedValue {
+  list.foldr(
+    xs,
+    MintedValue(dict.new()),
+    fn(elem, st) {
+      let (policy_id, asset_name, quantity) = elem
+      unchecked_add(st, policy_id, asset_name, quantity)
+    },
+  )
+}
+
+fn unchecked_add(
+  self: MintedValue,
+  policy_id: PolicyId,
+  asset_name: AssetName,
+  quantity: Int,
+) -> MintedValue {
+  MintedValue(
+    dict.insert_with(
+      self.inner,
+      policy_id,
+      dict.from_ascending_list([(asset_name, quantity)], bytearray.compare),
+      fn(_, left, _right) {
+        Some(
+          dict.insert_with(
+            left,
+            asset_name,
+            quantity,
+            fn(_k, ql, qr) { Some(ql + qr) },
+            bytearray.compare,
+          ),
+        )
+      },
+      bytearray.compare,
+    ),
+  )
 }
