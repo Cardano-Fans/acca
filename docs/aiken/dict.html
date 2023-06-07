@@ -424,7 +424,9 @@
   
   <li><a href="#find">find</a></li>
   
-  <li><a href="#fold">fold</a></li>
+  <li><a href="#foldl">foldl</a></li>
+  
+  <li><a href="#foldr">foldr</a></li>
   
   <li><a href="#from_ascending_list">from_ascending_list</a></li>
   
@@ -435,6 +437,8 @@
   <li><a href="#has_key">has_key</a></li>
   
   <li><a href="#insert">insert</a></li>
+  
+  <li><a href="#insert_with">insert_with</a></li>
   
   <li><a href="#is_empty">is_empty</a></li>
   
@@ -603,10 +607,10 @@ result == Some(foo)
   
   <div class="member">
     <div class="member-name">
-      <h2 id="fold"><pre class="hljs language-aiken">fold(
+      <h2 id="foldl"><pre class="hljs language-aiken">foldl(
   self: Dict&lt;key, value&gt;,
-  with: fn(key, value, result) -&gt; result,
   zero: result,
+  with: fn(key, value, result) -&gt; result,
 ) -&gt; result</pre></h2>
       
       <!-- TODO: support source linking
@@ -616,7 +620,8 @@ result == Some(foo)
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Fold over the key-value pairs in a dictionary.</p>
+    <div class="rendered-markdown"><p>Fold over the key-value pairs in a dictionary. The fold direction follows keys
+in ascending order and is done from left-to-right.</p>
 <pre><code class="language-aiken">use aiken/int
 
 let result =
@@ -624,7 +629,38 @@ let result =
     |&gt; dict.insert(key: 1, value: 100, compare: int.compare)
     |&gt; dict.insert(key: 2, value: 200, compare: int.compare)
     |&gt; dict.insert(key: 3, value: 300, compare: int.compare)
-    |&gt; dict.fold(fn(_k, v, r) { v + r }, 0)
+    |&gt; dict.foldl(0, fn(_k, v, r) { v + r })
+
+result == 600
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="foldr"><pre class="hljs language-aiken">foldr(
+  self: Dict&lt;key, value&gt;,
+  zero: result,
+  with: fn(key, value, result) -&gt; result,
+) -&gt; result</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Fold over the key-value pairs in a dictionary. The fold direction follows keys
+in ascending order and is done from right-to-left.</p>
+<pre><code class="language-aiken">use aiken/int
+
+let result =
+  dict.new()
+    |&gt; dict.insert(key: 1, value: 100, compare: int.compare)
+    |&gt; dict.insert(key: 2, value: 200, compare: int.compare)
+    |&gt; dict.insert(key: 3, value: 300, compare: int.compare)
+    |&gt; dict.foldr(0, fn(_k, v, r) { v + r })
 
 result == 600
 </code></pre>
@@ -762,18 +798,53 @@ result == True
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Insert a value in the dictionary at a given key key. If the key already exists, its value is <strong>overridden</strong>.</p>
+    <div class="rendered-markdown"><p>Insert a value in the dictionary at a given key. If the key already exists, its value is <strong>overridden</strong>. If you need ways to combine keys together, use (<code>insert_with</code>)[#insert_with].</p>
 <pre><code class="language-aiken">use aiken/bytearray
-
-let foo: ByteArray = #&quot;00&quot;
 
 let result =
   dict.new()
-    |&gt; dict.insert(key: foo, value: &quot;Foo&quot;, compare: bytearray.compare)
-    |&gt; dict.insert(key: foo, value: &quot;Aiken&quot;, compare: bytearray.compare)
+    |&gt; dict.insert(key: &quot;foo&quot;, value: 1, compare: bytearray.compare)
+    |&gt; dict.insert(key: &quot;bar&quot;, value: 2, compare: bytearray.compare)
+    |&gt; dict.insert(key: &quot;foo&quot;, value: 3, compare: bytearray.compare)
     |&gt; dict.to_list()
 
-result == [(foo, &quot;Aiken&quot;)]
+result == [(&quot;bar&quot;, 2), (&quot;foo&quot;, 3)]
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="insert_with"><pre class="hljs language-aiken">insert_with(
+  self: Dict&lt;key, value&gt;,
+  key: key,
+  value: value,
+  with: fn(key, value, value) -&gt; Option&lt;value&gt;,
+  compare: fn(key, key) -&gt; Ordering,
+) -&gt; Dict&lt;key, value&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Insert a value in the dictionary at a given key. When the key already exist, the provided
+merge function is called.</p>
+<pre><code class="language-aiken">use aiken/bytearray
+
+let sum =
+  fn (_k, a, b) { Some(a + b) }
+
+let result =
+  dict.new()
+    |&gt; dict.insert_with(key: &quot;foo&quot;, value: 1, with: sum, compare: bytearray.compare)
+    |&gt; dict.insert_with(key: &quot;bar&quot;, value: 2, with: sum, compare: bytearray.compare)
+    |&gt; dict.insert_with(key: &quot;foo&quot;, value: 3, with: sum, compare: bytearray.compare)
+    |&gt; dict.to_list()
+
+result == [(&quot;bar&quot;, 2), (&quot;foo&quot;, 4)]
 </code></pre>
 </div>
   </div>
@@ -967,7 +1038,8 @@ result == [(1, 100), (2, 200), (3, 300)]
       
     </div>
     <div class="rendered-markdown"><p>Like <a href="#union"><code>union</code></a> but allows specifying the behavior to adopt when a key is present
-in both dictionaries.</p>
+in both dictionaries. The first value received correspond to the value in the left
+dictionnary, whereas the second argument corresponds to the value in the right dictionnary.</p>
 <p>When passing <code>None</code>, the value is removed and not present in the union.</p>
 <pre><code class="language-aiken">use aiken/int
 
@@ -1090,8 +1162,8 @@ result == [1337, 42]
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.6-alpha"></script>
-    <script src="../js/index.js?v=1686164187"></script>
+    <script src="../js/index.js?v=1686165136"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1686164187"></script>
+    <script src="../search-data.js?v=1686165136"></script>
   </body>
 </html>

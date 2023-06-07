@@ -421,6 +421,8 @@
   
   <li><a href="#concat">concat</a></li>
   
+  <li><a href="#count">count</a></li>
+  
   <li><a href="#delete">delete</a></li>
   
   <li><a href="#difference">difference</a></li>
@@ -617,6 +619,26 @@ list.concat([1, 2, 3], [4, 5, 6]) == [1, 2, 3, 4, 5, 6]
   
   <div class="member">
     <div class="member-name">
+      <h2 id="count"><pre class="hljs language-aiken">count(self: List&lt;a&gt;, predicate: fn(a) -&gt; Bool) -&gt; Int</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Count how many items in the list satisfy the given predicate.</p>
+<pre><code class="language-aiken">list.count([], fn(a) { a &gt; 2}) == 0
+list.count([1, 2, 3], fn(a) { n &gt; 0 }) == 3
+list.count([1, 2, 3], fn(a) { n &gt;= 2 }) == 2
+list.count([1, 2, 3], fn(a) { n &gt; 5 }) == 0
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
       <h2 id="delete"><pre class="hljs language-aiken">delete(self: List&lt;a&gt;, elem: a) -&gt; List&lt;a&gt;</pre></h2>
       
       <!-- TODO: support source linking
@@ -683,7 +705,7 @@ list.drop([1, 2, 3], 42) == []
       
     </div>
     <div class="rendered-markdown"><p>Returns the suffix of the given list after removing all elements that satisfy the predicate.</p>
-<pre><code class="language-aiken">list.drop_while([1, 2, 3], fn(x) { x &gt; 2 }) == [2, 3]
+<pre><code class="language-aiken">list.drop_while([1, 2, 3], fn(x) { x &lt; 2 }) == [2, 3]
 list.drop_while([], fn(x) { x &gt; 2 }) == []
 list.drop_while([1, 2, 3], fn(x) { x == 3 }) == [1, 2, 3]
 </code></pre>
@@ -764,7 +786,7 @@ list.find([4, 5, 6], fn(x) { x == 2 }) == None
   
   <div class="member">
     <div class="member-name">
-      <h2 id="foldl"><pre class="hljs language-aiken">foldl(self: List&lt;a&gt;, with: fn(a, b) -&gt; b, zero: b) -&gt; b</pre></h2>
+      <h2 id="foldl"><pre class="hljs language-aiken">foldl(self: List&lt;a&gt;, zero: b, with: fn(a, b) -&gt; b) -&gt; b</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -774,15 +796,15 @@ list.find([4, 5, 6], fn(x) { x == 2 }) == None
       
     </div>
     <div class="rendered-markdown"><p>Reduce a list from left to right.</p>
-<pre><code class="language-aiken">list.foldl([1, 2, 3], fn(n, total) { n + total }, 0) == 6
-list.foldl([1, 2, 3], fn(x, xs) { [x, ..xs] }) == [3, 2, 1]
+<pre><code class="language-aiken">list.foldl([1, 2, 3], 0, fn(n, total) { n + total }) == 6
+list.foldl([1, 2, 3], [], fn(x, xs) { [x, ..xs] }) == [3, 2, 1]
 </code></pre>
 </div>
   </div>
   
   <div class="member">
     <div class="member-name">
-      <h2 id="foldr"><pre class="hljs language-aiken">foldr(self: List&lt;a&gt;, with: fn(a, b) -&gt; b, zero: b) -&gt; b</pre></h2>
+      <h2 id="foldr"><pre class="hljs language-aiken">foldr(self: List&lt;a&gt;, zero: b, with: fn(a, b) -&gt; b) -&gt; b</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -792,8 +814,8 @@ list.foldl([1, 2, 3], fn(x, xs) { [x, ..xs] }) == [3, 2, 1]
       
     </div>
     <div class="rendered-markdown"><p>Reduce a list from right to left.</p>
-<pre><code class="language-aiken">list.foldr([1, 2, 3], fn(n, total) { n + total }, 0) == 6
-list.foldr([1, 2, 3], fn(x, xs) { [x, ..xs] }, 0) == [1, 2, 3]
+<pre><code class="language-aiken">list.foldr([1, 2, 3], 0, fn(n, total) { n + total }) == 6
+list.foldr([1, 2, 3], [], fn(x, xs) { [x, ..xs] }) == [1, 2, 3]
 </code></pre>
 </div>
   </div>
@@ -839,8 +861,8 @@ list.head([]) == None
     <div class="member-name">
       <h2 id="indexed_foldr"><pre class="hljs language-aiken">indexed_foldr(
   self: List&lt;a&gt;,
-  with: fn(Int, a, result) -&gt; result,
   zero: result,
+  with: fn(Int, a, result) -&gt; result,
 ) -&gt; result</pre></h2>
       
       <!-- TODO: support source linking
@@ -852,7 +874,7 @@ list.head([]) == None
     </div>
     <div class="rendered-markdown"><p>Like <a href="#foldr"><code>foldr</code></a>, but also provides the position (0-based) of the elements when iterating.</p>
 <pre><code class="language-aiken">let group = fn(i, x, xs) { [(i, x), ..xs] }
-list.indexed_foldr([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], group, []) == [
+list.indexed_foldr([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], [], group) == [
   (0, &quot;a&quot;),
   (1, &quot;b&quot;),
   (2, &quot;c&quot;)
@@ -1085,7 +1107,7 @@ list.range(-1, 1) == [-1, 0, 1]
   
   <div class="member">
     <div class="member-name">
-      <h2 id="reduce"><pre class="hljs language-aiken">reduce(self: List&lt;a&gt;, with: fn(b, a) -&gt; b, zero: b) -&gt; b</pre></h2>
+      <h2 id="reduce"><pre class="hljs language-aiken">reduce(self: List&lt;a&gt;, zero: b, with: fn(b, a) -&gt; b) -&gt; b</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -1097,7 +1119,7 @@ list.range(-1, 1) == [-1, 0, 1]
     <div class="rendered-markdown"><p>Reduce a list from left to right using the accumulator as left operand.
 Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback arguments swapped.</p>
 <pre><code class="language-aiken">list.reduce([#[1], #[2], #[3]], bytearray.concat, #[0]) == #[0, 1, 2, 3]
-list.reduce([True, False, True], or, False) == True
+list.reduce([True, False, True], fn(b, a) { or([b, a]) }, False) == True
 </code></pre>
 </div>
   </div>
@@ -1190,7 +1212,8 @@ sort([1, 2, 3], int.compare) == [1, 2, 3]
     <div class="rendered-markdown"><p>Cut a list in two, such that the first list contains the given number of /
 elements and the second list contains the rest.</p>
 <p>Fundamentally equivalent to (but more efficient):</p>
-<pre><code class="language-aiken">span(xs, n) == (take(xs, n), drop(xs, n))
+<pre><code class="language-aiken">// span(xs, n) == (take(xs, n), drop(xs, n))
+span([1, 2, 3, 4, 5], 3) == ([1, 2, 3], [4, 5])
 </code></pre>
 </div>
   </div>
@@ -1374,8 +1397,8 @@ list.take_while([1, 2, 3], fn(x) { x &lt; 2 }) == [1]
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.6-alpha"></script>
-    <script src="../js/index.js?v=1686164187"></script>
+    <script src="../js/index.js?v=1686165136"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1686164187"></script>
+    <script src="../search-data.js?v=1686165136"></script>
   </body>
 </html>

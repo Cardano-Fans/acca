@@ -409,6 +409,8 @@
   
   <li><a href="#AssetName">AssetName</a></li>
   
+  <li><a href="#MintedValue">MintedValue</a></li>
+  
   <li><a href="#PolicyId">PolicyId</a></li>
   
   <li><a href="#Value">Value</a></li>
@@ -441,13 +443,21 @@
   
   <li><a href="#from_lovelace">from_lovelace</a></li>
   
+  <li><a href="#from_minted_value">from_minted_value</a></li>
+  
   <li><a href="#lovelace_of">lovelace_of</a></li>
+  
+  <li><a href="#merge">merge</a></li>
   
   <li><a href="#negate">negate</a></li>
   
   <li><a href="#policies">policies</a></li>
   
   <li><a href="#quantity_of">quantity_of</a></li>
+  
+  <li><a href="#to_dict">to_dict</a></li>
+  
+  <li><a href="#to_minted_value">to_minted_value</a></li>
   
   <li><a href="#tokens">tokens</a></li>
   
@@ -499,6 +509,33 @@
         <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
         <pre class="constructor-name"><code class="hljs aiken">AssetName = ByteArray</code></pre>
       </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="MintedValue">
+        <a href="#MintedValue">
+	  MintedValue
+        </a>
+      </h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A multi-asset value that can be found when minting transaction. Note that
+because of historical reasons, this is slightly different from <code>Value</code> found
+in transaction outputs.</p>
+<p>Note that you’re never expected to construct a <code>MintedValue</code> yourself. If you need to
+manipulate multi-asset values, use <a href="/value.html#Value">Value</a></p>
+<p>See also <a href="#to_value"><code>to_value</code></a>.</p>
+</div>
       
     </div>
   </div>
@@ -610,7 +647,12 @@ possible to mint Ada!).</p>
   
   <div class="member">
     <div class="member-name">
-      <h2 id="add"><pre class="hljs language-aiken">add(left: Value, right: Value) -&gt; Value</pre></h2>
+      <h2 id="add"><pre class="hljs language-aiken">add(
+  self: Value,
+  policy_id: PolicyId,
+  asset_name: AssetName,
+  quantity: Int,
+) -&gt; Value</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -619,7 +661,8 @@ possible to mint Ada!).</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Combine two <code>Value</code> together.</p>
+    <div class="rendered-markdown"><p>Add a (positive or negative) quantity of a single token to a value.
+This is more efficient than <a href="#merge"><code>merge</code></a> for a single asset.</p>
 </div>
   </div>
   
@@ -643,7 +686,7 @@ possible to mint Ada!).</p>
     <div class="member-name">
       <h2 id="flatten_with"><pre class="hljs language-aiken">flatten_with(
   self: Value,
-  transform: fn(PolicyId, AssetName, Int) -&gt; Option&lt;result&gt;,
+  with: fn(PolicyId, AssetName, Int) -&gt; Option&lt;result&gt;,
 ) -&gt; List&lt;result&gt;</pre></h2>
       
       <!-- TODO: support source linking
@@ -654,7 +697,7 @@ possible to mint Ada!).</p>
       
     </div>
     <div class="rendered-markdown"><p>Flatten a value as a list of results, possibly discarding some along the way.</p>
-<p>When the <code>transform</code> function returns <code>None</code>, the result is discarded altogether.</p>
+<p>When the transform function returns <code>None</code>, the result is discarded altogether.</p>
 </div>
   </div>
   
@@ -692,6 +735,21 @@ and a given quantity.</p>
   
   <div class="member">
     <div class="member-name">
+      <h2 id="from_minted_value"><pre class="hljs language-aiken">from_minted_value(self: MintedValue) -&gt; Value</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Convert a <a href="#MintedValue"><code>MintedValue</code></a> into a <a href="#Value"><code>Value</code></a>.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
       <h2 id="lovelace_of"><pre class="hljs language-aiken">lovelace_of(self: Value) -&gt; Int</pre></h2>
       
       <!-- TODO: support source linking
@@ -702,6 +760,21 @@ and a given quantity.</p>
       
     </div>
     <div class="rendered-markdown"><p>A specialized version of <code>quantity_of</code> for the Ada currency.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="merge"><pre class="hljs language-aiken">merge(left: Value, right: Value) -&gt; Value</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Combine two <code>Value</code> together.</p>
 </div>
   </div>
   
@@ -719,7 +792,7 @@ and a given quantity.</p>
     <div class="rendered-markdown"><p>Negates quantities of all tokens (including Ada) in that <code>Value</code>.</p>
 <pre><code>v1
   |&gt; value.negate
-  |&gt; value.add
+  |&gt; value.merge(v1)
   |&gt; value.is_zero
 // True
 </code></pre>
@@ -753,6 +826,36 @@ and a given quantity.</p>
       
     </div>
     <div class="rendered-markdown"><p>Extract the quantity of a given asset.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="to_dict"><pre class="hljs language-aiken">to_dict(self: Value) -&gt; Dict&lt;PolicyId, Dict&lt;AssetName, Int&gt;&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Convert the value into a dictionary of dictionaries.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="to_minted_value"><pre class="hljs language-aiken">to_minted_value(self: Value) -&gt; MintedValue</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Convert a <a href="#Value"><code>Value</code></a> into a <a href="#MintedValue"><code>MintedValue</code></a>.</p>
 </div>
   </div>
   
@@ -874,8 +977,8 @@ and a given quantity.</p>
       });
     </script>
     <script src="../../js/lunr.min.js?v=1.0.6-alpha"></script>
-    <script src="../../js/index.js?v=1686164187"></script>
+    <script src="../../js/index.js?v=1686165136"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../../search-data.js?v=1686164187"></script>
+    <script src="../../search-data.js?v=1686165136"></script>
   </body>
 </html>

@@ -825,7 +825,7 @@ to bootstrap addresses or just transaction metadata.</p>
   reference_inputs: List&lt;Input&gt;,
   outputs: List&lt;Output&gt;,
   fee: Value,
-  mint: Value,
+  mint: MintedValue,
   certificates: List&lt;Certificate&gt;,
   withdrawals: Dict&lt;StakeCredential, Int&gt;,
   validity_range: ValidityRange,
@@ -922,7 +922,8 @@ digests of transaction body as they are serialized on the network.</p>
   <div class="member">
     <div class="member-name">
       <h2 id="find_datum"><pre class="hljs language-aiken">find_datum(
-  transaction: Transaction,
+  outputs: List&lt;Output&gt;,
+  datums: Dict&lt;Hash&lt;Blake2b_256, Data&gt;, Data&gt;,
   datum_hash: Hash&lt;Blake2b_256, Data&gt;,
 ) -&gt; Option&lt;Data&gt;</pre></h2>
       
@@ -942,7 +943,7 @@ witnesses.</p>
   <div class="member">
     <div class="member-name">
       <h2 id="find_input"><pre class="hljs language-aiken">find_input(
-  transaction: Transaction,
+  inputs: List&lt;Input&gt;,
   output_reference: OutputReference,
 ) -&gt; Option&lt;Input&gt;</pre></h2>
       
@@ -962,7 +963,7 @@ input.</p>
       ctx.purpose
 
     expect Some(input) =
-      ctx.transaction
+      ctx.transaction.inputs
         |&gt; transaction.find_input(my_output_reference)
   }
 }
@@ -973,7 +974,7 @@ input.</p>
   <div class="member">
     <div class="member-name">
       <h2 id="find_script_outputs"><pre class="hljs language-aiken">find_script_outputs(
-  transaction: Transaction,
+  outputs: List&lt;Output&gt;,
   script_hash: Hash&lt;Blake2b_224, Script&gt;,
 ) -&gt; List&lt;Output&gt;</pre></h2>
       
@@ -1062,8 +1063,8 @@ contracts running over multiple transactions.</p>
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.6-alpha"></script>
-    <script src="../js/index.js?v=1686164187"></script>
+    <script src="../js/index.js?v=1686165136"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1686164187"></script>
+    <script src="../search-data.js?v=1686165136"></script>
   </body>
 </html>

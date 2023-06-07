@@ -584,9 +584,9 @@ option.map(Some(14), fn(n) { n * 2 }) == Some(28)
   Foo(Int, Int)
 }
 
-option.map2(Foo, Some(14), Some(42)) == Some(Foo(14, 42))
-option.map2(Foo, None, Some(42)) == None
-option.map2(Foo, Some(14), None) == None
+option.map2(Some(14), Some(42), Foo) == Some(Foo(14, 42))
+option.map2(None, Some(42), Foo) == None
+option.map2(Some(14), None, Foo) == None
 </code></pre>
 </div>
   </div>
@@ -612,9 +612,9 @@ option.map2(Foo, Some(14), None) == None
   Foo(Int, Int, Int)
 }
 
-option.map3(Foo, Some(14), Some(42), Some(1337)) == Some(Foo(14, 42, 1337))
-option.map3(Foo, None, Some(42), Some(1337)) == None
-option.map3(Foo, Some(14), None, None) == None
+option.map3(Some(14), Some(42), Some(1337), Foo) == Some(Foo(14, 42, 1337))
+option.map3(None, Some(42), Some(1337), Foo) == None
+option.map3(Some(14), None, None, Foo) == None
 </code></pre>
 </div>
   </div>
@@ -729,8 +729,8 @@ option.or_try(Some(42), fn(_) { Some(14) }) == Some(42)
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.6-alpha"></script>
-    <script src="../js/index.js?v=1686164187"></script>
+    <script src="../js/index.js?v=1686165136"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1686164187"></script>
+    <script src="../search-data.js?v=1686165136"></script>
   </body>
 </html>

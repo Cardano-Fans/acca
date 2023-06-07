@@ -437,6 +437,8 @@
   
   <li><a href="#take">take</a></li>
   
+  <li><a href="#to_hex">to_hex</a></li>
+  
   <li><a href="#to_string">to_string</a></li>
   
 </ul>
@@ -516,7 +518,7 @@ bytearray.compare(#&quot;FF&quot;, #&quot;00&quot;) == Greater
   
   <div class="member">
     <div class="member-name">
-      <h2 id="foldl"><pre class="hljs language-aiken">foldl(self: ByteArray, with: fn(Int, result) -&gt; result, zero: result) -&gt; result</pre></h2>
+      <h2 id="foldl"><pre class="hljs language-aiken">foldl(self: ByteArray, zero: result, with: fn(Int, result) -&gt; result) -&gt; result</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -526,15 +528,15 @@ bytearray.compare(#&quot;FF&quot;, #&quot;00&quot;) == Greater
       
     </div>
     <div class="rendered-markdown"><p>Left-fold over bytes of a <a href="https://aiken-lang.github.io/prelude/aiken.html#ByteArray"><code>ByteArray</code></a>. Note that every byte given to the callback function is comprised between 0 and 255.</p>
-<pre><code class="language-aiken">bytearray.foldl(#&quot;acab&quot;, fn(byte, acc) { acc * 256 + byte }, 0) == 44203
-bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #&quot;&quot;) == #[3, 2, 1]
+<pre><code class="language-aiken">bytearray.foldl(#&quot;acab&quot;, 0, fn(byte, acc) { acc * 256 + byte }) == 44203
+bytearray.foldl(#[1, 2, 3], #&quot;&quot;, flip(bytearray.push)) == #[3, 2, 1]
 </code></pre>
 </div>
   </div>
   
   <div class="member">
     <div class="member-name">
-      <h2 id="foldr"><pre class="hljs language-aiken">foldr(self: ByteArray, with: fn(Int, result) -&gt; result, zero: result) -&gt; result</pre></h2>
+      <h2 id="foldr"><pre class="hljs language-aiken">foldr(self: ByteArray, zero: result, with: fn(Int, result) -&gt; result) -&gt; result</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -544,8 +546,8 @@ bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #&quot;&quot;) == #[3, 2, 1]
       
     </div>
     <div class="rendered-markdown"><p>Right-fold over bytes of a <a href="https://aiken-lang.github.io/prelude/aiken.html#ByteArray"><code>ByteArray</code></a>. Note that every byte given to the callback function is comprised between 0 and 255.</p>
-<pre><code class="language-aiken">bytearray.foldr(#&quot;acab&quot;, fn(byte, acc) { acc * 256 + byte }, 0) == 43948
-bytearray.foldl(#[1, 2, 3], flip(bytearray.push), #&quot;&quot;) == #[1, 2, 3]
+<pre><code class="language-aiken">bytearray.foldr(#&quot;acab&quot;, 0, fn(byte, acc) { acc * 256 + byte }) == 43948
+bytearray.foldl(#[1, 2, 3], #&quot;&quot;, flip(bytearray.push)) == #[1, 2, 3]
 </code></pre>
 </div>
   </div>
@@ -646,7 +648,7 @@ bytearray.push(#&quot;0203&quot;, 257) == #&quot;010203&quot;
   
   <div class="member">
     <div class="member-name">
-      <h2 id="reduce"><pre class="hljs language-aiken">reduce(self: ByteArray, with: fn(result, Int) -&gt; result, zero: result) -&gt; result</pre></h2>
+      <h2 id="reduce"><pre class="hljs language-aiken">reduce(self: ByteArray, zero: result, with: fn(result, Int) -&gt; result) -&gt; result</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -657,7 +659,7 @@ bytearray.push(#&quot;0203&quot;, 257) == #&quot;010203&quot;
     </div>
     <div class="rendered-markdown"><p>Reduce bytes in a ByteArray from left to right using the accumulator as left operand.
 Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback arguments swapped.</p>
-<pre><code class="language-aiken">bytearray.reduce(#[1,2,3], bytearray.push, #[]) == #[3, 2, 1]
+<pre><code class="language-aiken">bytearray.reduce(#[1,2,3], #[], bytearray.push) == #[3, 2, 1]
 </code></pre>
 </div>
   </div>
@@ -693,6 +695,25 @@ Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback 
     </div>
     <div class="rendered-markdown"><p>Returns the n-length prefix of a <code>ByteArray</code>.</p>
 <pre><code class="language-aiken">bytearray.take(#[1, 2, 3], n: 2) == #[1, 2]
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="to_hex"><pre class="hljs language-aiken">to_hex(self: ByteArray) -&gt; String</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Encode a <code>ByteArray</code> as a hexidecimal <code>String</code>.</p>
+<pre><code class="language-aiken">use aiken/bytearray
+
+bytearray.to_hex(&quot;Hello world!&quot;) == @&quot;48656c6c6f20776f726c6421&quot;
 </code></pre>
 </div>
   </div>
@@ -787,8 +808,8 @@ Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback 
       });
     </script>
     <script src="../js/lunr.min.js?v=1.0.6-alpha"></script>
-    <script src="../js/index.js?v=1686164187"></script>
+    <script src="../js/index.js?v=1686165136"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1686164187"></script>
+    <script src="../search-data.js?v=1686165136"></script>
   </body>
 </html>
