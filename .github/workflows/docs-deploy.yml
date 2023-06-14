@@ -19,7 +19,7 @@ jobs:
 
       - uses: aiken-lang/setup-aiken@v0.1.0
         with:
-          version: v1.0.6-alpha
+          version: v1.0.10-alpha
 
       - name: Run Aiken docs on acca
         working-directory: ./
