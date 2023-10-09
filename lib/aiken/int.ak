@@ -32,10 +32,10 @@ pub fn compare(left: Int, right: Int) -> Ordering {
 pub fn from_utf8(bytes: ByteArray) -> Option<Int> {
   bytes
     |> bytearray.foldr(
+         Some((0, 0)),
          fn(byte, st) {
            when st is {
-             None ->
-               None
+             None -> None
              Some((n, e)) ->
                if byte < 48 || byte > 57 {
                  if byte == 45 {
@@ -46,13 +46,11 @@ pub fn from_utf8(bytes: ByteArray) -> Option<Int> {
                } else if n < 0 {
                  None
                } else {
-                 let digit =
-                   byte - 48
+                 let digit = byte - 48
                  Some((n + digit * math.pow(10, e), e + 1))
                }
            }
          },
-         Some((0, 0)),
        )
     |> option.map(fn(tuple) { tuple.1st })
 }

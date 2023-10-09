@@ -1,4 +1,4 @@
-use aiken/cbor
+use aiken/builtin
 use aiken/dict.{Dict}
 use aiken/hash.{Blake2b_224, Blake2b_256, Hash, blake2b_256}
 use aiken/interval.{Interval}
@@ -10,7 +10,7 @@ use aiken/transaction/credential.{
   Address, Script, ScriptCredential, StakeCredential, VerificationKey,
   VerificationKeyCredential,
 }
-use aiken/transaction/value.{PolicyId, Value}
+use aiken/transaction/value.{MintedValue, PolicyId, Value}
 
 /// A context given to a script by the Cardano ledger when being executed.
 ///
@@ -57,7 +57,7 @@ pub type Transaction {
   reference_inputs: List<Input>,
   outputs: List<Output>,
   fee: Value,
-  mint: Value,
+  mint: MintedValue,
   certificates: List<Certificate>,
   withdrawals: Dict<StakeCredential, Int>,
   validity_range: ValidityRange,
@@ -126,16 +126,16 @@ pub type Redeemer =
 ///       ctx.purpose
 ///
 ///     expect Some(input) =
-///       ctx.transaction
+///       ctx.transaction.inputs
 ///         |> transaction.find_input(my_output_reference)
 ///   }
 /// }
 /// ```
 pub fn find_input(
-  transaction: Transaction,
+  inputs: List<Input>,
   output_reference: OutputReference,
 ) -> Option<Input> {
-  transaction.inputs
+  inputs
     |> list.find(fn(input) { input.output_reference == output_reference })
 }
 
@@ -143,25 +143,27 @@ pub fn find_input(
 /// datums in the witness set, and then for inline datums if it doesn't find any in
 /// witnesses.
 pub fn find_datum(
-  transaction: Transaction,
+  outputs: List<Output>,
+  datums: Dict<Hash<Blake2b_256, Data>, Data>,
   datum_hash: Hash<Blake2b_256, Data>,
 ) -> Option<Data> {
-  transaction.datums
+  datums
     |> dict.get(datum_hash)
     |> option.or_try(
-         fn(_) {
-           transaction.outputs
+         fn() {
+           outputs
              |> list.filter_map(
                   fn(output) {
                     when output.datum is {
                       InlineDatum(data) ->
-                        if blake2b_256(cbor.serialise(data)) == datum_hash {
+                        if
+                        blake2b_256(builtin.serialise_data(data)) == datum_hash{
+                        
                           Some(data)
                         } else {
                           None
                         }
-                      _ ->
-                        None
+                      _ -> None
                     }
                   },
                 )
@@ -173,17 +175,16 @@ pub fn find_datum(
 /// Find all outputs that are paying into the given script hash, if any. This is useful for
 /// contracts running over multiple transactions.
 pub fn find_script_outputs(
-  transaction: Transaction,
+  outputs: List<Output>,
   script_hash: Hash<Blake2b_224, Script>,
 ) -> List<Output> {
-  transaction.outputs
+  outputs
     |> list.filter(
          fn(output) {
            when output.address.payment_credential is {
              ScriptCredential(addr_script_hash) ->
                script_hash == addr_script_hash
-             VerificationKeyCredential(_) ->
-               False
+             VerificationKeyCredential(_) -> False
            }
          },
        )

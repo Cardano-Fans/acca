@@ -8,14 +8,11 @@
 /// ```
 pub fn choice(self: List<Option<a>>) -> Option<a> {
   when self is {
-    [] ->
-      None
+    [] -> None
     [head, ..others] ->
       when head is {
-        None ->
-          choice(others)
-        _ ->
-          head
+        None -> choice(others)
+        _ -> head
       }
   }
 }
@@ -40,10 +37,8 @@ test choice_3() {
 /// ```
 pub fn or_else(self: Option<a>, default: a) -> a {
   when self is {
-    None ->
-      default
-    Some(a) ->
-      a
+    None -> default
+    Some(a) -> a
   }
 }
 
@@ -62,29 +57,19 @@ test or_else_2() {
 /// option.or_try(None, fn(_) { Some("aiken") }) == Some("aiken")
 /// option.or_try(Some(42), fn(_) { Some(14) }) == Some(42)
 /// ```
-pub fn or_try(
-  self: Option<a>,
-  compute_default: fn(Void) -> Option<a>,
-) -> Option<a> {
+pub fn or_try(self: Option<a>, compute_default: fn() -> Option<a>) -> Option<a> {
   when self is {
-    None ->
-      compute_default(Void)
-    _ ->
-      self
+    None -> compute_default()
+    _ -> self
   }
 }
 
 test or_try_1() {
-  or_try(None, fn(_) { Some("aiken") }) == Some("aiken")
+  or_try(None, fn() { Some("aiken") }) == Some("aiken")
 }
 
 test or_try_2() {
-  or_try(
-    Some(42),
-    fn(_) {
-      error
-    },
-  ) == Some(42)
+  or_try(Some(42), fn() { fail }) == Some(42)
 }
 
 /// Apply a function to the inner value of an [`Option`](#option)
@@ -95,10 +80,8 @@ test or_try_2() {
 /// ```
 pub fn map(self: Option<a>, with: fn(a) -> result) -> Option<result> {
   when self is {
-    None ->
-      None
-    Some(a) ->
-      Some(with(a))
+    None -> None
+    Some(a) -> Some(with(a))
   }
 }
 
@@ -117,9 +100,9 @@ test map_2() {
 ///   Foo(Int, Int)
 /// }
 ///
-/// option.map2(Foo, Some(14), Some(42)) == Some(Foo(14, 42))
-/// option.map2(Foo, None, Some(42)) == None
-/// option.map2(Foo, Some(14), None) == None
+/// option.map2(Some(14), Some(42), Foo) == Some(Foo(14, 42))
+/// option.map2(None, Some(42), Foo) == None
+/// option.map2(Some(14), None, Foo) == None
 /// ```
 pub fn map2(
   opt_a: Option<a>,
@@ -127,14 +110,11 @@ pub fn map2(
   with: fn(a, b) -> result,
 ) -> Option<result> {
   when opt_a is {
-    None ->
-      None
+    None -> None
     Some(a) ->
       when opt_b is {
-        None ->
-          None
-        Some(b) ->
-          Some(with(a, b))
+        None -> None
+        Some(b) -> Some(with(a, b))
       }
   }
 }
@@ -158,9 +138,9 @@ test map2_3() {
 ///   Foo(Int, Int, Int)
 /// }
 ///
-/// option.map3(Foo, Some(14), Some(42), Some(1337)) == Some(Foo(14, 42, 1337))
-/// option.map3(Foo, None, Some(42), Some(1337)) == None
-/// option.map3(Foo, Some(14), None, None) == None
+/// option.map3(Some(14), Some(42), Some(1337), Foo) == Some(Foo(14, 42, 1337))
+/// option.map3(None, Some(42), Some(1337), Foo) == None
+/// option.map3(Some(14), None, None, Foo) == None
 /// ```
 pub fn map3(
   opt_a: Option<a>,
@@ -169,18 +149,14 @@ pub fn map3(
   with: fn(a, b, c) -> result,
 ) -> Option<result> {
   when opt_a is {
-    None ->
-      None
+    None -> None
     Some(a) ->
       when opt_b is {
-        None ->
-          None
+        None -> None
         Some(b) ->
           when opt_c is {
-            None ->
-              None
-            Some(c) ->
-              Some(with(a, b, c))
+            None -> None
+            Some(c) -> Some(with(a, b, c))
           }
       }
   }
@@ -211,10 +187,8 @@ pub fn and_then(
   then: fn(a) -> Option<result>,
 ) -> Option<result> {
   when self is {
-    None ->
-      None
-    Some(a) ->
-      then(a)
+    None -> None
+    Some(a) -> then(a)
   }
 }
 
@@ -263,34 +237,28 @@ test and_then_3() {
 /// ```
 pub fn flatten(opt: Option<Option<a>>) -> Option<a> {
   when opt is {
-    Some(inner) ->
-      inner
-    None ->
-      None
+    Some(inner) -> inner
+    None -> None
   }
 }
 
 test flatten_1() {
-  let x: Option<Option<Int>> =
-    Some(Some(6))
+  let x: Option<Option<Int>> = Some(Some(6))
   Some(6) == flatten(x)
 }
 
 test flatten_2() {
-  let x: Option<Option<Int>> =
-    Some(None)
+  let x: Option<Option<Int>> = Some(None)
   None == flatten(x)
 }
 
 test flatten_3() {
-  let x: Option<Option<Int>> =
-    None
+  let x: Option<Option<Int>> = None
   None == flatten(x)
 }
 
 test flatten_4() {
-  let x: Option<Option<Option<Int>>> =
-    Some(Some(Some(6)))
+  let x: Option<Option<Option<Int>>> = Some(Some(Some(6)))
 
   let result =
     x
@@ -303,10 +271,8 @@ test flatten_4() {
 /// Asserts whether an option is `Some`, irrespective of the value it contains.
 pub fn is_some(self: Option<a>) -> Bool {
   when self is {
-    Some(_) ->
-      True
-    _ ->
-      False
+    Some(_) -> True
+    _ -> False
   }
 }
 
@@ -321,10 +287,8 @@ test is_some_2() {
 /// Asserts whether an option is `None`.
 pub fn is_none(self: Option<a>) -> Bool {
   when self is {
-    Some(_) ->
-      False
-    _ ->
-      True
+    Some(_) -> False
+    _ -> True
   }
 }
 

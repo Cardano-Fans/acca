@@ -10,18 +10,15 @@ pub type Either<a, b> {
 }
 
 test either_1() {
-  let l: Either<Int, String> =
-    Left { value: 1 }
-  let r: Either<Int, String> =
-    Right { value: @"" }
+  let l: Either<Int, String> = Left { value: 1 }
+  let r: Either<Int, String> = Right { value: @"" }
 
-  list.and([l == Left { value: 1 }, r == Right { value: @"" }])
+  l == Left { value: 1 } && r == Right { value: @"" }
 }
 
 /// Forces either to be `Left`, fails with an error otherwise.
 pub fn left(self: Either<a, b>) {
-  expect Left { value } =
-    self
+  expect Left { value } = self
 
   value
 }
@@ -32,8 +29,7 @@ test left_1() {
 
 /// Forces either to be `Right`, fails with an error otherwise.
 pub fn right(self: Either<a, b>) {
-  expect Right { value } =
-    self
+  expect Right { value } = self
 
   value
 }
@@ -45,10 +41,8 @@ test right_1() {
 /// Provides information whether `Either` contains a particular element.
 pub fn contains(self: Either<a, b>, item: b) -> Bool {
   when self is {
-    Left(_) ->
-      False
-    Right(x) ->
-      x == item
+    Left(_) -> False
+    Right(x) -> x == item
   }
 }
 
@@ -71,23 +65,19 @@ pub fn fold(
   with_right: fn(b) -> c,
 ) -> c {
   when self is {
-    Left(a) ->
-      with_left(a)
-    Right(b) ->
-      with_right(b)
+    Left(a) -> with_left(a)
+    Right(b) -> with_right(b)
   }
 }
 
 test fold_1() {
-  let either: Either<Int, Int> =
-    Left { value: 1 }
+  let either: Either<Int, Int> = Left { value: 1 }
 
   fold(self: either, with_left: fn(x) { x > 0 }, with_right: fn(y) { y < 0 }) == True
 }
 
 test fold_2() {
-  let either: Either<Int, Int> =
-    Right { value: 1 }
+  let either: Either<Int, Int> = Right { value: 1 }
 
   fold(self: either, with_left: fn(x) { x > 0 }, with_right: fn(y) { y < 0 }) == False
 }
@@ -96,10 +86,8 @@ test fold_2() {
 /// Notice that coversion of `Left` to None means we are loosing value wrapped in `Left`.
 pub fn to_option(self: Either<a, b>) -> Option<b> {
   when self is {
-    Left(_) ->
-      None
-    Right(x) ->
-      Some(x)
+    Left(_) -> None
+    Right(x) -> Some(x)
   }
 }
 
@@ -134,28 +122,23 @@ test to_list_2() {
 /// Whether this either is in fact `Left`.
 pub fn is_left(self: Either<a, b>) -> Bool {
   when self is {
-    Left(_) ->
-      True
-    _ ->
-      False
+    Left(_) -> True
+    _ -> False
   }
 }
 
 /// Whether this either is in fact `Right`.
 pub fn is_right(self: Either<a, b>) -> Bool {
   when self is {
-    Right(_) ->
-      True
-    _ ->
-      False
+    Right(_) -> True
+    _ -> False
   }
 }
 
 /// Applies the predicate to the `Right` part, in case Either is `Left`, it returns negative.
 pub fn exists(self: Either<a, b>, with: fn(b) -> Bool) -> Bool {
   when self is {
-    Left(_) ->
-      False
+    Left(_) -> False
     Right(y) ->
       if with(y) {
         True
@@ -180,10 +163,8 @@ test exists_3() {
 /// Swap and replace a `Left` side with a `Right` side.
 pub fn swap(self: Either<a, b>) -> Either<b, a> {
   when self is {
-    Left(x) ->
-      Right(x)
-    Right(y) ->
-      Left(y)
+    Left(x) -> Right(x)
+    Right(y) -> Left(y)
   }
 }
 
@@ -199,10 +180,8 @@ test swap_2() {
 /// Note that map is right biased, if you need to map over left, you should use map_left function.
 pub fn map(self: Either<a, b>, with: fn(b) -> c) {
   when self is {
-    Left(x) ->
-      Left(x)
-    Right(y) ->
-      Right(with(y))
+    Left(x) -> Left(x)
+    Right(y) -> Right(with(y))
   }
 }
 
@@ -221,10 +200,8 @@ test map_2() {
 
 pub fn map_left(self: Either<a, b>, with: fn(a) -> c) {
   when self is {
-    Left(x) ->
-      Left(with(x))
-    Right(y) ->
-      Right(y)
+    Left(x) -> Left(with(x))
+    Right(y) -> Right(y)
   }
 }
 

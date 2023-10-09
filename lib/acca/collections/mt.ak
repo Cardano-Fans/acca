@@ -63,24 +63,29 @@ pub fn from_hash(hash: Hash<alg, a>) -> Root {
 /// Deconstruct a [MerkleTree](#MerkleTree) back to a list of elements.
 pub fn to_list(self: MerkleTree<a>) -> List<a> {
   when self is {
-    Empty -> []
-    Leaf { value, .. } -> [value]
+    Empty ->
+      []
+    Leaf { value, .. } ->
+      [value]
     Node { left, right, .. } -> list.concat(to_list(left), to_list(right))
   }
 }
 
 test to_list_1() {
-  let items = []
+  let items =
+    []
   to_list(from_list(items, identity)) == items
 }
 
 test to_list_2() {
-  let items = ["dog"]
+  let items =
+    ["dog"]
   to_list(from_list(items, identity)) == items
 }
 
 test to_list_3() {
-  let items = ["dog", "cat", "mouse"]
+  let items =
+    ["dog", "cat", "mouse"]
   to_list(from_list(items, identity)) == items
 }
 
@@ -95,9 +100,9 @@ pub fn root(self: MerkleTree<a>) -> Root {
 
 test root_1() {
   from_list([], identity)
-  |> root
-  |> to_hash
-  |> is_none
+    |> root
+    |> to_hash
+    |> is_none
 }
 
 test root_2() {
@@ -113,11 +118,11 @@ test root_3() {
 
   let hash =
     "mouse"
-    |> sha2_256
-    |> bytearray.concat(sha2_256(cat), _)
-    |> sha2_256
-    |> bytearray.concat(sha2_256(dog), _)
-    |> sha2_256
+      |> sha2_256
+      |> bytearray.concat(sha2_256(cat), _)
+      |> sha2_256
+      |> bytearray.concat(sha2_256(dog), _)
+      |> sha2_256
 
   to_hash(root(from_list([dog, cat, mouse], identity))) == Some(hash)
 }
@@ -132,23 +137,26 @@ pub fn equals(left: MerkleTree<a>, right: MerkleTree<a>) -> Bool {
 pub fn size(self: MerkleTree<a>) -> Int {
   when self is {
     Empty -> 0
-    Leaf{..} -> 1
+    Leaf { .. } -> 1
     Node { left, right, .. } -> size(left) + size(right)
   }
 }
 
 test size_1() {
-  let items = []
+  let items =
+    []
   size(from_list(items, identity)) == 0
 }
 
 test size_2() {
-  let items = ["dog"]
+  let items =
+    ["dog"]
   size(from_list(items, identity)) == 1
 }
 
 test size_3() {
-  let items = ["dog", "cat", "mouse"]
+  let items =
+    ["dog", "cat", "mouse"]
   size(from_list(items, identity)) == 3
 }
 
@@ -206,14 +214,14 @@ fn do_get_proof(
 
 test get_proof_1() {
   from_list([], identity)
-  |> get_proof("dog", identity)
-  |> is_none
+    |> get_proof("dog", identity)
+    |> is_none
 }
 
 test get_proof_2() {
   from_list(["dog", "cat", "mouse", "horse", "pig", "bull"], identity)
-  |> get_proof("parrot", identity)
-  |> is_none
+    |> get_proof("parrot", identity)
+    |> is_none
 }
 
 test get_proof_3() {
@@ -234,12 +242,12 @@ fn do_from_list(
       let cutoff: Int = len / 2
       let left =
         items
-        |> list.take(cutoff)
-        |> do_from_list(cutoff, serialise)
+          |> list.take(cutoff)
+          |> do_from_list(cutoff, serialise)
       let right =
         items
-        |> list.drop(cutoff)
-        |> do_from_list(len - cutoff, serialise)
+          |> list.drop(cutoff)
+          |> do_from_list(len - cutoff, serialise)
       let root = combine(root(left), root(right))
       Node { root, left, right }
     }
@@ -281,10 +289,10 @@ test from_list_4() {
 
   let root_hash =
     sha2_256(mouse)
-    |> bytearray.concat(sha2_256(cat), _)
-    |> sha2_256
-    |> bytearray.concat(sha2_256(dog), _)
-    |> sha2_256
+      |> bytearray.concat(sha2_256(cat), _)
+      |> sha2_256
+      |> bytearray.concat(sha2_256(dog), _)
+      |> sha2_256
 
   root(from_list([dog, cat, mouse], identity)) == from_hash(root_hash)
 }
@@ -338,24 +346,21 @@ test get_proof_is_member_1() {
   expect Some(mouse_proof) = get_proof(mt, mouse, identity)
 
   let all_members =
-    list.and(
-      [
-        is_member(root(mt), dog, dog_proof, identity)?,
-        is_member(root(mt), cat, cat_proof, identity)?,
-        is_member(root(mt), mouse, mouse_proof, identity)?,
-      ],
-    )
+    is_member(root(mt), dog, dog_proof, identity) && is_member(
+      root(mt),
+      cat,
+      cat_proof,
+      identity,
+    ) && is_member(root(mt), mouse, mouse_proof, identity)
 
-  let check_sizes =
-    list.and(
-      [
-        (list.length(dog_proof) == 1)?,
-        (list.length(cat_proof) == 2)?,
-        (list.length(mouse_proof) == 2)?,
-      ],
-    )
+  let check_sizes = {
+    let length_check =
+      list.length(dog_proof) == 1 && list.length(cat_proof) == 2 && list.length(
+        mouse_proof,
+      ) == 2
+  }
 
-  all_members? && check_sizes?
+  length_check && all_members && check_sizes
 }
 
 test get_proof_is_member_2() {
@@ -373,6 +378,6 @@ test get_proof_is_member_2() {
 
 fn combine(left: Root, right: Root) -> Root {
   bytearray.concat(left.inner, right.inner)
-  |> sha2_256
-  |> Root
+    |> sha2_256
+    |> Root
 }

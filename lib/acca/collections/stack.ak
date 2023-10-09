@@ -47,10 +47,8 @@ pub fn push(self: Stack<a>, value: a) -> Stack<a> {
 /// ```
 pub fn pop(self: Stack<a>) -> (Option<a>, Stack<a>) {
   when self.inner is {
-    [] ->
-      (None, self)
-    [h, ..t] ->
-      (Some(h), from_list(t))
+    [] -> (None, self)
+    [h, ..t] -> (Some(h), from_list(t))
   }
 }
 
@@ -72,10 +70,8 @@ pub fn size(self: Stack<a>) -> Int {
 /// ```
 pub fn peek(self: Stack<a>) -> Option<a> {
   when self.inner is {
-    [] ->
-      None
-    [h, ..] ->
-      Some(h)
+    [] -> None
+    [h, ..] -> Some(h)
   }
 }
 
@@ -87,40 +83,34 @@ pub fn peek(self: Stack<a>) -> Option<a> {
 /// ```
 pub fn is_empty(self: Stack<a>) -> Bool {
   when self.inner is {
-    [] ->
-      True
-    _ ->
-      False
+    [] -> True
+    _ -> False
   }
 }
 
 test stack_0() {
-  let s =
-    new()
+  let s = new()
 
   is_empty(s)
 }
 
 test stack_1() {
-  let s =
-    new() |> push(1) |> push(2) |> push(3)
+  let s = new() |> push(1) |> push(2) |> push(3)
 
   is_empty(s) == False
 }
 
 test stack_2() {
-  let s =
-    new() |> push(1) |> push(2) |> push(3)
+  let s = new() |> push(1) |> push(2) |> push(3)
 
-  let (Some(x), stack) =
-    pop(s)
-
-  list.and([x == 3, size(stack) == 2])
+  when pop(s) is {
+    (Some(x), stack) -> x == 3 && size(stack) == 2
+    _ -> False
+  }
 }
 
 test stack_3() {
-  let s =
-    new() |> push(1) |> push(2) |> push(3)
+  let s = new() |> push(1) |> push(2) |> push(3)
 
-  list.and([peek(s) == Some(3), size(s) == 3])
+  peek(s) == Some(3) && size(s) == 3
 }

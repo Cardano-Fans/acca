@@ -38,12 +38,10 @@ pub fn compare_option(
   right: Option<Ordering>,
 ) -> Option<Ordering> {
   when (left, right) is {
-    (Some(l), Some(r)) ->
-      Some(compare(l, r))
-    (Some(l), None) ->
-      Some(l)
-    (None, Some(r)) ->
-      Some(r)
+    (Some(l), Some(r)) -> Some(compare(l, r))
+    (Some(l), None) -> Some(l)
+    (None, Some(r)) -> Some(r)
+    _ -> None
   }
 }
 
@@ -75,11 +73,10 @@ test compare_3() {
 /// ```
 pub fn reduce(self: List<Ordering>) -> Option<Ordering> {
   when self is {
-    [] ->
-      None
+    [] -> None
     _ ->
       list.map(self, fn(elem) { Some(elem) })
-        |> list.reduce(compare_option, None)
+        |> list.reduce(None, compare_option)
   }
 }
 
@@ -165,10 +162,8 @@ pub fn compare_tuple(
   first_compare: fn(a, a) -> Ordering,
   second_compare: fn(b, b) -> Ordering,
 ) -> Ordering {
-  let (cp1, r1) =
-    left
-  let (cp2, r2) =
-    right
+  let (cp1, r1) = left
+  let (cp2, r2) = right
 
   force_reduce([first_compare(cp1, cp2), second_compare(r1, r2)])
 }
@@ -207,10 +202,8 @@ pub fn compare_tuple_left(
   right: (a, b),
   first_compare: fn(a, a) -> Ordering,
 ) -> Ordering {
-  let (cp1, _r1) =
-    left
-  let (cp2, _r2) =
-    right
+  let (cp1, _r1) = left
+  let (cp2, _r2) = right
 
   first_compare(cp1, cp2)
 }
@@ -239,12 +232,9 @@ test compare_tuple_left_3() {
 /// ```
 pub fn to_string(ord: Ordering) {
   when ord is {
-    Less ->
-      @"Less"
-    Equal ->
-      @"Equal"
-    Greater ->
-      @"Greater"
+    Less -> @"Less"
+    Equal -> @"Equal"
+    Greater -> @"Greater"
   }
 }
 
