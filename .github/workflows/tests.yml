@@ -16,14 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: Swatinem/rust-cache@v1
+      - uses: aiken-lang/setup-aiken@v0.1.0
         with:
-          cache-on-failure: true
+          version: v1.0.13-alpha
 
-      - name: Install Aiken
-        run: cargo install --git https://github.com/aiken-lang/aiken.git
-
-      - name: Run Aiken check on acca
+      - name: Aiken check
         working-directory: ./
         run: aiken check
-        shell: bash

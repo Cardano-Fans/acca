@@ -17,12 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: aiken-lang/setup-aiken@v0.1.0
         with:
-          cache-on-failure: true
-
-      - name: Install Aiken
-        run: cargo install --git https://github.com/aiken-lang/aiken.git
+          version: v1.0.10-alpha
 
       - name: Run Aiken docs on acca
         working-directory: ./
