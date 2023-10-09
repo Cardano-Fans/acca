@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.0.10-alpha" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.10-alpha"/>
+    <link rel="stylesheet" href="../css/index.css?v=1.0.19-alpha" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.19-alpha"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
@@ -358,6 +358,12 @@
 	  
 	  </a></li>
         
+	  <li><a href="../aiken/math/rational.html">
+	  
+	  aiken/math/rational
+	  
+	  </a></li>
+        
 	  <li><a href="../aiken/option.html">
 	  
 	  aiken/option
@@ -432,6 +438,12 @@
   
   <li><a href="#empty">empty</a></li>
   
+  <li><a href="#entirely_after">entirely_after</a></li>
+  
+  <li><a href="#entirely_before">entirely_before</a></li>
+  
+  <li><a href="#entirely_between">entirely_between</a></li>
+  
   <li><a href="#everything">everything</a></li>
   
   <li><a href="#hull">hull</a></li>
@@ -440,15 +452,13 @@
   
   <li><a href="#is_empty">is_empty</a></li>
   
+  <li><a href="#is_entirely_after">is_entirely_after</a></li>
+  
+  <li><a href="#is_entirely_before">is_entirely_before</a></li>
+  
   <li><a href="#max">max</a></li>
   
   <li><a href="#min">min</a></li>
-  
-  <li><a href="#strictly_after">strictly_after</a></li>
-  
-  <li><a href="#strictly_before">strictly_before</a></li>
-  
-  <li><a href="#strictly_between">strictly_between</a></li>
   
 </ul>
 
@@ -664,7 +674,7 @@ milliseconds.</p>
       -->
       
     </div>
-    <div class="rendered-markdown"><p>Create an interval that includes all values less than the given bound. i.e (-INF, upper_bound]</p>
+    <div class="rendered-markdown"><p>Create an interval that includes all values before (and including) the given bound. i.e (-INF, upper_bound]</p>
 <pre><code class="language-aiken">interval.before(100) == Interval {
   lower_bound: IntervalBound { bound_type: NegativeInfinity, is_inclusive: True },
   upper_bound: IntervalBound { bound_type: Finite(100), is_inclusive: True },
@@ -745,6 +755,66 @@ interval.contains(empty(), 1000) == False
   
   <div class="member">
     <div class="member-name">
+      <h2 id="entirely_after"><pre class="hljs language-aiken">entirely_after(lower_bound: a) -&gt; Interval&lt;a&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Create an interval that includes all values after (and not including) the given bound. i.e (lower_bound, +INF)</p>
+<pre><code class="language-aiken">interval.entirely_after(10) == Interval {
+  lower_bound: IntervalBound { bound_type: Finite(10), is_inclusive: False },
+  upper_bound: IntervalBound { bound_type: PositiveInfinity, is_inclusive: True },
+}
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="entirely_before"><pre class="hljs language-aiken">entirely_before(upper_bound: a) -&gt; Interval&lt;a&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Create an interval that includes all values before (and not including) the given bound. i.e (-INF, upper_bound)</p>
+<pre><code class="language-aiken">interval.entirely_before(10) == Interval {
+  lower_bound: IntervalBound { bound_type: NegativeInfinity, is_inclusive: True },
+  upper_bound: IntervalBound { bound_type: Finite(10), is_inclusive: False },
+}
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="entirely_between"><pre class="hljs language-aiken">entirely_between(lower_bound: a, upper_bound: a) -&gt; Interval&lt;a&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Create an interval that includes all values between two bounds, excluding the bounds. i.e. (lower_bound, upper_bound)</p>
+<pre><code class="language-aiken">interval.entirely_between(10, 100) == Interval {
+  lower_bound: IntervalBound { bound_type: Finite(10), is_inclusive: False },
+  upper_bound: IntervalBound { bound_type: Finite(100), is_inclusive: False },
+}
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
       <h2 id="everything"><pre class="hljs language-aiken">everything() -&gt; Interval&lt;a&gt;</pre></h2>
       
       <!-- TODO: support source linking
@@ -781,9 +851,9 @@ let iv1 = between(5, 10)
 let iv2 = before(0)
 hull(iv1, iv2) == before(10)
 
-let iv1 = strictly_after(0)
+let iv1 = entirely_after(0)
 let iv2 = between(10, 42)
-hull(iv1, iv2) = strictly_after(0)
+hull(iv1, iv2) = entirely_after(0)
 </code></pre>
 </div>
   </div>
@@ -804,9 +874,9 @@ hull(iv1, iv2) = strictly_after(0)
 let iv2 = interval.between(2, 14)
 interval.intersection(iv1, iv2) == interval.between(2, 10)
 
-let iv1 = interval.strictly_before(10)
-let iv2 = interval.strictly_after(0)
-interval.intersection(iv1, iv2) == interval.strictly_between(0, 10)
+let iv1 = interval.entirely_before(10)
+let iv2 = interval.entirely_after(0)
+interval.intersection(iv1, iv2) == interval.entirely_between(0, 10)
 
 let iv1 = interval.between(0, 1)
 let iv2 = interval.between(2, 3)
@@ -851,6 +921,46 @@ iv1 != iv2
   
   <div class="member">
     <div class="member-name">
+      <h2 id="is_entirely_after"><pre class="hljs language-aiken">is_entirely_after(self: Interval&lt;Int&gt;, point: Int) -&gt; Bool</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Check whether the interval is entirely after the point “a”</p>
+<pre><code class="language-aiken">interval.is_entirely_after(interval.after(10), 5) == True
+interval.is_entirely_after(interval.after(10), 10) == False
+interval.is_entirely_after(interval.after(10), 15) == False
+interval.is_entirely_after(interval.between(10, 20), 30) == False
+interval.is_entirely_after(interval.between(10, 20), 5) == True</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="is_entirely_before"><pre class="hljs language-aiken">is_entirely_before(self: Interval&lt;Int&gt;, point: Int) -&gt; Bool</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Check whether the interval is entirely before the point “a”</p>
+<pre><code class="language-aiken">interval.is_entirely_before(interval.before(10), 15) == True
+interval.is_entirely_before(interval.before(10), 10) == False
+interval.is_entirely_before(interval.before(10), 5) == False
+interval.is_entirely_before(interval.between(10, 20), 30) == True
+interval.is_entirely_before(interval.between(10, 20), 5) == False</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
       <h2 id="max"><pre class="hljs language-aiken">max(left: IntervalBound&lt;Int&gt;, right: IntervalBound&lt;Int&gt;) -&gt; IntervalBound&lt;Int&gt;</pre></h2>
       
       <!-- TODO: support source linking
@@ -885,66 +995,6 @@ interval.max(ib1, ib2) == ib2
 let ib2 = IntervalBound { bound_type: Finite(1), is_inclusive: False }
 
 interval.min(ib1, ib2) == ib1
-</code></pre>
-</div>
-  </div>
-  
-  <div class="member">
-    <div class="member-name">
-      <h2 id="strictly_after"><pre class="hljs language-aiken">strictly_after(lower_bound: a) -&gt; Interval&lt;a&gt;</pre></h2>
-      
-      <!-- TODO: support source linking
-      <a class="member-source" alt="View Source" title="View Source" href="#todo">
-        &lt;/&gt;
-      </a>
-      -->
-      
-    </div>
-    <div class="rendered-markdown"><p>Create an interval that includes all values strictly greater than the given bound, excluding the bound itself. i.e (lower_bound, +INF)</p>
-<pre><code class="language-aiken">interval.strictly_after(10) == Interval {
-  lower_bound: IntervalBound { bound_type: Finite(10), is_inclusive: False },
-  upper_bound: IntervalBound { bound_type: PositiveInfinity, is_inclusive: True },
-}
-</code></pre>
-</div>
-  </div>
-  
-  <div class="member">
-    <div class="member-name">
-      <h2 id="strictly_before"><pre class="hljs language-aiken">strictly_before(upper_bound: a) -&gt; Interval&lt;a&gt;</pre></h2>
-      
-      <!-- TODO: support source linking
-      <a class="member-source" alt="View Source" title="View Source" href="#todo">
-        &lt;/&gt;
-      </a>
-      -->
-      
-    </div>
-    <div class="rendered-markdown"><p>Create an interval that includes all values strictly less than the given bound, excluding the bound itself. i.e (-INF, upper_bound)</p>
-<pre><code class="language-aiken">interval.strictly_before(10) == Interval {
-  lower_bound: IntervalBound { bound_type: NegativeInfinity, is_inclusive: True },
-  upper_bound: IntervalBound { bound_type: Finite(10), is_inclusive: False },
-}
-</code></pre>
-</div>
-  </div>
-  
-  <div class="member">
-    <div class="member-name">
-      <h2 id="strictly_between"><pre class="hljs language-aiken">strictly_between(lower_bound: a, upper_bound: a) -&gt; Interval&lt;a&gt;</pre></h2>
-      
-      <!-- TODO: support source linking
-      <a class="member-source" alt="View Source" title="View Source" href="#todo">
-        &lt;/&gt;
-      </a>
-      -->
-      
-    </div>
-    <div class="rendered-markdown"><p>Create an interval that includes all values between two bounds, excluding the bounds. i.e. (lower_bound, upper_bound)</p>
-<pre><code class="language-aiken">interval.strictly_between(10, 100) == Interval {
-  lower_bound: IntervalBound { bound_type: Finite(10), is_inclusive: False },
-  upper_bound: IntervalBound { bound_type: Finite(100), is_inclusive: False },
-}
 </code></pre>
 </div>
   </div>
@@ -1001,8 +1051,8 @@ interval.min(ib1, ib2) == ib1
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.0.10-alpha"></script>
+    <script src="../js/highlight.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/highlightjs-aiken.js?v=1.0.19-alpha"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -1021,9 +1071,9 @@ interval.min(ib1, ib2) == ib1
 	el.prepend(a);
       });
     </script>
-    <script src="../js/lunr.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/index.js?v=1691103690"></script>
+    <script src="../js/lunr.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/index.js?v=1696864966"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1691103690"></script>
+    <script src="../search-data.js?v=1696864966"></script>
   </body>
 </html>

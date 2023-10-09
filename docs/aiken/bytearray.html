@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.0.10-alpha" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.10-alpha"/>
+    <link rel="stylesheet" href="../css/index.css?v=1.0.19-alpha" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.19-alpha"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
@@ -358,6 +358,12 @@
 	  
 	  </a></li>
         
+	  <li><a href="../aiken/math/rational.html">
+	  
+	  aiken/math/rational
+	  
+	  </a></li>
+        
 	  <li><a href="../aiken/option.html">
 	  
 	  aiken/option
@@ -436,6 +442,8 @@
   <li><a href="#slice">slice</a></li>
   
   <li><a href="#take">take</a></li>
+  
+  <li><a href="#test_bit">test_bit</a></li>
   
   <li><a href="#to_hex">to_hex</a></li>
   
@@ -701,6 +709,38 @@ Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback 
   
   <div class="member">
     <div class="member-name">
+      <h2 id="test_bit"><pre class="hljs language-aiken">test_bit(self: ByteArray, ix: Int) -&gt; Bool</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Checks whether a bit (Most-Significant-Bit first) is set in the given ‘ByteArray’.</p>
+<p>For example, consider the following bytearray: <code>#&quot;8b765f&quot;</code>. It can also be written as the
+following bits sequence:</p>
+<table><thead><tr><th><code>8</code></th><th><code>b</code></th><th><code>7</code></th><th><code>6</code></th><th><code>5</code></th><th><code>f</code></th></tr></thead><tbody>
+<tr><td><code>1000</code></td><td><code>1011</code></td><td><code>0111</code></td><td><code>0110</code></td><td><code>0101</code></td><td><code>1111</code></td></tr>
+</tbody></table>
+<p>And thus, we have:</p>
+<pre><code class="language-aiken">test_bit(#&quot;8b765f&quot;, 0) == True
+test_bit(#&quot;8b765f&quot;, 1) == False
+test_bit(#&quot;8b765f&quot;, 2) == False
+test_bit(#&quot;8b765f&quot;, 3) == False
+test_bit(#&quot;8b765f&quot;, 7) == True
+test_bit(#&quot;8b765f&quot;, 8) == False
+test_bit(#&quot;8b765f&quot;, 20) == True
+test_bit(#&quot;8b765f&quot;, 21) == True
+test_bit(#&quot;8b765f&quot;, 22) == True
+test_bit(#&quot;8b765f&quot;, 23) == True
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
       <h2 id="to_hex"><pre class="hljs language-aiken">to_hex(self: ByteArray) -&gt; String</pre></h2>
       
       <!-- TODO: support source linking
@@ -787,8 +827,8 @@ bytearray.to_hex(&quot;Hello world!&quot;) == @&quot;48656c6c6f20776f726c6421&qu
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.0.10-alpha"></script>
+    <script src="../js/highlight.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/highlightjs-aiken.js?v=1.0.19-alpha"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -807,9 +847,9 @@ bytearray.to_hex(&quot;Hello world!&quot;) == @&quot;48656c6c6f20776f726c6421&qu
 	el.prepend(a);
       });
     </script>
-    <script src="../js/lunr.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/index.js?v=1691103690"></script>
+    <script src="../js/lunr.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/index.js?v=1696864966"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1691103690"></script>
+    <script src="../search-data.js?v=1696864966"></script>
   </body>
 </html>

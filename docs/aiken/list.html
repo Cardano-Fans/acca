@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.0.10-alpha" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.10-alpha"/>
+    <link rel="stylesheet" href="../css/index.css?v=1.0.19-alpha" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.19-alpha"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
@@ -358,6 +358,12 @@
 	  
 	  </a></li>
         
+	  <li><a href="../aiken/math/rational.html">
+	  
+	  aiken/math/rational
+	  
+	  </a></li>
+        
 	  <li><a href="../aiken/option.html">
 	  
 	  aiken/option
@@ -413,8 +419,6 @@
   
   <li><a href="#all">all</a></li>
   
-  <li><a href="#and">and</a></li>
-  
   <li><a href="#any">any</a></li>
   
   <li><a href="#at">at</a></li>
@@ -447,6 +451,8 @@
   
   <li><a href="#head">head</a></li>
   
+  <li><a href="#index_of">index_of</a></li>
+  
   <li><a href="#indexed_foldr">indexed_foldr</a></li>
   
   <li><a href="#indexed_map">indexed_map</a></li>
@@ -464,8 +470,6 @@
   <li><a href="#map2">map2</a></li>
   
   <li><a href="#map3">map3</a></li>
-  
-  <li><a href="#or">or</a></li>
   
   <li><a href="#partition">partition</a></li>
   
@@ -535,26 +539,6 @@
 <pre><code class="language-aiken">list.all([], fn(n) { n &gt; 0 }) == True
 list.all([1, 2, 3], fn(n) { n &gt; 0 }) == True
 list.all([1, 2, 3], fn(n) { n == 2 }) == False
-</code></pre>
-</div>
-  </div>
-  
-  <div class="member">
-    <div class="member-name">
-      <h2 id="and"><pre class="hljs language-aiken">and(self: List&lt;Bool&gt;) -&gt; Bool</pre></h2>
-      
-      <!-- TODO: support source linking
-      <a class="member-source" alt="View Source" title="View Source" href="#todo">
-        &lt;/&gt;
-      </a>
-      -->
-      
-    </div>
-    <div class="rendered-markdown"><p>Like <a href="#all">all</a> but when elements are already booleans.</p>
-<p>Note: an empty list always satisfies the predicate.</p>
-<pre><code class="language-aiken">list.and([]) == True
-list.and([True, True]) == True
-list.and([True, False]) == False
 </code></pre>
 </div>
   </div>
@@ -859,6 +843,26 @@ list.head([]) == None
   
   <div class="member">
     <div class="member-name">
+      <h2 id="index_of"><pre class="hljs language-aiken">index_of(self: List&lt;a&gt;, elem: a) -&gt; Option&lt;Int&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Gets the index of an element of a list, if any. Otherwise, returns None.</p>
+<pre><code class="language-aiken">list.index_of([1, 5, 2], 2) == Some(2)
+list.index_of([1, 7, 3], 4) == None
+list.index_of([1, 0, 9, 6], 6) == 3
+list.index_of([], 6) == None
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
       <h2 id="indexed_foldr"><pre class="hljs language-aiken">indexed_foldr(
   self: List&lt;a&gt;,
   zero: result,
@@ -1032,27 +1036,6 @@ list.length([1, 2, 3]) == 3
   
   <div class="member">
     <div class="member-name">
-      <h2 id="or"><pre class="hljs language-aiken">or(self: List&lt;Bool&gt;) -&gt; Bool</pre></h2>
-      
-      <!-- TODO: support source linking
-      <a class="member-source" alt="View Source" title="View Source" href="#todo">
-        &lt;/&gt;
-      </a>
-      -->
-      
-    </div>
-    <div class="rendered-markdown"><p>Like <a href="#any">any</a> but when elements are already booleans.</p>
-<p>Note: an empty list never satisfies the predicate.</p>
-<pre><code class="language-aiken">list.or([]) == False
-list.or([True, True]) == True
-list.or([True, False]) == True
-list.or([False, False]) == False
-</code></pre>
-</div>
-  </div>
-  
-  <div class="member">
-    <div class="member-name">
       <h2 id="partition"><pre class="hljs language-aiken">partition(self: List&lt;a&gt;, predicate: fn(a) -&gt; Bool) -&gt; (List&lt;a&gt;, List&lt;a&gt;)</pre></h2>
       
       <!-- TODO: support source linking
@@ -1118,8 +1101,8 @@ list.range(-1, 1) == [-1, 0, 1]
     </div>
     <div class="rendered-markdown"><p>Reduce a list from left to right using the accumulator as left operand.
 Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback arguments swapped.</p>
-<pre><code class="language-aiken">list.reduce([#[1], #[2], #[3]], bytearray.concat, #[0]) == #[0, 1, 2, 3]
-list.reduce([True, False, True], fn(b, a) { or([b, a]) }, False) == True
+<pre><code class="language-aiken">list.reduce([#[1], #[2], #[3]], #[0], bytearray.concat) == #[0, 1, 2, 3]
+list.reduce([True, False, True], False, fn(b, a) { or { b, a } }) == True
 </code></pre>
 </div>
   </div>
@@ -1376,8 +1359,8 @@ list.take_while([1, 2, 3], fn(x) { x &lt; 2 }) == [1]
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.0.10-alpha"></script>
+    <script src="../js/highlight.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/highlightjs-aiken.js?v=1.0.19-alpha"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -1396,9 +1379,9 @@ list.take_while([1, 2, 3], fn(x) { x &lt; 2 }) == [1]
 	el.prepend(a);
       });
     </script>
-    <script src="../js/lunr.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/index.js?v=1691103690"></script>
+    <script src="../js/lunr.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/index.js?v=1696864966"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1691103690"></script>
+    <script src="../search-data.js?v=1696864966"></script>
   </body>
 </html>

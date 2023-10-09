@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.0.10-alpha" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.10-alpha"/>
+    <link rel="stylesheet" href="../css/index.css?v=1.0.19-alpha" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.19-alpha"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
@@ -358,6 +358,12 @@
 	  
 	  </a></li>
         
+	  <li><a href="../aiken/math/rational.html">
+	  
+	  aiken/math/rational
+	  
+	  </a></li>
+        
 	  <li><a href="../aiken/option.html">
 	  
 	  <strong>aiken/option</strong>
@@ -639,7 +645,7 @@ option.or_else(Some(42), 14) == 42
   
   <div class="member">
     <div class="member-name">
-      <h2 id="or_try"><pre class="hljs language-aiken">or_try(self: Option&lt;a&gt;, compute_default: fn(Void) -&gt; Option&lt;a&gt;) -&gt; Option&lt;a&gt;</pre></h2>
+      <h2 id="or_try"><pre class="hljs language-aiken">or_try(self: Option&lt;a&gt;, compute_default: fn() -&gt; Option&lt;a&gt;) -&gt; Option&lt;a&gt;</pre></h2>
       
       <!-- TODO: support source linking
       <a class="member-source" alt="View Source" title="View Source" href="#todo">
@@ -708,8 +714,8 @@ option.or_try(Some(42), fn(_) { Some(14) }) == Some(42)
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.0.10-alpha"></script>
+    <script src="../js/highlight.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/highlightjs-aiken.js?v=1.0.19-alpha"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -728,9 +734,9 @@ option.or_try(Some(42), fn(_) { Some(14) }) == Some(42)
 	el.prepend(a);
       });
     </script>
-    <script src="../js/lunr.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/index.js?v=1691103690"></script>
+    <script src="../js/lunr.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/index.js?v=1696864966"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1691103690"></script>
+    <script src="../search-data.js?v=1696864966"></script>
   </body>
 </html>

@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.0.10-alpha" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.10-alpha"/>
+    <link rel="stylesheet" href="../css/index.css?v=1.0.19-alpha" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.0.19-alpha"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
@@ -358,6 +358,12 @@
 	  
 	  </a></li>
         
+	  <li><a href="../aiken/math/rational.html">
+	  
+	  aiken/math/rational
+	  
+	  </a></li>
+        
 	  <li><a href="../aiken/option.html">
 	  
 	  aiken/option
@@ -415,6 +421,8 @@
   
   <li><a href="#clamp">clamp</a></li>
   
+  <li><a href="#gcd">gcd</a></li>
+  
   <li><a href="#log">log</a></li>
   
   <li><a href="#max">max</a></li>
@@ -422,6 +430,10 @@
   <li><a href="#min">min</a></li>
   
   <li><a href="#pow">pow</a></li>
+  
+  <li><a href="#pow2">pow2</a></li>
+  
+  <li><a href="#sqrt">sqrt</a></li>
   
 </ul>
 
@@ -491,6 +503,25 @@ math.abs(14) == 14
     </div>
     <div class="rendered-markdown"><p>Restrict the value of an integer between two min and max bounds</p>
 <pre><code class="language-aiken">math.clamp(14, min: 0, max: 10) == 10
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="gcd"><pre class="hljs language-aiken">gcd(x: Int, y: Int) -&gt; Int</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>The greatest common divisor of two integers.</p>
+<pre><code class="language-aiken">math.gcd(42, 14) == 14
+math.gcd(14, 42) == 14
+math.gcd(0, 0) == 0
 </code></pre>
 </div>
   </div>
@@ -569,6 +600,51 @@ math.pow(513, 3) == 135005697
 </div>
   </div>
   
+  <div class="member">
+    <div class="member-name">
+      <h2 id="pow2"><pre class="hljs language-aiken">pow2(e: Int) -&gt; Int</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Calculates the power of 2 for a given exponent <code>e</code>. Much cheaper than
+using <code>pow(2, _)</code> for small exponents (0 &lt; e &lt; 256).</p>
+<pre><code class="language-aiken">math.pow2(-2) == 0
+math.pow2(0) == 1
+math.pow2(1) == 2
+math.pow2(4) == 16
+math.pow2(42) == 4398046511104
+</code></pre>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="sqrt"><pre class="hljs language-aiken">sqrt(self: Int) -&gt; Option&lt;Int&gt;</pre></h2>
+      
+      <!-- TODO: support source linking
+      <a class="member-source" alt="View Source" title="View Source" href="#todo">
+        &lt;/&gt;
+      </a>
+      -->
+      
+    </div>
+    <div class="rendered-markdown"><p>Calculates the square root of an integer using the <a href="https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method">Babylonian
+method</a>. This returns either the exact result or the smallest integer
+nearest to the square root.</p>
+<p>Returns <code>None</code> for negative values.</p>
+<pre><code class="language-aiken">math.sqrt(0) == Some(0)
+math.sqrt(25) == Some(5)
+math.sqrt(44203) == Some(210)
+math.sqrt(-42) == None
+</code></pre>
+</div>
+  </div>
+  
 </section>
 
 
@@ -621,8 +697,8 @@ math.pow(513, 3) == 135005697
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.0.10-alpha"></script>
+    <script src="../js/highlight.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/highlightjs-aiken.js?v=1.0.19-alpha"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -641,9 +717,9 @@ math.pow(513, 3) == 135005697
 	el.prepend(a);
       });
     </script>
-    <script src="../js/lunr.min.js?v=1.0.10-alpha"></script>
-    <script src="../js/index.js?v=1691103690"></script>
+    <script src="../js/lunr.min.js?v=1.0.19-alpha"></script>
+    <script src="../js/index.js?v=1696864966"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1691103690"></script>
+    <script src="../search-data.js?v=1696864966"></script>
   </body>
 </html>
