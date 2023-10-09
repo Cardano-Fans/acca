@@ -22,46 +22,34 @@ pub type ProofItem<a> {
 // Function returning a hash of a given Hash Tree element
 pub fn element_hash(self: HashTree<a>) -> Hash<Sha2_256, a> {
   when self is {
-    Empty ->
-      #""
-    Leaf { hash } ->
-      hash
-    Node { hash, .. } ->
-      hash
+    Empty -> #""
+    Leaf { hash } -> hash
+    Node { hash, .. } -> hash
   }
 }
 
 test element_hash_1() {
-  let dog =
-    @"dog"
+  let dog = @"dog"
   let items =
     [dog]
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
 
-  let node_hash =
-    sha2_256(serialise_fn(dog))
+  let node_hash = sha2_256(serialise_fn(dog))
 
   element_hash(mt) == node_hash
 }
 
 test element_hash_3() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
   let items =
     [dog, cat, mouse]
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
 
   let node_hash =
     sha2_256(
@@ -70,11 +58,9 @@ test element_hash_3() {
         sha2_256(serialise_fn(mouse)),
       ),
     )
-  let rh =
-    sha2_256(bytearray.concat(sha2_256(serialise_fn(dog)), node_hash))
+  let rh = sha2_256(bytearray.concat(sha2_256(serialise_fn(dog)), node_hash))
 
-  expect Node { hash: element_hash, .. } =
-    mt
+  expect Node { hash: element_hash, .. } = mt
 
   rh == element_hash
 }
@@ -82,13 +68,10 @@ test element_hash_3() {
 test element_hash_2() {
   let items =
     []
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
-  let node_hash =
-    #""
+  let node_hash = #""
 
   element_hash(mt) == node_hash
 }
@@ -101,78 +84,55 @@ pub fn is_equal(left: HashTree<a>, right: HashTree<a>) -> Bool {
 /// Function returns a total numbers of leaves in the tree.
 pub fn size(self: HashTree<a>) -> Int {
   when self is {
-    Empty ->
-      0
-    Leaf { .. } ->
-      1
-    Node { left, right, .. } ->
-      size(left) + size(right)
+    Empty -> 0
+    Leaf { .. } -> 1
+    Node { left, right, .. } -> size(left) + size(right)
   }
 }
 
 test size_1() {
   let items =
     []
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
   size(mt) == 0
 }
 
 test size_2() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let serialise_fn = create_string_item_serialise_fn()
 
-  let mt =
-    from_list([dog, cat, mouse], serialise_fn)
+  let mt = from_list([dog, cat, mouse], serialise_fn)
   size(mt) == 3
 }
 
 test size_3() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
   let items =
     [dog, cat, mouse]
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
   size(mt) == 3
 }
 
 test size_4() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
-  let pig =
-    @"pig"
-  let bull =
-    @"bull"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
+  let pig = @"pig"
+  let bull = @"bull"
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
   let items =
     [dog, cat, mouse, horse, pig, bull]
 
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
   size(mt) == 6
 }
 
@@ -186,28 +146,22 @@ fn combine_hash(
 /// Function that returns whether merkle tree has any elements
 pub fn is_empty(self: HashTree<a>) -> Bool {
   when self is {
-    Empty ->
-      True
-    _ ->
-      False
+    Empty -> True
+    _ -> False
   }
 }
 
 test is_empty_1() {
-  let mt =
-    Empty
+  let mt = Empty
 
   is_empty(mt)
 }
 
 test is_empty_2() {
-  let dog =
-    @"dog"
-  let hash =
-    create_string_item_serialise_fn()
+  let dog = @"dog"
+  let hash = create_string_item_serialise_fn()
 
-  let mt =
-    Leaf { hash: hash(dog) }
+  let mt = Leaf { hash: hash(dog) }
 
   is_empty(mt) == False
 }
@@ -219,8 +173,7 @@ fn do_proof(
   serialise_fn: fn(a) -> ByteArray,
 ) -> Option<Proof<a>> {
   when self is {
-    Empty ->
-      None
+    Empty -> None
     Leaf { hash } ->
       if hash == item_hash {
         Some(proof)
@@ -228,10 +181,8 @@ fn do_proof(
         None
       }
     Node { left, right, .. } -> {
-      let rh =
-        element_hash(right)
-      let lh =
-        element_hash(left)
+      let rh = element_hash(right)
+      let lh = element_hash(left)
       let go_left: Option<Proof<a>> =
         do_proof(
           left,
@@ -266,28 +217,19 @@ pub fn get_proof(
 }
 
 test get_proof_1() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
-  let pig =
-    @"pig"
-  let bull =
-    @"bull"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
+  let pig = @"pig"
+  let bull = @"bull"
 
   let items =
     [dog, cat, mouse, horse, pig, bull]
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
-  let mt =
-    from_list(items, serialise_fn)
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
 
   let maybe_proof: Option<Proof<String>> =
     get_proof(mt, @"parrot", serialise_fn)
@@ -296,41 +238,31 @@ test get_proof_1() {
 }
 
 test get_proof_2() {
-  let dog =
-    @"dog"
+  let dog = @"dog"
 
   let items =
     [dog]
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
-  let maybe_proof: Option<Proof<String>> =
-    get_proof(mt, dog, serialise_fn)
+  let maybe_proof: Option<Proof<String>> = get_proof(mt, dog, serialise_fn)
 
-  expect Some(proof) =
-    maybe_proof
+  expect Some(proof) = maybe_proof
 
   // when proof is empty list it actually means that root of the tree is in fact element
   proof == []
 }
 
 test get_proof_3() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
 
   let items =
     [dog, cat, mouse]
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
   let node_hash =
     sha2_256(
@@ -340,42 +272,33 @@ test get_proof_3() {
       ),
     )
 
-  let maybe_proof: Option<Proof<String>> =
-    get_proof(mt, dog, serialise_fn)
+  let maybe_proof: Option<Proof<String>> = get_proof(mt, dog, serialise_fn)
 
-  expect Some(proof) =
-    maybe_proof
+  expect Some(proof) = maybe_proof
 
-  let size_match =
-    list.length(proof) == 1
+  let size_match = list.length(proof) == 1
 
-  expect Some(p1) =
-    list.at(proof, 0)
+  expect Some(p1) = list.at(proof, 0)
 
-  let h1: ByteArray =
-    get_proof_item_value(p1)
-  let hash_match =
-    h1 == node_hash
+  let h1: ByteArray = get_proof_item_value(p1)
+  let hash_match = h1 == node_hash
 
-  list.and([size_match?, hash_match?])
+  and {
+    size_match?,
+    hash_match?,
+  }
 }
 
 test get_proof_4() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
 
   let items =
     [dog, cat, mouse, horse]
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
   let right_node_hash =
     sha2_256(
@@ -384,24 +307,17 @@ test get_proof_4() {
         sha2_256(serialise_fn(horse)),
       ),
     )
-  let maybe_proof: Option<Proof<String>> =
-    get_proof(mt, dog, serialise_fn)
+  let maybe_proof: Option<Proof<String>> = get_proof(mt, dog, serialise_fn)
 
-  expect Some(proof) =
-    maybe_proof
+  expect Some(proof) = maybe_proof
 
-  let size_match =
-    list.length(proof) == 2
+  let size_match = list.length(proof) == 2
 
-  expect Some(p1) =
-    list.at(proof, 0)
-  expect Some(p2) =
-    list.at(proof, 1)
+  expect Some(p1) = list.at(proof, 0)
+  expect Some(p2) = list.at(proof, 1)
 
-  let h1: ByteArray =
-    get_proof_item_value(p1)
-  let h2: ByteArray =
-    get_proof_item_value(p2)
+  let h1: ByteArray = get_proof_item_value(p1)
+  let h2: ByteArray = get_proof_item_value(p2)
 
   size_match && h1 == sha2_256(serialise_fn(cat)) && h2 == right_node_hash
 }
@@ -412,16 +328,13 @@ fn do_from_list(
   serialise_fn: fn(a) -> ByteArray,
 ) -> HashTree<a> {
   when items is {
-    [] ->
-      Empty
+    [] -> Empty
     [item] -> {
-      let hashed_item =
-        sha2_256(serialise_fn(item))
+      let hashed_item = sha2_256(serialise_fn(item))
       Leaf { hash: hashed_item }
     }
     all -> {
-      let cutoff: Int =
-        len / 2
+      let cutoff: Int = len / 2
       let left =
         all
           |> list.take(cutoff)
@@ -430,8 +343,7 @@ fn do_from_list(
         all
           |> list.drop(cutoff)
           |> do_from_list(len - cutoff, serialise_fn)
-      let hash =
-        combine_hash(element_hash(left), element_hash(right))
+      let hash = combine_hash(element_hash(left), element_hash(right))
       Node { hash, left, right }
     }
   }
@@ -450,39 +362,30 @@ pub fn from_list(
 test from_1() {
   let items =
     []
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
   Empty == mt
 }
 
 test from_2() {
-  let dog =
-    @"dog"
+  let dog = @"dog"
   let items =
     [dog]
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
   Leaf { hash: sha2_256(serialise_fn(dog)) } == mt
 }
 
 test from_3() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
+  let dog = @"dog"
+  let cat = @"cat"
   let items =
     [dog, cat]
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
   let element_hash =
     sha2_256(
@@ -497,20 +400,15 @@ test from_3() {
 }
 
 test from_4() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
 
   let items =
     [dog, cat, mouse]
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
 
   let node_hash =
     sha2_256(
@@ -534,22 +432,16 @@ test from_4() {
 }
 
 test from_5() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
   let items =
     [dog, cat, mouse, horse]
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
 
   let left_node_hash =
     sha2_256(
@@ -563,8 +455,7 @@ test from_5() {
       ),
     )
 
-  let element_hash =
-    sha2_256(bytearray.concat(left_node_hash, right_node_hash))
+  let element_hash = sha2_256(bytearray.concat(left_node_hash, right_node_hash))
 
   Node {
     hash: element_hash,
@@ -583,13 +474,10 @@ test from_5() {
 
 fn do_from_hashes_list(items: List<Hash<Sha2_256, a>>, len: Int) -> HashTree<a> {
   when items is {
-    [] ->
-      Empty
-    [hashed_item] ->
-      Leaf { hash: hashed_item }
+    [] -> Empty
+    [hashed_item] -> Leaf { hash: hashed_item }
     all -> {
-      let cutoff: Int =
-        len / 2
+      let cutoff: Int = len / 2
       let left =
         all
           |> list.take(cutoff)
@@ -598,8 +486,7 @@ fn do_from_hashes_list(items: List<Hash<Sha2_256, a>>, len: Int) -> HashTree<a> 
         all
           |> list.drop(cutoff)
           |> do_from_hashes_list(len - cutoff)
-      let hash =
-        combine_hash(element_hash(left), element_hash(right))
+      let hash = combine_hash(element_hash(left), element_hash(right))
       Node { hash, left, right }
     }
   }
@@ -613,25 +500,18 @@ pub fn from_hashes_list(items: List<Hash<Sha2_256, a>>) -> HashTree<a> {
 }
 
 test from_hashes_list_5() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
   let items =
     [dog, cat, mouse, horse]
-  let hashes_items =
-    list.map(items, fn(item) { sha2_256(serialise_fn(item)) })
+  let hashes_items = list.map(items, fn(item) { sha2_256(serialise_fn(item)) })
 
-  let mt =
-    from_hashes_list(hashes_items)
+  let mt = from_hashes_list(hashes_items)
 
   let left_node_hash =
     sha2_256(
@@ -645,8 +525,7 @@ test from_hashes_list_5() {
       ),
     )
 
-  let element_hash =
-    sha2_256(bytearray.concat(left_node_hash, right_node_hash))
+  let element_hash = sha2_256(bytearray.concat(left_node_hash, right_node_hash))
 
   Node {
     hash: element_hash,
@@ -674,8 +553,7 @@ pub fn member_from_hash(
   serialise_fn: fn(a) -> ByteArray,
 ) -> Bool {
   when proof is {
-    [] ->
-      element_hash == item_hash
+    [] -> element_hash == item_hash
     [head, ..tail] ->
       when head is {
         Left { hash: l } ->
@@ -704,161 +582,110 @@ pub fn member(
   proof: Proof<a>,
   serialise_fn: fn(a) -> ByteArray,
 ) -> Bool {
-  let item_hash =
-    sha2_256(serialise_fn(item))
+  let item_hash = sha2_256(serialise_fn(item))
   member_from_hash(item_hash, element_hash, proof, serialise_fn)
 }
 
 test member_1() {
-  let dog =
-    @"dog"
+  let dog = @"dog"
   let items =
     [dog]
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
-  let item =
-    dog
-  let rh =
-    element_hash(mt)
+  let item = dog
+  let rh = element_hash(mt)
 
-  expect Some(proof) =
-    get_proof(mt, item, serialise_fn)
+  expect Some(proof) = get_proof(mt, item, serialise_fn)
   member(item: item, element_hash: rh, proof: proof, serialise_fn: serialise_fn)
 }
 
 test member_2() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
 
   let items =
     [dog, cat, mouse, horse]
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
-  let item =
-    cat
-  let rh =
-    element_hash(mt)
+  let item = cat
+  let rh = element_hash(mt)
 
-  expect Some(proof) =
-    get_proof(mt, item, serialise_fn)
+  expect Some(proof) = get_proof(mt, item, serialise_fn)
   member(item: item, element_hash: rh, proof: proof, serialise_fn: serialise_fn)
 }
 
 test member_3() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
+  let dog = @"dog"
+  let cat = @"cat"
 
   let items =
     [dog, cat]
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
-  let item =
-    cat
-  let rh =
-    element_hash(mt)
+  let item = cat
+  let rh = element_hash(mt)
 
-  expect Some(proof) =
-    get_proof(mt, item, serialise_fn)
+  expect Some(proof) = get_proof(mt, item, serialise_fn)
   member(item: item, element_hash: rh, proof: proof, serialise_fn: serialise_fn)
 }
 
 test member_4() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
 
   let items =
     [dog, cat, mouse]
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
-  let item =
-    mouse
-  let rh =
-    element_hash(mt)
+  let item = mouse
+  let rh = element_hash(mt)
 
-  expect Some(proof) =
-    get_proof(mt, item, serialise_fn)
+  expect Some(proof) = get_proof(mt, item, serialise_fn)
   member(item: item, element_hash: rh, proof: proof, serialise_fn: serialise_fn)
 }
 
 test member_5() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
-  let pig =
-    @"pig"
-  let bull =
-    @"bull"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
+  let pig = @"pig"
+  let bull = @"bull"
 
   let items =
     [dog, cat, mouse, horse, pig, bull]
-  let serialise_fn =
-    create_string_item_serialise_fn()
-  let mt =
-    from_list(items, serialise_fn)
+  let serialise_fn = create_string_item_serialise_fn()
+  let mt = from_list(items, serialise_fn)
 
-  let item =
-    pig
-  let rh =
-    element_hash(mt)
+  let item = pig
+  let rh = element_hash(mt)
 
-  expect Some(proof) =
-    get_proof(mt, item, serialise_fn)
+  expect Some(proof) = get_proof(mt, item, serialise_fn)
   member(item: item, element_hash: rh, proof: proof, serialise_fn: serialise_fn)
 }
 
 test member_6() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
-  let pig =
-    @"pig"
-  let bull =
-    @"bull"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
+  let pig = @"pig"
+  let bull = @"bull"
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
   let items =
     [dog, cat, mouse, horse, pig, bull]
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
 
-  let item =
-    @"parrot"
+  let item = @"parrot"
 
   is_none(get_proof(mt, item, serialise_fn))
 }
@@ -872,82 +699,59 @@ pub fn member_from_tree(
 }
 
 test member_from_tree_1() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
-  let pig =
-    @"pig"
-  let bull =
-    @"bull"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
+  let pig = @"pig"
+  let bull = @"bull"
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
   let items =
     [dog, cat, mouse, horse, pig, bull]
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
 
-  let item =
-    pig
+  let item = pig
 
   member_from_tree(tree: mt, item: item, serialise_fn: serialise_fn)
 }
 
 test member_from_tree_2() {
-  let dog =
-    @"dog"
-  let cat =
-    @"cat"
-  let mouse =
-    @"mouse"
-  let horse =
-    @"horse"
-  let pig =
-    @"pig"
-  let bull =
-    @"bull"
+  let dog = @"dog"
+  let cat = @"cat"
+  let mouse = @"mouse"
+  let horse = @"horse"
+  let pig = @"pig"
+  let bull = @"bull"
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
   let items =
     [dog, cat, mouse, horse, pig, bull]
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
 
-  let item =
-    @"parrot"
+  let item = @"parrot"
 
   member_from_tree(tree: mt, item: item, serialise_fn: serialise_fn) == False
 }
 
 test member_from_tree_32() {
-  let dog =
-    @"dog"
+  let dog = @"dog"
 
-  let serialise_fn =
-    create_string_item_serialise_fn()
+  let serialise_fn = create_string_item_serialise_fn()
 
   let items =
     [dog]
-  let mt =
-    from_list(items, serialise_fn)
+  let mt = from_list(items, serialise_fn)
 
   member_from_tree(tree: mt, item: dog, serialise_fn: serialise_fn)
 }
 
 fn get_proof_item_value(proof_item: ProofItem<a>) -> Hash<Sha2_256, a> {
   when proof_item is {
-    Left(hash) ->
-      hash
-    Right(hash) ->
-      hash
+    Left(hash) -> hash
+    Right(hash) -> hash
   }
 }
 

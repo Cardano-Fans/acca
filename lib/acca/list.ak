@@ -350,7 +350,11 @@ test grouped_2() {
   expect Some(g2) = list.at(items, 1)
   expect Some(g3) = list.at(items, 2)
 
-  list.and([(g1 == [1, 2])?, (g2 == [3, 4])?, (g3 == [5, 6])?])
+  and {
+    (g1 == [1, 2])?,
+    (g2 == [3, 4])?,
+    (g3 == [5, 6])?,
+  }
 }
 
 test grouped_3() {
@@ -359,7 +363,11 @@ test grouped_3() {
   expect Some(g2) = list.at(items, 1)
   expect Some(g3) = list.at(items, 2)
 
-  list.and([(g1 == [1])?, (g2 == [2])?, (g3 == [3])?])
+  and {
+    (g1 == [1])?,
+    (g2 == [2])?,
+    (g3 == [3])?,
+  }
 }
 
 test grouped_4() {
@@ -450,7 +458,10 @@ test sliding_4() {
   expect Some(g1) = list.at(items, 0)
   expect Some(g2) = list.at(items, 1)
 
-  list.and([(g1 == [1, 2])?, (g2 == [2, 3])?])
+  and {
+    (g1 == [1, 2])?,
+    (g2 == [2, 3])?,
+  }
 }
 
 test sliding_5() {
@@ -460,7 +471,12 @@ test sliding_5() {
   expect Some(g2) = list.at(items, 1)
   expect Some(g4) = list.at(items, 3)
 
-  list.and([(g1 == [1, 2])?, (g2 == [2, 3])?, (g3 == [3, 4])?, (g4 == [4, 5])?])
+  and {
+    (g1 == [1, 2])?,
+    (g2 == [2, 3])?,
+    (g3 == [3, 4])?,
+    (g4 == [4, 5])?,
+  }
 }
 
 test sliding_6() {
@@ -469,7 +485,11 @@ test sliding_6() {
   expect Some(g2) = list.at(items, 1)
   expect Some(g3) = list.at(items, 2)
 
-  list.and([(g1 == [1, 2, 3])?, (g2 == [3, 4, 5])?, (g3 == [5, 6])?])
+  and {
+    (g1 == [1, 2, 3])?,
+    (g2 == [3, 4, 5])?,
+    (g3 == [5, 6])?,
+  }
 }
 
 test sliding_7() {
@@ -477,7 +497,10 @@ test sliding_7() {
   expect Some(g1) = list.at(items, 0)
   expect Some(g2) = list.at(items, 1)
 
-  list.and([(g1 == [1, 2, 3])?, (g2 == [3, 4, 5])?])
+  and {
+    (g1 == [1, 2, 3])?,
+    (g2 == [3, 4, 5])?,
+  }
 }
 
 test sliding_8() {

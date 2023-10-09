@@ -18,6 +18,8 @@
 //// 3 * 4   // 12
 //// 10 % 3  // 1
 
+use aiken/builtin
+
 /// Calculate the absolute value of an integer.
 ///
 /// ```aiken
@@ -155,6 +157,63 @@ test pow_513_3() {
   pow(513, 3) == 135005697
 }
 
+test pow_2_4() {
+  pow(2, 4) == 16
+}
+
+test pow_2_42() {
+  pow(2, 42) == 4398046511104
+}
+
+/// Calculates the power of 2 for a given exponent `e`. Much cheaper than
+/// using `pow(2, _)` for small exponents (0 < e < 256).
+///
+/// ```aiken
+/// math.pow2(-2) == 0
+/// math.pow2(0) == 1
+/// math.pow2(1) == 2
+/// math.pow2(4) == 16
+/// math.pow2(42) == 4398046511104
+/// ```
+pub fn pow2(e: Int) -> Int {
+  // do_pow2(e, 1)
+  if e < 8 {
+    if e < 0 {
+      0
+    } else {
+      builtin.index_bytearray(#[1, 2, 4, 8, 16, 32, 64, 128], e)
+    }
+  } else if e < 32 {
+    256 * pow2(e - 8)
+  } else {
+    4294967296 * pow2(e - 32)
+  }
+}
+
+test pow2_neg() {
+  pow2(-2) == 0
+}
+
+test pow2_0() {
+  pow2(0) == 1
+}
+
+test pow2_1() {
+  pow2(1) == 2
+}
+
+test pow2_4() {
+  pow2(4) == 16
+}
+
+test pow2_42() {
+  pow2(42) == 4398046511104
+}
+
+test pow2_256() {
+  pow2(256) == 115792089237316195423570985008687907853269984665640564039457584007913129639936
+}
+
 /// The logarithm in base `b` of an element using integer divisions.
 ///
 /// ```aiken
@@ -199,4 +258,94 @@ test log_4_4() {
 
 test log_4_43() {
   log(4, base: 43) == 0
+}
+
+/// The greatest common divisor of two integers.
+///
+/// ```aiken
+/// math.gcd(42, 14) == 14
+/// math.gcd(14, 42) == 14
+/// math.gcd(0, 0) == 0
+/// ```
+pub fn gcd(x: Int, y: Int) -> Int {
+  abs(do_gcd(x, y))
+}
+
+fn do_gcd(x: Int, y: Int) -> Int {
+  when y is {
+    0 -> x
+    _ -> do_gcd(y, x % y)
+  }
+}
+
+test gcd_test1() {
+  gcd(10, 300) == 10
+}
+
+test gcd_test2() {
+  gcd(-10, 300) == 10
+}
+
+test gcd_test3() {
+  gcd(42, 14) == 14
+}
+
+/// Calculates the square root of an integer using the [Babylonian
+/// method](https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method). This returns either the exact result or the smallest integer
+/// nearest to the square root.
+///
+/// Returns `None` for negative values.
+///
+/// ```aiken
+/// math.sqrt(0) == Some(0)
+/// math.sqrt(25) == Some(5)
+/// math.sqrt(44203) == Some(210)
+/// math.sqrt(-42) == None
+/// ```
+pub fn sqrt(self: Int) -> Option<Int> {
+  if self < 0 {
+    None
+  } else if self <= 1 {
+    Some(self)
+  } else {
+    Some(sqrt_babylonian(self, self, ( self + 1 ) / 2))
+  }
+}
+
+// The basic idea is that if x is an overestimate to the square root of a
+// non-negative real number S then S/x will be an underestimate, or vice versa,
+// and so the average of these two numbers may reasonably be expected to provide a
+// better approximation (though the formal proof of that assertion depends on the
+// inequality of arithmetic and geometric means that shows this average is always
+// an overestimate of the square root.
+fn sqrt_babylonian(self: Int, x: Int, y: Int) -> Int {
+  if y >= x {
+    x
+  } else {
+    sqrt_babylonian(self, y, ( y + self / y ) / 2)
+  }
+}
+
+test sqrt1() {
+  sqrt(0) == Some(0)
+}
+
+test sqrt2() {
+  sqrt(1) == Some(1)
+}
+
+test sqrt3() {
+  sqrt(25) == Some(5)
+}
+
+test sqrt4() {
+  sqrt(44203) == Some(210)
+}
+
+test sqrt5() {
+  sqrt(975461057789971041) == Some(987654321)
+}
+
+test sqrt6() {
+  sqrt(-42) == None
 }

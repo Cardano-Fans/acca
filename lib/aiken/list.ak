@@ -30,34 +30,6 @@ test all_3() {
   all([], fn(n) { n == 42 }) == True
 }
 
-/// Like [all](#all) but when elements are already booleans.
-///
-/// Note: an empty list always satisfies the predicate.
-///
-/// ```aiken
-/// list.and([]) == True
-/// list.and([True, True]) == True
-/// list.and([True, False]) == False
-/// ```
-pub fn and(self: List<Bool>) -> Bool {
-  when self is {
-    [] -> True
-    [x, ..xs] -> x && and(xs)
-  }
-}
-
-test and_1() {
-  and([True, True, True])
-}
-
-test and_2() {
-  !and([True, False, True])
-}
-
-test and_3() {
-  and([])
-}
-
 /// Determine if at least one element of the list satisfies the given predicate.
 ///
 /// Note: an empty list never satisfies the predicate.
@@ -161,39 +133,6 @@ test at_4() {
 
 test at_5() {
   at([1, 2, 3], 2) == Some(3)
-}
-
-/// Like [any](#any) but when elements are already booleans.
-///
-/// Note: an empty list never satisfies the predicate.
-///
-/// ```aiken
-/// list.or([]) == False
-/// list.or([True, True]) == True
-/// list.or([True, False]) == True
-/// list.or([False, False]) == False
-/// ```
-pub fn or(self: List<Bool>) -> Bool {
-  when self is {
-    [] -> False
-    [x, ..xs] -> x || or(xs)
-  }
-}
-
-test or_1() {
-  or([True, True])
-}
-
-test or_2() {
-  or([True, False, True])
-}
-
-test or_3() {
-  !or([])
-}
-
-test or_4() {
-  !or([False, False])
 }
 
 /// Merge two lists together.
@@ -567,7 +506,7 @@ pub fn init(self: List<a>) -> Option<List<a>> {
 
 fn do_init(self: List<a>) -> List<a> {
   when self is {
-    [] -> error @"unreachable"
+    [] -> fail @"unreachable"
     [_] ->
       []
     [x, ..xs] ->
@@ -616,6 +555,46 @@ test has_2() {
 
 test has_3() {
   has([], 14) == False
+}
+
+/// Gets the index of an element of a list, if any. Otherwise, returns None.
+///
+/// ```aiken
+/// list.index_of([1, 5, 2], 2) == Some(2)
+/// list.index_of([1, 7, 3], 4) == None
+/// list.index_of([1, 0, 9, 6], 6) == 3
+/// list.index_of([], 6) == None
+/// ```
+pub fn index_of(self: List<a>, elem: a) -> Option<Int> {
+  do_index_of(self, elem, 0)
+}
+
+fn do_index_of(self: List<a>, elem: a, i: Int) -> Option<Int> {
+  when self is {
+    [] -> None
+    [x, ..xs] ->
+      if x == elem {
+        Some(i)
+      } else {
+        do_index_of(xs, elem, i + 1)
+      }
+  }
+}
+
+test index_of_1() {
+  index_of([1, 5, 2], 2) == Some(2)
+}
+
+test index_of_2() {
+  index_of([1, 7, 3], 4) == None
+}
+
+test index_of_3() {
+  index_of([1, 0, 9, 6], 6) == Some(3)
+}
+
+test index_of_4() {
+  index_of([], 6) == None
 }
 
 /// Get the first element of a list
@@ -1330,8 +1309,8 @@ test zip_3() {
 /// Said differently, this is [`foldl`](#foldl) with callback arguments swapped.
 ///
 /// ```aiken
-/// list.reduce([#[1], #[2], #[3]], bytearray.concat, #[0]) == #[0, 1, 2, 3]
-/// list.reduce([True, False, True], fn(b, a) { or([b, a]) }, False) == True
+/// list.reduce([#[1], #[2], #[3]], #[0], bytearray.concat) == #[0, 1, 2, 3]
+/// list.reduce([True, False, True], False, fn(b, a) { or { b, a } }) == True
 /// ```
 pub fn reduce(self: List<a>, zero: b, with: fn(b, a) -> b) -> b {
   foldl(self, zero, flip(with))
@@ -1346,7 +1325,7 @@ test reduce_2() {
 }
 
 test reduce_3() {
-  reduce([True, False, True], False, fn(left, right) { or([left, right]) }) == True
+  reduce([True, False, True], False, fn(left, right) { left || right }) == True
 }
 
 test reduce_4() {

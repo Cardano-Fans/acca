@@ -41,6 +41,7 @@ pub fn compare_option(
     (Some(l), Some(r)) -> Some(compare(l, r))
     (Some(l), None) -> Some(l)
     (None, Some(r)) -> Some(r)
+    _ -> None
   }
 }
 

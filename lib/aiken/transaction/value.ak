@@ -107,34 +107,34 @@ pub fn negate(self: Value) -> Value {
 
 /// Combine two `Value` together.
 pub fn merge(left v0: Value, right v1: Value) -> Value {
-  dict.union_with(
-    v0.inner,
-    v1.inner,
-    fn(_, a0, a1) {
-      let result =
-        dict.union_with(
-          a0,
-          a1,
-          fn(_, q0, q1) {
-            let q = q0 + q1
-            if q == 0 {
-              None
-            } else {
-              Some(q)
-            }
-          },
-          bytearray.compare,
-        )
-
-      if dict.is_empty(result) {
-        None
-      } else {
-        Some(result)
-      }
-    },
-    bytearray.compare,
+  Value(
+    dict.union_with(
+      v0.inner,
+      v1.inner,
+      fn(_, a0, a1) {
+        let result =
+          dict.union_with(
+            a0,
+            a1,
+            fn(_, q0, q1) {
+              let q = q0 + q1
+              if q == 0 {
+                None
+              } else {
+                Some(q)
+              }
+            },
+            bytearray.compare,
+          )
+        if dict.is_empty(result) {
+          None
+        } else {
+          Some(result)
+        }
+      },
+      bytearray.compare,
+    ),
   )
-    |> Value
 }
 
 test merge_1() {
@@ -175,6 +175,21 @@ test merge_3() {
   flatten(v) == [(#"01", #"", 1)]
 }
 
+test merge_4() {
+  let v1 = from_asset(#"00", #"", 1)
+  let v2 = from_asset(#"00", #"", -1)
+
+  merge(v1, v2) == zero()
+}
+
+test merge_5() {
+  let v =
+    zero()
+      |> add(#"acab", #"beef", 0)
+
+  merge(zero(), v) == zero()
+}
+
 /// Add a (positive or negative) quantity of a single token to a value.
 /// This is more efficient than [`merge`](#merge) for a single asset.
 pub fn add(
@@ -183,13 +198,12 @@ pub fn add(
   asset_name: AssetName,
   quantity: Int,
 ) -> Value {
-  Value(
-    dict.insert_with(
-      self.inner,
-      policy_id,
-      dict.from_ascending_list([(asset_name, quantity)], bytearray.compare),
+  if quantity == 0 {
+    self
+  } else {
+    let helper =
       fn(_, left, _right) {
-        Some(
+        let inner_result =
           dict.insert_with(
             left,
             asset_name,
@@ -203,12 +217,63 @@ pub fn add(
               }
             },
             bytearray.compare,
-          ),
-        )
-      },
-      bytearray.compare,
-    ),
-  )
+          )
+        if dict.is_empty(inner_result) {
+          None
+        } else {
+          Some(inner_result)
+        }
+      }
+
+    Value(
+      dict.insert_with(
+        self.inner,
+        policy_id,
+        dict.from_ascending_list([(asset_name, quantity)], bytearray.compare),
+        helper,
+        bytearray.compare,
+      ),
+    )
+  }
+}
+
+test add_1() {
+  let v =
+    zero()
+      |> add(#"acab", #"beef", 321)
+      |> add(#"acab", #"beef", -321)
+  v == zero()
+}
+
+test add_2() {
+  let v =
+    from_lovelace(123)
+      |> add(#"acab", #"beef", 321)
+      |> add(#"acab", #"beef", -1 * 321)
+  v == from_lovelace(123)
+}
+
+test add_3() {
+  let v =
+    from_lovelace(1)
+      |> add(ada_policy_id, ada_asset_name, 2)
+      |> add(ada_policy_id, ada_asset_name, 3)
+  v == from_lovelace(6)
+}
+
+test add_4() {
+  let v =
+    zero()
+      |> add(#"acab", #"beef", 0)
+  v == zero()
+}
+
+test add_5() {
+  let v =
+    zero()
+      |> add(#"acab", #"beef", 0)
+      |> add(#"acab", #"beef", 0)
+  v == zero()
 }
 
 /// Extract the quantity of a given asset.
@@ -318,9 +383,9 @@ pub fn to_dict(self: Value) -> Dict<PolicyId, Dict<AssetName, Int>> {
 /// in transaction outputs.
 ///
 /// Note that you're never expected to construct a `MintedValue` yourself. If you need to
-/// manipulate multi-asset values, use [Value](/value.html#Value)
+/// manipulate multi-asset values, use [Value](#Value)
 ///
-/// See also [`to_value`](#to_value).
+/// See also [`from_minted_value`](#from_minted_value).
 pub opaque type MintedValue {
   inner: Dict<PolicyId, Dict<AssetName, Int>>,
 }
