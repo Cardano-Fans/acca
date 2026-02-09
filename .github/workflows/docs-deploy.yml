@@ -17,9 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: aiken-lang/setup-aiken@v0.1.0
+      - uses: aiken-lang/setup-aiken@v1
         with:
-          version: v1.0.20-alpha
+          version: v1.1.21
 
       - name: Run Aiken docs on acca
         working-directory: ./
