@@ -1,7 +1,7 @@
-use aiken/bytearray.{from_string}
-use aiken/hash.{Hash, Sha2_256, sha2_256}
-use aiken/list
+use aiken/collection/list
+use aiken/crypto.{Hash, Sha2_256, sha2_256}
 use aiken/option.{choice, is_none}
+use aiken/primitive/bytearray.{from_string}
 
 /// Data structure similar to Merkle Tree called colloquially `Hash Tree`. Contrary to the original
 /// it doesn't store the original element.
@@ -30,8 +30,7 @@ pub fn element_hash(self: HashTree<a>) -> Hash<Sha2_256, a> {
 
 test element_hash_1() {
   let dog = @"dog"
-  let items =
-    [dog]
+  let items = [dog]
   let serialise_fn = create_string_item_serialise_fn()
 
   let mt = from_list(items, serialise_fn)
@@ -45,8 +44,7 @@ test element_hash_3() {
   let dog = @"dog"
   let cat = @"cat"
   let mouse = @"mouse"
-  let items =
-    [dog, cat, mouse]
+  let items = [dog, cat, mouse]
   let serialise_fn = create_string_item_serialise_fn()
 
   let mt = from_list(items, serialise_fn)
@@ -66,8 +64,7 @@ test element_hash_3() {
 }
 
 test element_hash_2() {
-  let items =
-    []
+  let items = []
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -91,8 +88,7 @@ pub fn size(self: HashTree<a>) -> Int {
 }
 
 test size_1() {
-  let items =
-    []
+  let items = []
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
   size(mt) == 0
@@ -112,8 +108,7 @@ test size_3() {
   let dog = @"dog"
   let cat = @"cat"
   let mouse = @"mouse"
-  let items =
-    [dog, cat, mouse]
+  let items = [dog, cat, mouse]
   let serialise_fn = create_string_item_serialise_fn()
 
   let mt = from_list(items, serialise_fn)
@@ -129,8 +124,7 @@ test size_4() {
   let bull = @"bull"
 
   let serialise_fn = create_string_item_serialise_fn()
-  let items =
-    [dog, cat, mouse, horse, pig, bull]
+  let items = [dog, cat, mouse, horse, pig, bull]
 
   let mt = from_list(items, serialise_fn)
   size(mt) == 6
@@ -210,8 +204,7 @@ pub fn get_proof(
   item: a,
   serialise_fn: fn(a) -> ByteArray,
 ) -> Option<Proof<a>> {
-  let empty: Proof<a> =
-    []
+  let empty: Proof<a> = []
 
   do_proof(self, sha2_256(serialise_fn(item)), empty, serialise_fn)
 }
@@ -224,8 +217,7 @@ test get_proof_1() {
   let pig = @"pig"
   let bull = @"bull"
 
-  let items =
-    [dog, cat, mouse, horse, pig, bull]
+  let items = [dog, cat, mouse, horse, pig, bull]
   let serialise_fn = create_string_item_serialise_fn()
 
   let mt = from_list(items, serialise_fn)
@@ -240,8 +232,7 @@ test get_proof_1() {
 test get_proof_2() {
   let dog = @"dog"
 
-  let items =
-    [dog]
+  let items = [dog]
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -258,8 +249,7 @@ test get_proof_3() {
   let cat = @"cat"
   let mouse = @"mouse"
 
-  let items =
-    [dog, cat, mouse]
+  let items = [dog, cat, mouse]
 
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
@@ -295,8 +285,7 @@ test get_proof_4() {
   let mouse = @"mouse"
   let horse = @"horse"
 
-  let items =
-    [dog, cat, mouse, horse]
+  let items = [dog, cat, mouse, horse]
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -360,8 +349,7 @@ pub fn from_list(
 }
 
 test from_1() {
-  let items =
-    []
+  let items = []
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -370,8 +358,7 @@ test from_1() {
 
 test from_2() {
   let dog = @"dog"
-  let items =
-    [dog]
+  let items = [dog]
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -381,8 +368,7 @@ test from_2() {
 test from_3() {
   let dog = @"dog"
   let cat = @"cat"
-  let items =
-    [dog, cat]
+  let items = [dog, cat]
 
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
@@ -404,8 +390,7 @@ test from_4() {
   let cat = @"cat"
   let mouse = @"mouse"
 
-  let items =
-    [dog, cat, mouse]
+  let items = [dog, cat, mouse]
   let serialise_fn = create_string_item_serialise_fn()
 
   let mt = from_list(items, serialise_fn)
@@ -439,8 +424,7 @@ test from_5() {
 
   let serialise_fn = create_string_item_serialise_fn()
 
-  let items =
-    [dog, cat, mouse, horse]
+  let items = [dog, cat, mouse, horse]
   let mt = from_list(items, serialise_fn)
 
   let left_node_hash =
@@ -507,8 +491,7 @@ test from_hashes_list_5() {
 
   let serialise_fn = create_string_item_serialise_fn()
 
-  let items =
-    [dog, cat, mouse, horse]
+  let items = [dog, cat, mouse, horse]
   let hashes_items = list.map(items, fn(item) { sha2_256(serialise_fn(item)) })
 
   let mt = from_hashes_list(hashes_items)
@@ -588,8 +571,7 @@ pub fn member(
 
 test member_1() {
   let dog = @"dog"
-  let items =
-    [dog]
+  let items = [dog]
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -606,8 +588,7 @@ test member_2() {
   let mouse = @"mouse"
   let horse = @"horse"
 
-  let items =
-    [dog, cat, mouse, horse]
+  let items = [dog, cat, mouse, horse]
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -622,8 +603,7 @@ test member_3() {
   let dog = @"dog"
   let cat = @"cat"
 
-  let items =
-    [dog, cat]
+  let items = [dog, cat]
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -639,8 +619,7 @@ test member_4() {
   let cat = @"cat"
   let mouse = @"mouse"
 
-  let items =
-    [dog, cat, mouse]
+  let items = [dog, cat, mouse]
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -659,8 +638,7 @@ test member_5() {
   let pig = @"pig"
   let bull = @"bull"
 
-  let items =
-    [dog, cat, mouse, horse, pig, bull]
+  let items = [dog, cat, mouse, horse, pig, bull]
   let serialise_fn = create_string_item_serialise_fn()
   let mt = from_list(items, serialise_fn)
 
@@ -681,8 +659,7 @@ test member_6() {
 
   let serialise_fn = create_string_item_serialise_fn()
 
-  let items =
-    [dog, cat, mouse, horse, pig, bull]
+  let items = [dog, cat, mouse, horse, pig, bull]
   let mt = from_list(items, serialise_fn)
 
   let item = @"parrot"
@@ -708,8 +685,7 @@ test member_from_tree_1() {
 
   let serialise_fn = create_string_item_serialise_fn()
 
-  let items =
-    [dog, cat, mouse, horse, pig, bull]
+  let items = [dog, cat, mouse, horse, pig, bull]
   let mt = from_list(items, serialise_fn)
 
   let item = pig
@@ -727,8 +703,7 @@ test member_from_tree_2() {
 
   let serialise_fn = create_string_item_serialise_fn()
 
-  let items =
-    [dog, cat, mouse, horse, pig, bull]
+  let items = [dog, cat, mouse, horse, pig, bull]
   let mt = from_list(items, serialise_fn)
 
   let item = @"parrot"
@@ -741,8 +716,7 @@ test member_from_tree_32() {
 
   let serialise_fn = create_string_item_serialise_fn()
 
-  let items =
-    [dog]
+  let items = [dog]
   let mt = from_list(items, serialise_fn)
 
   member_from_tree(tree: mt, item: dog, serialise_fn: serialise_fn)
@@ -750,8 +724,8 @@ test member_from_tree_32() {
 
 fn get_proof_item_value(proof_item: ProofItem<a>) -> Hash<Sha2_256, a> {
   when proof_item is {
-    Left(hash) -> hash
-    Right(hash) -> hash
+    Left { hash } -> hash
+    Right { hash } -> hash
   }
 }
 

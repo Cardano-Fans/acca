@@ -42,8 +42,8 @@ test right_1() {
 /// Provides information whether `Either` contains a particular element.
 pub fn contains(self: Either<a, b>, item: b) -> Bool {
   when self is {
-    Left(_) -> False
-    Right(x) -> x == item
+    Left { .. } -> False
+    Right { value } -> value == item
   }
 }
 
@@ -66,8 +66,8 @@ pub fn fold(
   with_right: fn(b) -> c,
 ) -> c {
   when self is {
-    Left(a) -> with_left(a)
-    Right(b) -> with_right(b)
+    Left { value } -> with_left(value)
+    Right { value } -> with_right(value)
   }
 }
 
@@ -87,8 +87,8 @@ test fold_2() {
 /// Notice that coversion of `Left` to None means we are loosing value wrapped in `Left`.
 pub fn to_option(self: Either<a, b>) -> Option<b> {
   when self is {
-    Left(_) -> None
-    Right(x) -> Some(x)
+    Left { .. } -> None
+    Right { value } -> Some(value)
   }
 }
 
@@ -105,10 +105,8 @@ test to_option_2() {
 /// `Right` will be converted to a list of one element
 pub fn to_list(self: Either<a, b>) -> List<b> {
   when self is {
-    Left(_) ->
-      []
-    Right(x) ->
-      [x]
+    Left { .. } -> []
+    Right { value } -> [value]
   }
 }
 
@@ -123,7 +121,7 @@ test to_list_2() {
 /// Whether this either is in fact `Left`.
 pub fn is_left(self: Either<a, b>) -> Bool {
   when self is {
-    Left(_) -> True
+    Left { .. } -> True
     _ -> False
   }
 }
@@ -131,7 +129,7 @@ pub fn is_left(self: Either<a, b>) -> Bool {
 /// Whether this either is in fact `Right`.
 pub fn is_right(self: Either<a, b>) -> Bool {
   when self is {
-    Right(_) -> True
+    Right { .. } -> True
     _ -> False
   }
 }
@@ -139,9 +137,9 @@ pub fn is_right(self: Either<a, b>) -> Bool {
 /// Applies the predicate to the `Right` part, in case Either is `Left`, it returns negative.
 pub fn exists(self: Either<a, b>, with: fn(b) -> Bool) -> Bool {
   when self is {
-    Left(_) -> False
-    Right(y) ->
-      if with(y) {
+    Left { .. } -> False
+    Right { value } ->
+      if with(value) {
         True
       } else {
         False
@@ -164,8 +162,8 @@ test exists_3() {
 /// Swap and replace a `Left` side with a `Right` side.
 pub fn swap(self: Either<a, b>) -> Either<b, a> {
   when self is {
-    Left(x) -> Right(x)
-    Right(y) -> Left(y)
+    Left { value } -> Right { value }
+    Right { value } -> Left { value }
   }
 }
 
@@ -181,8 +179,8 @@ test swap_2() {
 /// Note that map is right biased, if you need to map over left, you should use map_left function.
 pub fn map(self: Either<a, b>, with: fn(b) -> c) {
   when self is {
-    Left(x) -> Left(x)
-    Right(y) -> Right(with(y))
+    Left { value } -> Left { value }
+    Right { value } -> Right { value: with(value) }
   }
 }
 
@@ -201,8 +199,8 @@ test map_2() {
 
 pub fn map_left(self: Either<a, b>, with: fn(a) -> c) {
   when self is {
-    Left(x) -> Left(with(x))
-    Right(y) -> Right(y)
+    Left { value } -> Left { value: with(value) }
+    Right { value } -> Right { value }
   }
 }
 

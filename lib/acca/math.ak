@@ -1,5 +1,5 @@
 use aiken/builtin.{mod_integer}
-use aiken/int
+use aiken/primitive/int
 
 /// Returns a min of two elements.
 ///
@@ -9,10 +9,8 @@ use aiken/int
 /// ```
 pub fn min(left: a, right: a, compare: fn(a, a) -> Ordering) -> a {
   when compare(left, right) is {
-    Greater ->
-      right
-    _ ->
-      left
+    Greater -> right
+    _ -> left
   }
 }
 
@@ -40,10 +38,8 @@ test min_3() {
 /// ```
 pub fn max(left: a, right: a, compare: fn(a, a) -> Ordering) -> a {
   when compare(left, right) is {
-    Greater ->
-      left
-    _ ->
-      right
+    Greater -> left
+    _ -> right
   }
 }
 
@@ -72,10 +68,8 @@ test max_3() {
 /// ```
 pub fn gcd(a: Int, b: Int) -> Int {
   when b is {
-    0 ->
-      a
-    _n ->
-      gcd(b, mod_integer(a, b))
+    0 -> a
+    _n -> gcd(b, mod_integer(a, b))
   }
 }
 

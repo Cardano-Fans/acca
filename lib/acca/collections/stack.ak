@@ -1,5 +1,5 @@
 use acca/list as alist
-use aiken/list
+use aiken/collection/list
 
 /// Functional stack backed by list.
 pub opaque type Stack<a> {

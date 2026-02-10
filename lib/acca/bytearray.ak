@@ -1,5 +1,5 @@
 use aiken/builtin
-use aiken/bytearray
+use aiken/primitive/bytearray
 
 /// Attest whether a given list of byte array is in fact sorted.
 ///

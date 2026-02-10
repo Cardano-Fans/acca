@@ -1,7 +1,7 @@
 use acca/string as astring
-use aiken/int
-use aiken/list
+use aiken/collection/list
 use aiken/option
+use aiken/primitive/int
 
 /// Left biased resolution of comparing two orderings.
 ///
@@ -222,6 +222,41 @@ test compare_tuple_left_2() {
 
 test compare_tuple_left_3() {
   compare_tuple_left((1, @"a"), (1, @"b"), int.compare) == Equal
+}
+
+/// Compares two pairs with a given compare function for the left side of the pair.
+/// This function will only look at left side of the pair.
+///
+/// ```aiken
+/// aordering.compare_pair_left(Pair(1, 2), Pair(1, 2), int.compare) == Equal
+/// aordering.compare_pair_left(Pair(0, 1), Pair(1, 2), int.compare) == Less
+/// aordering.compare_pair_left(Pair(2, 1), Pair(1, 2), int.compare) == Greater
+/// aordering.compare_pair_left(Pair(1, @"a"), Pair(1, @"b"), int.compare) == Equal
+/// ```
+pub fn compare_pair_left(
+  pair1: Pair<a, b>,
+  pair2: Pair<a, b>,
+  left_compare: fn(a, a) -> Ordering,
+) -> Ordering {
+  let Pair(cp1, _r1) = pair1
+  let Pair(cp2, _r2) = pair2
+  left_compare(cp1, cp2)
+}
+
+test compare_pair_left_0() {
+  compare_pair_left(Pair(1, 2), Pair(1, 2), int.compare) == Equal
+}
+
+test compare_pair_left_1() {
+  compare_pair_left(Pair(0, 2), Pair(1, 2), int.compare) == Less
+}
+
+test compare_pair_left_2() {
+  compare_pair_left(Pair(2, 2), Pair(1, 2), int.compare) == Greater
+}
+
+test compare_pair_left_3() {
+  compare_pair_left(Pair(1, @"a"), Pair(1, @"b"), int.compare) == Equal
 }
 
 /// Serialises ordering to string

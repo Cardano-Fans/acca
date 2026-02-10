@@ -3,11 +3,11 @@ use acca/option as aoption
 use acca/predicate as apredicate
 use acca/string as astring
 use aiken/builtin
-use aiken/bytearray
-use aiken/dict.{Dict}
-use aiken/int
-use aiken/list
+use aiken/collection/list
+use aiken/collection/pairs
 use aiken/option
+use aiken/primitive/bytearray
+use aiken/primitive/int
 
 /// Returns head of a list or error
 ///
@@ -774,18 +774,21 @@ test permutations_2() {
 fn do_count_by(
   self: List<a>,
   with: fn(a) -> b,
-  acc: Dict<b, Int>,
+  acc: Pairs<b, Int>,
   compare: fn(b, b) -> Ordering,
-) -> Dict<b, Int> {
+) -> Pairs<b, Int> {
   when self is {
     [] -> acc
     [h, ..t] -> {
-      let comp: Dict<b, Int> = {
+      let comp: Pairs<b, Int> = {
         let key = with(h)
-        when dict.get(acc, key) is {
-          None -> dict.insert(acc, key, 1, compare)
-          Some(count) -> dict.insert(acc, key, count + 1, compare)
-        }
+        pairs.insert_with_by_ascending_key(
+          acc,
+          key,
+          1,
+          compare,
+          fn(c1, c2) { c1 + c2 },
+        )
       }
       do_count_by(t, with, comp, compare)
     }
@@ -796,21 +799,21 @@ pub fn count_by(
   self: List<a>,
   with: fn(a) -> b,
   compare: fn(b, b) -> Ordering,
-) -> Dict<b, Int> {
-  do_count_by(self, with, dict.new(), compare)
+) -> Pairs<b, Int> {
+  do_count_by(self, with, [], compare)
 }
 
 test count_by_0() {
-  count_by([], list.length, int.compare) == dict.new()
+  count_by([], list.length, int.compare) == []
 }
 
 test count_by_1() {
   let items = [#"ffff", #"ffff", #"00", #"00", #"00"]
 
   let result =
-    dict.new()
-      |> dict.insert(2, 2, int.compare)
-      |> dict.insert(1, 3, int.compare)
+    []
+      |> pairs.insert_by_ascending_key(2, 2, int.compare)
+      |> pairs.insert_by_ascending_key(1, 3, int.compare)
 
   count_by(items, builtin.length_of_bytearray, int.compare) == result
 }
@@ -819,30 +822,29 @@ test count_by_2() {
   let items = [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
 
   let result =
-    dict.new()
-      |> dict.insert(@"dog", 2, astring.compare)
-      |> dict.insert(@"cat", 3, astring.compare)
-      |> dict.insert(@"horse", 1, astring.compare)
-
+    []
+      |> pairs.insert_by_ascending_key(@"dog", 2, astring.compare)
+      |> pairs.insert_by_ascending_key(@"cat", 3, astring.compare)
+      |> pairs.insert_by_ascending_key(@"horse", 1, astring.compare)
   count_by(items, identity, astring.compare) == result
 }
 
-pub fn count(self: List<a>, compare: fn(a, a) -> Ordering) -> Dict<a, Int> {
+pub fn count(self: List<a>, compare: fn(a, a) -> Ordering) -> Pairs<a, Int> {
   count_by(self, identity, compare)
 }
 
 test count_0() {
-  count_by([], list.length, int.compare) == dict.new()
+  count_by([], list.length, int.compare) == []
 }
 
 test count_1() {
   let items = [@"dog", @"dog", @"cat", @"cat", @"cat", @"horse"]
 
   let result =
-    dict.new()
-      |> dict.insert(@"dog", 2, astring.compare)
-      |> dict.insert(@"cat", 3, astring.compare)
-      |> dict.insert(@"horse", 1, astring.compare)
+    []
+      |> pairs.insert_by_ascending_key(@"dog", 2, astring.compare)
+      |> pairs.insert_by_ascending_key(@"cat", 3, astring.compare)
+      |> pairs.insert_by_ascending_key(@"horse", 1, astring.compare)
 
   count(items, astring.compare) == result
 }
