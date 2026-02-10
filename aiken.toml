@@ -2,6 +2,7 @@ name = "Cardano-Fans/acca"
 version = "0.0.4"
 licences = ["MIT"]
 description = "The Aiken Non Standard Library"
+compiler = "v1.1.21"
 
 [repository]
 user = "Cardano-Fans"
