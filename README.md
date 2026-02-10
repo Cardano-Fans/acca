@@ -8,18 +8,18 @@
   <hr/>
 </div>
 
-
 ## Introduction
 
 Acca is Aiken's utility library (https://github.com/aiken-lang/aiken).
-
 
 Creators of Aiken standard library are quite opinionated what should be in Aiken's standard library (stdlib) and what should not be. They want to keep it quite minimal. This library is simply an extension / utility library that is adding many useful / repetitive functions, which somehow didn't make to std lib.
 
 ## Usage
 
 aiken.toml
+
 ```
+compiler = "v1.1.21"
 licences = ["Apache-2.0"]
 description = "Example project"
 
@@ -29,11 +29,13 @@ dependencies = [
 ```
 
 ## Limitations
+
 Since Aiken doesn't support libraries which both include the same std library (or any other library), this project simply clones std library. In other words Aiken's std lib is inlined in this project and there is no plan to make any changes to it.
 
-Current std lib SHA1 version: 746c7a9cf29729c3978235703de9e2e30848088d
+Current std lib SHA1 version: 95e58c6c400eaf38ed213728c92f8e545e49967e (stdlib v3.0.0)
 
 ## Requirements
+
 - Aiken (https://github.com/aiken-lang/aiken)
 
 ## Examples
@@ -42,7 +44,7 @@ Current std lib SHA1 version: 746c7a9cf29729c3978235703de9e2e30848088d
 use acca/list as alist
 use acca/math as amath
 
-let items: List<Option<Int>> = [Some(1), None, Some(2)] 
+let items: List<Option<Int>> = [Some(1), None, Some(2)]
 
 // resolve only Some and ignore None elements
 let resolved: List<Option<Int>> = alist.resolve(items)
@@ -78,7 +80,9 @@ expect Some(x) = product
 ```
 
 ## Why acca?
+
 Acca (Acca sellowiana) is brazilian guava fruit. The name is not accidental, this library is a tribute to well known Google's java library called guava.
 
 ## Status
+
 Project under development, API subject to change.
