@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/collections/hashed_list - Cardano-Fans/acca</title>
+    <title>aiken/primitive/bytearray - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../../favicon.svg"/>
@@ -191,7 +191,7 @@
 <h2>Types</h2>
 <ul>
   
-  <li><a href="#HashedList">HashedList</a></li>
+  <li><a href="#Byte">Byte</a></li>
   
 </ul>
 
@@ -203,7 +203,147 @@
 <ul>
   
     
-        <li><a href="#from">from</a></li>
+        <li data-heading="2"><a href="#Constructing">Constructing</a></li>
+    
+  
+    
+        <li><a href="#from_int_big_endian">from_int_big_endian</a></li>
+
+      
+  
+    
+        <li><a href="#from_int_little_endian">from_int_little_endian</a></li>
+
+      
+  
+    
+        <li><a href="#from_string">from_string</a></li>
+
+      
+  
+    
+        <li><a href="#push">push</a></li>
+
+      
+  
+    
+        <li data-heading="2"><a href="#Inspecting">Inspecting</a></li>
+    
+  
+    
+        <li><a href="#at">at</a></li>
+
+      
+  
+    
+        <li><a href="#index_of">index_of</a></li>
+
+      
+  
+    
+        <li><a href="#is_empty">is_empty</a></li>
+
+      
+  
+    
+        <li><a href="#length">length</a></li>
+
+      
+  
+    
+        <li><a href="#test_bit">test_bit</a></li>
+
+      
+  
+    
+        <li data-heading="2"><a href="#Modifying">Modifying</a></li>
+    
+  
+    
+        <li><a href="#drop">drop</a></li>
+
+      
+  
+    
+        <li><a href="#slice">slice</a></li>
+
+      
+  
+    
+        <li><a href="#take">take</a></li>
+
+      
+  
+    
+        <li data-heading="2"><a href="#Combining">Combining</a></li>
+    
+  
+    
+        <li><a href="#concat">concat</a></li>
+
+      
+  
+    
+        <li><a href="#compare">compare</a></li>
+
+      
+  
+    
+        <li data-heading="2"><a href="#Transforming">Transforming</a></li>
+    
+  
+    
+        <li><a href="#foldl">foldl</a></li>
+
+      
+  
+    
+        <li><a href="#foldr">foldr</a></li>
+
+      
+  
+    
+        <li><a href="#reduce">reduce</a></li>
+
+      
+  
+    
+        <li><a href="#to_int_big_endian">to_int_big_endian</a></li>
+
+      
+  
+    
+        <li><a href="#to_int_little_endian">to_int_little_endian</a></li>
+
+      
+  
+    
+        <li><a href="#to_string">to_string</a></li>
+
+      
+  
+    
+        <li><a href="#to_hex">to_hex</a></li>
+
+      
+  
+    
+        <li><a href="#starts_with">starts_with</a></li>
+
+      
+  
+    
+        <li><a href="#and_bytes">and_bytes</a></li>
+
+      
+  
+    
+        <li><a href="#or_bytes">or_bytes</a></li>
+
+      
+  
+    
+        <li><a href="#xor_bytes">xor_bytes</a></li>
 
       
   
@@ -248,8 +388,8 @@
         
 	  
 	    
-	      <li data-indent="2" data-current><a href="../../acca/collections/hashed_list.html">
-	      <strong>hashed_list</strong>
+	      <li data-indent="2"><a href="../../acca/collections/hashed_list.html">
+	      hashed_list
 	      </a></li>
 	    
 	  
@@ -532,8 +672,8 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../../aiken/primitive/bytearray.html">
-	      bytearray
+	      <li data-indent="2" data-current><a href="../../aiken/primitive/bytearray.html">
+	      <strong>bytearray</strong>
 	      </a></li>
 	    
 	  
@@ -660,7 +800,7 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/collections/hashed_list</a>
+  <a href="#module-name">aiken/primitive/bytearray</a>
 </h1>
 
 
@@ -673,30 +813,23 @@
   
   <div class="member">
     <div class="member-name">
-      <h2 id="HashedList">
-        <a href="#HashedList">
-	  HashedList&lt;a&gt;
+      <h2 id="Byte">
+        <a href="#Byte">
+	  Byte
         </a>
       </h2>
       
-        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/hashed_list.ak#L6-L9"></a>
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L5-L6"></a>
       
     </div>
     <div class="custom-type-constructors">
       <div class="rendered-markdown"></div>
       
-      <h3>Constructors</h3>
-      <ul class="constructor-list">
-        
-        <li class="constructor-item">
-          <div class="constructor-row">
-            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
-            <pre class="constructor-name"><code class="hljs aiken">HashedList { inner: List&lt;Hash&lt;Sha2_256, a&gt;&gt;, hash: Hash&lt;Sha2_256, a&gt; }</code></pre>
-          </div>
-	  
-        </li>
-        
-      </ul>
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">Byte = Int</code></pre>
+      </div>
       
     </div>
   </div>
@@ -713,11 +846,454 @@
   </h1>
   
   
+      
+        <h2 id="Constructing" class="module-heading"><a href="#Constructing">Constructing</a></h3>
+      
+  
+  
+  
       <div class="member">
         <div class="member-name">
-          <h2 id="from"><pre class="hljs language-aiken">from(items: List&lt;a&gt;, hash_fn: fn(a) -&gt; Hash&lt;Sha2_256, a&gt;) -&gt; HashedList&lt;a&gt;</pre></h2>
+          <h2 id="from_int_big_endian"><pre class="hljs language-aiken">from_int_big_endian(self: Int, size: Int) -&gt; ByteArray</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/hashed_list.ak#L18-L31"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L23-L25"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Encode an integer value as a Big-Endian (most-significant bytes first) <code>ByteArray</code>.
+The size is the expected size in number of bytes.</p>
+<blockquote class="markdown-alert-important">
+<p>This function fails (i.e. halts the program) if the value cannot fit in the given size. When the
+size is <em>too large</em>, the array is left-padded with zeroes.</p>
+</blockquote>
+<pre><code class="language-aiken">bytearray.from_int_big_endian(1_000_000, 3) == #"0f4240"
+bytearray.from_int_big_endian(1_000_000, 5) == #"00000f4240"
+bytearray.from_int_big_endian(0, 8) == #"0000000000000000"
+bytearray.from_int_big_endian(1_000_000, 1) =&gt; 💥
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="from_int_little_endian"><pre class="hljs language-aiken">from_int_little_endian(self: Int, size: Int) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L56-L58"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Encode an integer value as a Little-Endian (least-significant bytes first) <code>ByteArray</code>.
+The size is the expected size in number of bytes.</p>
+<blockquote class="markdown-alert-important">
+<p>This function fails (i.e. halts the program) if the value cannot fit in the given size. When the
+size is <em>too large</em>, the array is right-padded with zeroes.</p>
+</blockquote>
+<pre><code class="language-aiken">bytearray.from_int_little_endian(1_000_000, 3) == #"40420f"
+bytearray.from_int_little_endian(1_000_000, 5) == #"40420f0000"
+bytearray.from_int_little_endian(0, 8) == #"0000000000000000"
+bytearray.from_int_little_endian(1_000_000, 1) =&gt; 💥
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="from_string"><pre class="hljs language-aiken">from_string(str: String) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L81-L83"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Convert a <code>String</code> into a <code>ByteArray</code>.</p>
+<pre><code class="language-aiken">bytearray.from_string(@"ABC") == #"414243"
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="push"><pre class="hljs language-aiken">push(self: ByteArray, byte: Byte) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L103-L105"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Add a byte element in front of a <code>ByteArray</code>. When the given byte is
+greater than 255, it wraps-around. <strong>PlutusV2 behavior</strong> So 256 is mapped to 0, 257 to 1, and so
+forth.
+In PlutusV3 this will error instead of wrapping around.</p>
+<pre><code class="language-aiken">bytearray.push(#"", 0) == #"00"
+bytearray.push(#"0203", 1) == #"010203"
+bytearray.push(#"0203", 257) == #"010203"
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      
+        <h2 id="Inspecting" class="module-heading"><a href="#Inspecting">Inspecting</a></h3>
+      
+  
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="at"><pre class="hljs language-aiken">at(self: ByteArray, index: Int) -&gt; Byte</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L126-L128"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Get the <code>Byte</code> at the given index, or crash.</p>
+<blockquote class="markdown-alert-warning">
+<p>This functions fails (i.e. halts the program) if there’s no byte at the given index.</p>
+</blockquote>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="index_of"><pre class="hljs language-aiken">index_of(self: ByteArray, bytes: ByteArray) -&gt; Option&lt;(Int, Int)&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L139-L144"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Search the start and end positions of a sub-array in a <code>ByteArray</code>.</p>
+<pre><code class="language-aiken">bytearray.index_of("Hello, World!", "World") == Some((7, 11))
+bytearray.index_of("Hello, World!", "foo") == None
+bytearray.index_of("Hello, World!", "!") == Some((12, 12))
+bytearray.index_of("Hello, World!", "o") == Some((4, 4))
+bytearray.index_of("Hello, World!", "Hello, World!") == Some((0, 12))
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="is_empty"><pre class="hljs language-aiken">is_empty(self: ByteArray) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L190-L192"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Returns <code>True</code> when the given <code>ByteArray</code> is empty.</p>
+<pre><code class="language-aiken">bytearray.is_empty(#"") == True
+bytearray.is_empty(#"00ff") == False
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="length"><pre class="hljs language-aiken">length(self: ByteArray) -&gt; Int</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L207-L209"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Returns the number of bytes in a <code>ByteArray</code>.</p>
+<pre><code class="language-aiken">bytearray.length(#[1, 2, 3]) == 3
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="test_bit"><pre class="hljs language-aiken">test_bit(self: ByteArray, ix: Int) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L242-L250"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Checks whether a bit (Most-Significant-Bit first) is set in the given ‘ByteArray’.</p>
+<p>For example, consider the following bytearray: <code>#"8b765f"</code>. It can also be written as the
+following bits sequence:</p>
+<table><thead><tr><th><code>8</code></th><th><code>b</code></th><th><code>7</code></th><th><code>6</code></th><th><code>5</code></th><th><code>f</code></th></tr></thead><tbody>
+<tr><td><code>1000</code></td><td><code>1011</code></td><td><code>0111</code></td><td><code>0110</code></td><td><code>0101</code></td><td><code>1111</code></td></tr>
+</tbody></table>
+<p>And thus, we have:</p>
+<pre><code class="language-aiken">test_bit(#"8b765f", 0) == True
+test_bit(#"8b765f", 1) == False
+test_bit(#"8b765f", 2) == False
+test_bit(#"8b765f", 3) == False
+test_bit(#"8b765f", 7) == True
+test_bit(#"8b765f", 8) == False
+test_bit(#"8b765f", 20) == True
+test_bit(#"8b765f", 21) == True
+test_bit(#"8b765f", 22) == True
+test_bit(#"8b765f", 23) == True
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      
+        <h2 id="Modifying" class="module-heading"><a href="#Modifying">Modifying</a></h3>
+      
+  
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="drop"><pre class="hljs language-aiken">drop(self: ByteArray, n: Int) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L292-L294"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Returns the suffix of a <code>ByteArray</code> after <code>n</code> elements.</p>
+<pre><code class="language-aiken">bytearray.drop(#[1, 2, 3], n: 2) == #[3]
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="slice"><pre class="hljs language-aiken">slice(self: ByteArray, start: Int, end: Int) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L323-L325"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Extract a <code>ByteArray</code> as a slice of another <code>ByteArray</code>.</p>
+<p>Indexes are 0-based and inclusive.</p>
+<pre><code class="language-aiken">bytearray.slice(#[0, 1, 2, 3, 4, 5, 6], start: 1, end: 3) == #[1, 2, 3]
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="take"><pre class="hljs language-aiken">take(self: ByteArray, n: Int) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L352-L354"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Returns the n-length prefix of a <code>ByteArray</code>.</p>
+<pre><code class="language-aiken">bytearray.take(#[1, 2, 3], n: 2) == #[1, 2]
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      
+        <h2 id="Combining" class="module-heading"><a href="#Combining">Combining</a></h3>
+      
+  
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="concat"><pre class="hljs language-aiken">concat(left: ByteArray, right: ByteArray) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L383-L385"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Combine two <code>ByteArray</code> together.</p>
+<pre><code class="language-aiken">bytearray.concat(left: #[1, 2, 3], right: #[4, 5, 6]) == #[1, 2, 3, 4, 5, 6]
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="compare"><pre class="hljs language-aiken">compare(left: ByteArray, right: ByteArray) -&gt; Ordering</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L410-L418"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Compare two bytearrays lexicographically.</p>
+<pre><code class="language-aiken">bytearray.compare(#"00", #"FF") == Less
+bytearray.compare(#"42", #"42") == Equal
+bytearray.compare(#"FF", #"00") == Greater
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      
+        <h2 id="Transforming" class="module-heading"><a href="#Transforming">Transforming</a></h3>
+      
+  
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="foldl"><pre class="hljs language-aiken">foldl(self: ByteArray, zero: result, with: fn(Int, result) -&gt; result) -&gt; result</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L428-L434"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Left-fold over bytes of a <a href="https://aiken-lang.github.io/prelude/aiken.html#ByteArray"><code>ByteArray</code></a>. Note that every byte given to the callback function is comprised between 0 and 255.</p>
+<pre><code class="language-aiken">bytearray.foldl(#"acab", 0, fn(byte, acc) { acc * 256 + byte }) == 44203
+bytearray.foldl(#[1, 2, 3], #"", flip(bytearray.push)) == #[3, 2, 1]
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="foldr"><pre class="hljs language-aiken">foldr(self: ByteArray, zero: result, with: fn(Int, result) -&gt; result) -&gt; result</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L482-L488"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Right-fold over bytes of a <a href="https://aiken-lang.github.io/prelude/aiken.html#ByteArray"><code>ByteArray</code></a>. Note that every byte given to the callback function is comprised between 0 and 255.</p>
+<pre><code class="language-aiken">bytearray.foldr(#"acab", 0, fn(byte, acc) { acc * 256 + byte }) == 43948
+bytearray.foldr(#[1, 2, 3], #"", flip(bytearray.push)) == #[1, 2, 3]
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="reduce"><pre class="hljs language-aiken">reduce(self: ByteArray, zero: result, with: fn(result, Int) -&gt; result) -&gt; result</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L526-L532"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Reduce bytes in a ByteArray from left to right using the accumulator as left operand.
+Said differently, this is <a href="#foldl"><code>foldl</code></a> with callback arguments swapped.</p>
+<pre><code class="language-aiken">bytearray.reduce(#[1,2,3], #[], bytearray.push) == #[3, 2, 1]
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="to_int_big_endian"><pre class="hljs language-aiken">to_int_big_endian(self: ByteArray) -&gt; Int</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L549-L551"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Interpret a Big-Endian (most-significant bytes first) <code>ByteArray</code> as an <code>Int</code>.</p>
+<pre><code class="language-aiken">bytearray.to_int_big_endian(#"0f4240") == 1_000_000
+bytearray.to_int_big_endian(#"00000f4240") == 1_000_000
+bytearray.to_int_big_endian(#"0000000000000000") == 0
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="to_int_little_endian"><pre class="hljs language-aiken">to_int_little_endian(self: ByteArray) -&gt; Int</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L572-L574"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Interpret a Little-Endian (least-significant bytes first) <code>ByteArray</code> as an <code>Int</code>.</p>
+<pre><code class="language-aiken">bytearray.to_int_big_endian(#"40420f") == 1_000_000
+bytearray.to_int_big_endian(#"40420f0000") == 1_000_000
+bytearray.to_int_big_endian(#"0000000000000000") == 0
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="to_string"><pre class="hljs language-aiken">to_string(self: ByteArray) -&gt; String</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L599-L601"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Convert a <code>ByteArray</code> into a <code>String</code>.</p>
+<blockquote class="markdown-alert-warning">
+<p>This functions fails (i.e. halts the program) if the underlying <code>ByteArray</code> isn’t UTF-8-encoded. In particular, you cannot convert arbitrary hash digests using this function.</p>
+<p>For converting arbitrary <code>ByteArray</code>s, use <a href="#to_hex">bytearray.to_hex</a>.</p>
+</blockquote>
+<pre><code class="language-aiken">bytearray.to_string(#"414243") == "ABC"
+bytearray.to_string(some_hash) =&gt; 💥
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="to_hex"><pre class="hljs language-aiken">to_hex(self: ByteArray) -&gt; String</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L616-L620"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Encode a <code>ByteArray</code> as a hexidecimal <code>String</code>.</p>
+<pre><code class="language-aiken">bytearray.to_hex("Hello world!") == @"48656c6c6f20776f726c6421"
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="starts_with"><pre class="hljs language-aiken">starts_with(self: ByteArray, prefix: ByteArray) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L637-L644"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Checks whether a <code>ByteArray</code> starts with a given prefix.</p>
+<pre><code class="language-aiken">bytearray.starts_with("Hello, World!", prefix: "Hello") == True
+bytearray.starts_with("", prefix: "") == True
+bytearray.starts_with("Hello", prefix: "Hello, World!") == False
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="and_bytes"><pre class="hljs language-aiken">and_bytes(left: ByteArray, right: ByteArray, pad_end: Bool) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L670-L672"></a>
+          
+        </div>
+        <div class="rendered-markdown"></div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="or_bytes"><pre class="hljs language-aiken">or_bytes(left: ByteArray, right: ByteArray, pad_end: Bool) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L674-L676"></a>
+          
+        </div>
+        <div class="rendered-markdown"></div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="xor_bytes"><pre class="hljs language-aiken">xor_bytes(left: ByteArray, right: ByteArray, pad_end: Bool) -&gt; ByteArray</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/primitive/bytearray.ak#L678-L680"></a>
           
         </div>
         <div class="rendered-markdown"></div>

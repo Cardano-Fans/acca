@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/math - Cardano-Fans/acca</title>
+    <title>aiken/crypto - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
@@ -188,6 +188,35 @@
 
         
 
+<h2>Types</h2>
+<ul>
+  
+  <li><a href="#Blake2b_224">Blake2b_224</a></li>
+  
+  <li><a href="#Blake2b_256">Blake2b_256</a></li>
+  
+  <li><a href="#DataHash">DataHash</a></li>
+  
+  <li><a href="#Hash">Hash</a></li>
+  
+  <li><a href="#Keccak_256">Keccak_256</a></li>
+  
+  <li><a href="#Script">Script</a></li>
+  
+  <li><a href="#ScriptHash">ScriptHash</a></li>
+  
+  <li><a href="#Sha2_256">Sha2_256</a></li>
+  
+  <li><a href="#Sha3_256">Sha3_256</a></li>
+  
+  <li><a href="#Signature">Signature</a></li>
+  
+  <li><a href="#VerificationKey">VerificationKey</a></li>
+  
+  <li><a href="#VerificationKeyHash">VerificationKeyHash</a></li>
+  
+</ul>
+
 
 
 
@@ -196,17 +225,50 @@
 <ul>
   
     
-        <li><a href="#min">min</a></li>
+        <li data-heading="2"><a href="#Hashing">Hashing</a></li>
+    
+  
+    
+        <li><a href="#blake2b_224">blake2b_224</a></li>
 
       
   
     
-        <li><a href="#max">max</a></li>
+        <li><a href="#blake2b_256">blake2b_256</a></li>
 
       
   
     
-        <li><a href="#gcd">gcd</a></li>
+        <li><a href="#keccak_256">keccak_256</a></li>
+
+      
+  
+    
+        <li><a href="#sha2_256">sha2_256</a></li>
+
+      
+  
+    
+        <li><a href="#sha3_256">sha3_256</a></li>
+
+      
+  
+    
+        <li data-heading="2"><a href="#Verifying%20signatures">Verifying signatures</a></li>
+    
+  
+    
+        <li><a href="#verify_ecdsa_signature">verify_ecdsa_signature</a></li>
+
+      
+  
+    
+        <li><a href="#verify_ed25519_signature">verify_ed25519_signature</a></li>
+
+      
+  
+    
+        <li><a href="#verify_schnorr_signature">verify_schnorr_signature</a></li>
 
       
   
@@ -323,8 +385,8 @@
         
 	  
 	    
-	      <li data-indent="1" data-current><a href="../acca/math.html">
-	      <strong>math</strong>
+	      <li data-indent="1"><a href="../acca/math.html">
+	      math
 	      </a></li>
 	    
 	  
@@ -439,8 +501,8 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../aiken/crypto.html">
-	      crypto
+	      <li data-indent="1" data-current><a href="../aiken/crypto.html">
+	      <strong>crypto</strong>
 	      </a></li>
 	    
 	  
@@ -663,10 +725,299 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/math</a>
+  <a href="#module-name">aiken/crypto</a>
 </h1>
 
 
+
+<section class="module-members">
+  <h1 id="module-types" class="module-member-kind">
+    <a href="#module-types">Types</a>
+  </h1>
+
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Blake2b_224">
+        <a href="#Blake2b_224">
+	  Blake2b_224
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L62-L64"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A blake2b-224 hash algorithm.</p>
+<p>Typically used for:</p>
+<ul>
+<li><a href="../cardano/address.html#Credential"><code>Credential</code></a></li>
+<li><a href="../cardano/assets.html#PolicyId"><code>PolicyId</code></a></li>
+</ul>
+</div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Blake2b_256">
+        <a href="#Blake2b_256">
+	  Blake2b_256
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L77-L79"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A blake2b-256 hash algorithm.</p>
+<p>Typically used for:</p>
+<ul>
+<li><a href="../cardano/transaction.html#TransactionId"><code>TransactionId</code></a></li>
+</ul>
+</div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="DataHash">
+        <a href="#DataHash">
+	  DataHash
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L18-L19"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">DataHash = Hash&lt;Blake2b_256, Data&gt;</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Hash">
+        <a href="#Hash">
+	  Hash&lt;alg, a&gt;
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L51-L52"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A <code>Hash</code> is nothing more than a <code>ByteArray</code>, but it carries extra
+information for readability.</p>
+<p>On-chain, any hash digest value is represented as a plain ‘ByteArray’.
+Though in practice, hashes come from different sources and have
+different semantics.</p>
+<p>Hence, while this type-alias doesn’t provide any strong type-guarantees,
+it helps writing functions signatures with more meaningful types than mere
+‘ByteArray’.</p>
+<p>Compare for example:</p>
+<pre><code class="language-aiken">pub type Credential {
+  VerificationKey(ByteArray)
+  Script(ByteArray)
+}
+</code></pre>
+<p>with</p>
+<pre><code class="language-aiken">pub type Credential {
+  VerificationKey(Hash&lt;Blake2b_224, VerificationKey&gt;)
+  Script(Hash&lt;Blake2b_224, Script&gt;)
+}
+</code></pre>
+<p>Both are strictly equivalent, but the second reads much better.</p>
+</div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">Hash&lt;alg, a&gt; = ByteArray</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Keccak_256">
+        <a href="#Keccak_256">
+	  Keccak_256
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L87-L89"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A Keccak-256 hash algorithm.</p>
+</div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Script">
+        <a href="#Script">
+	  Script
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L9-L10"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">Script = ByteArray</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ScriptHash">
+        <a href="#ScriptHash">
+	  ScriptHash
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L12-L13"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">ScriptHash = Hash&lt;Blake2b_224, Script&gt;</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Sha2_256">
+        <a href="#Sha2_256">
+	  Sha2_256
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L97-L99"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A SHA2-256 hash algorithm.</p>
+</div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Sha3_256">
+        <a href="#Sha3_256">
+	  Sha3_256
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L107-L109"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A SHA3-256 hash algorithm.</p>
+</div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Signature">
+        <a href="#Signature">
+	  Signature
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L15-L16"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">Signature = ByteArray</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="VerificationKey">
+        <a href="#VerificationKey">
+	  VerificationKey
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L3-L4"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">VerificationKey = ByteArray</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="VerificationKeyHash">
+        <a href="#VerificationKeyHash">
+	  VerificationKeyHash
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L6-L7"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">VerificationKeyHash = Hash&lt;Blake2b_224, VerificationKey&gt;</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+</section>
 
 
 
@@ -678,17 +1029,21 @@
   </h1>
   
   
+      
+        <h2 id="Hashing" class="module-heading"><a href="#Hashing">Hashing</a></h3>
+      
+  
+  
+  
       <div class="member">
         <div class="member-name">
-          <h2 id="min"><pre class="hljs language-aiken">min(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="blake2b_224"><pre class="hljs language-aiken">blake2b_224(bytes: ByteArray) -&gt; Hash&lt;Blake2b_224, a&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L10-L15"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L68-L70"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a min of two elements.</p>
-<pre><code class="language-aiken">amath.min(3, 9, int.compare) == 3
-amath.min(-1, 5, int.compare) == -1
-</code></pre>
+        <div class="rendered-markdown"><p>Compute the blake2b-224 hash digest (28 bytes) of some data.
+Minimum Plutus Version: 3</p>
 </div>
       </div>
     
@@ -696,15 +1051,12 @@ amath.min(-1, 5, int.compare) == -1
   
       <div class="member">
         <div class="member-name">
-          <h2 id="max"><pre class="hljs language-aiken">max(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="blake2b_256"><pre class="hljs language-aiken">blake2b_256(bytes: ByteArray) -&gt; Hash&lt;Blake2b_256, a&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L39-L44"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L82-L84"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a max of two elements.</p>
-<pre><code class="language-aiken">amath.max(3, 9, int.compare) == 9
-amath.max(-1, 5, int.compare) == 5
-</code></pre>
+        <div class="rendered-markdown"><p>Compute the blake2b-256 hash digest (32 bytes) of some data.</p>
 </div>
       </div>
     
@@ -712,16 +1064,98 @@ amath.max(-1, 5, int.compare) == 5
   
       <div class="member">
         <div class="member-name">
-          <h2 id="gcd"><pre class="hljs language-aiken">gcd(a: Int, b: Int) -&gt; Int</pre></h2>
+          <h2 id="keccak_256"><pre class="hljs language-aiken">keccak_256(bytes: ByteArray) -&gt; Hash&lt;Keccak_256, a&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L69-L74"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L92-L94"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Computes greatest common divisor of two numbers
-https://en.wikipedia.org/wiki/Greatest_common_divisor</p>
-<pre><code class="language-aiken">amath.gcd(20, 15) == 5
-amath.gcd(54, 24) == 6
-</code></pre>
+        <div class="rendered-markdown"><p>Compute the keccak-256 hash digest (32 bytes) of some data.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="sha2_256"><pre class="hljs language-aiken">sha2_256(bytes: ByteArray) -&gt; Hash&lt;Sha2_256, a&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L102-L104"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Compute the sha2-256 hash digest (32 bytes) of some data.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="sha3_256"><pre class="hljs language-aiken">sha3_256(bytes: ByteArray) -&gt; Hash&lt;Sha3_256, a&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L112-L114"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Compute the sha3-256 hash digest (32 bytes) of some data.</p>
+</div>
+      </div>
+    
+  
+  
+      
+        <h2 id="Verifying%20signatures" class="module-heading"><a href="#Verifying%20signatures">Verifying signatures</a></h3>
+      
+  
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="verify_ecdsa_signature"><pre class="hljs language-aiken">verify_ecdsa_signature(
+  key: VerificationKey,
+  msg: ByteArray,
+  sig: Signature,
+) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L120-L126"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Verify an ECDCA signature (over secp256k1) using the given verification key.
+Returns <code>True</code> when the signature is valid.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="verify_ed25519_signature"><pre class="hljs language-aiken">verify_ed25519_signature(
+  key: VerificationKey,
+  msg: ByteArray,
+  sig: Signature,
+) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L130-L136"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Verify an Ed25519 signature using the given verification key.
+Returns <code>True</code> when the signature is valid.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="verify_schnorr_signature"><pre class="hljs language-aiken">verify_schnorr_signature(
+  key: VerificationKey,
+  msg: ByteArray,
+  sig: Signature,
+) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto.ak#L140-L146"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Verify a Schnorr signature (over secp256k1) using the given verification key.
+Returns <code>True</code> when the signature is valid.</p>
 </div>
       </div>
     

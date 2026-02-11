@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/math - Cardano-Fans/acca</title>
+    <title>cardano/governance - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
@@ -188,29 +188,32 @@
 
         
 
-
-
-
-
-<h2>Functions</h2>
+<h2>Types</h2>
 <ul>
   
-    
-        <li><a href="#min">min</a></li>
-
-      
+  <li><a href="#Constitution">Constitution</a></li>
   
-    
-        <li><a href="#max">max</a></li>
-
-      
+  <li><a href="#GovernanceAction">GovernanceAction</a></li>
   
-    
-        <li><a href="#gcd">gcd</a></li>
-
-      
+  <li><a href="#GovernanceActionId">GovernanceActionId</a></li>
+  
+  <li><a href="#Mandate">Mandate</a></li>
+  
+  <li><a href="#ProposalProcedure">ProposalProcedure</a></li>
+  
+  <li><a href="#ProtocolVersion">ProtocolVersion</a></li>
+  
+  <li><a href="#TransactionId">TransactionId</a></li>
+  
+  <li><a href="#Vote">Vote</a></li>
+  
+  <li><a href="#Voter">Voter</a></li>
   
 </ul>
+
+
+
+
 
 
 
@@ -323,8 +326,8 @@
         
 	  
 	    
-	      <li data-indent="1" data-current><a href="../acca/math.html">
-	      <strong>math</strong>
+	      <li data-indent="1"><a href="../acca/math.html">
+	      math
 	      </a></li>
 	    
 	  
@@ -603,8 +606,8 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/governance.html">
-	      governance
+	      <li data-indent="1" data-current><a href="../cardano/governance.html">
+	      <strong>governance</strong>
 	      </a></li>
 	    
 	  
@@ -663,70 +666,463 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/math</a>
+  <a href="#module-name">cardano/governance</a>
 </h1>
 
 
 
-
-
-
-
 <section class="module-members">
-  <h1 id="module-functions" class="module-member-kind">
-    <a href="#module-functions">Functions</a>
+  <h1 id="module-types" class="module-member-kind">
+    <a href="#module-types">Types</a>
   </h1>
+
   
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Constitution">
+        <a href="#Constitution">
+	  Constitution
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L96-L98"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Constitution { guardrails: Option&lt;ScriptHash&gt; }</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
   
-      <div class="member">
-        <div class="member-name">
-          <h2 id="min"><pre class="hljs language-aiken">min(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
-          
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L10-L15"></a>
-          
-        </div>
-        <div class="rendered-markdown"><p>Returns a min of two elements.</p>
-<pre><code class="language-aiken">amath.min(3, 9, int.compare) == 3
-amath.min(-1, 5, int.compare) == -1
-</code></pre>
+  <div class="member">
+    <div class="member-name">
+      <h2 id="GovernanceAction">
+        <a href="#GovernanceAction">
+	  GovernanceAction
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L14-L75"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ProtocolParameters {
+  ancestor: Option&lt;GovernanceActionId&gt;,
+  new_parameters: ProtocolParametersUpdate,
+  guardrails: Option&lt;ScriptHash&gt;,
+}</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <h4><code>.ancestor</code></h4>
+<p>The last governance action of type ‘ProtocolParameters’. They must all
+form a chain.</p>
+<hr/>
+<h4><code>.new_parameters</code></h4>
+<p>The new proposed protocol parameters. Only values set to <code>Some</code> are relevant.</p>
+<hr/>
+<h4><code>.guardrails</code></h4>
+<p>The optional guardrails script defined in the constitution. The script
+is executed by the ledger in addition to the hard-coded ledger rules.</p>
+<p>It must pass for the new protocol parameters to be deemed valid.</p>
+<hr/>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">HardFork { ancestor: Option&lt;GovernanceActionId&gt;, new_version: ProtocolVersion }</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <h4><code>.ancestor</code></h4>
+<p>The last governance action of type <code>HardFork</code>. They must all
+form a chain.</p>
+<hr/>
+<h4><code>.new_version</code></h4>
+<p>The new proposed version. Few rules apply to proposing new versions:</p>
+<ul>
+<li>The <code>major</code> component, if incremented, must be exactly one more than the current.</li>
+<li>The <code>minor</code> component, if incremented, must be exactly one more than the current.</li>
+<li>If the <code>major</code> component is incremented, <code>minor</code> must be set to <code>0</code>.</li>
+<li>Neither <code>minor</code> nor <code>major</code> can be decremented.</li>
+</ul>
+<hr/>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">TreasuryWithdrawal {
+  beneficiaries: Pairs&lt;Credential, Lovelace&gt;,
+  guardrails: Option&lt;ScriptHash&gt;,
+}</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <h4><code>.beneficiaries</code></h4>
+<p>A collection of beneficiaries, which can be plain verification key
+hashes or script hashes (e.g. DAO).</p>
+<hr/>
+<h4><code>.guardrails</code></h4>
+<p>The optional guardrails script defined in the constitution. The script
+is executed by the ledger in addition to the hard-coded ledger rules.</p>
+<p>It must pass for the withdrawals to be authorized.</p>
+<hr/>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">NoConfidence { ancestor: Option&lt;GovernanceActionId&gt; }</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <h4><code>.ancestor</code></h4>
+<p>The last governance action of type <code>NoConfidence</code> or
+<code>ConstitutionalCommittee</code>. They must all / form a chain.</p>
+<hr/>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ConstitutionalCommittee {
+  ancestor: Option&lt;GovernanceActionId&gt;,
+  evicted_members: List&lt;Credential&gt;,
+  added_members: Pairs&lt;Credential, Mandate&gt;,
+  quorum: Rational,
+}</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <h4><code>.ancestor</code></h4>
+<p>The last governance action of type <code>NoConfidence</code> or
+<code>ConstitutionalCommittee</code>. They must all / form a chain.</p>
+<hr/>
+<h4><code>.evicted_members</code></h4>
+<p>Constitutional members to be removed.</p>
+<hr/>
+<h4><code>.added_members</code></h4>
+<p>Constitutional members to be added.</p>
+<hr/>
+<h4><code>.quorum</code></h4>
+<p>The new quorum value, as a ratio of a numerator and a denominator. The
+quorum specifies the threshold of ‘Yes’ votes necessary for the
+constitutional committee to accept a proposal procedure.</p>
+<hr/>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">NewConstitution {
+  ancestor: Option&lt;GovernanceActionId&gt;,
+  constitution: Constitution,
+}</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <h4><code>.ancestor</code></h4>
+<p>The last governance action of type <code>Constitution</code> or
+<code>ConstitutionalCommittee</code>. They must all / form a chain.</p>
+<hr/>
+<h4><code>.constitution</code></h4>
+<p>The new proposed constitution.</p>
+<hr/>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">NicePoll</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="GovernanceActionId">
+        <a href="#GovernanceActionId">
+	  GovernanceActionId
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L86-L89"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">GovernanceActionId { transaction: TransactionId, proposal_procedure: Index }</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Mandate">
+        <a href="#Mandate">
+	  Mandate
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L102-L103"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>An epoch number after which constitutional committee member
+mandate expires.</p>
 </div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">Mandate = Int</code></pre>
       </div>
-    
+      
+    </div>
+  </div>
   
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ProposalProcedure">
+        <a href="#ProposalProcedure">
+	  ProposalProcedure
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L8-L12"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ProposalProcedure {
+  deposit: Lovelace,
+  return_address: Credential,
+  governance_action: GovernanceAction,
+}</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
   
-      <div class="member">
-        <div class="member-name">
-          <h2 id="max"><pre class="hljs language-aiken">max(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
-          
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L39-L44"></a>
-          
-        </div>
-        <div class="rendered-markdown"><p>Returns a max of two elements.</p>
-<pre><code class="language-aiken">amath.max(3, 9, int.compare) == 9
-amath.max(-1, 5, int.compare) == 5
-</code></pre>
-</div>
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ProtocolVersion">
+        <a href="#ProtocolVersion">
+	  ProtocolVersion
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L91-L94"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ProtocolVersion { major: Int, minor: Int }</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="TransactionId">
+        <a href="#TransactionId">
+	  TransactionId
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L83-L84"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">TransactionId = Hash&lt;Blake2b_256, ByteArray&gt;</code></pre>
       </div>
-    
+      
+    </div>
+  </div>
   
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Vote">
+        <a href="#Vote">
+	  Vote
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L77-L81"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">No</code></pre>
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Yes</code></pre>
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Abstain</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
   
-      <div class="member">
-        <div class="member-name">
-          <h2 id="gcd"><pre class="hljs language-aiken">gcd(a: Int, b: Int) -&gt; Int</pre></h2>
-          
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L69-L74"></a>
-          
-        </div>
-        <div class="rendered-markdown"><p>Computes greatest common divisor of two numbers
-https://en.wikipedia.org/wiki/Greatest_common_divisor</p>
-<pre><code class="language-aiken">amath.gcd(20, 15) == 5
-amath.gcd(54, 24) == 6
-</code></pre>
-</div>
-      </div>
-    
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Voter">
+        <a href="#Voter">
+	  Voter
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance.ak#L105-L109"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ConstitutionalCommitteeMember(Credential)</code></pre>
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">DelegateRepresentative(Credential)</code></pre>
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">StakePool(VerificationKeyHash)</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
   
 </section>
+
+
+
+
 
 
       </main>

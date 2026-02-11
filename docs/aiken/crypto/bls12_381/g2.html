@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/math - Cardano-Fans/acca</title>
+    <title>aiken/crypto/bls12_381/g2 - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
-    <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
-    <link rel="stylesheet" href="../css/index.css?v=1.1.21" type="text/css"/>
-    <link id="syntax-theme" rel="stylesheet" href="../css/atom-one-light.min.css?v=1.1.21"/>
+    <link rel="icon" type="image/svg+xml" sizes="any" href="../../../favicon.svg"/>
+    <link rel="stylesheet" href="../../../css/index.css?v=1.1.21" type="text/css"/>
+    <link id="syntax-theme" rel="stylesheet" href="../../../css/atom-one-light.min.css?v=1.1.21"/>
   </head>
   <body class="prewrap-off theme-light drawer-closed">
     <script>
       "use strict";
-      window.breadcrumbs = '..';
+      window.breadcrumbs = '../../..';
       const aikenConfig = {
         theme: {
           values: (() => {
@@ -118,7 +118,7 @@
       </button>
 
       <h2>
-        <a href="../">acca</a>
+        <a href="../../../">acca</a>
         <span id="project-version">
           <span>0.0.4 </span>
         </span>
@@ -190,23 +190,54 @@
 
 
 
+<h2>Constants</h2>
+<ul>
+  
+  <li><a href="#domain_separation_tag_basic">domain_separation_tag_basic</a></li>
+  
+  <li><a href="#generator">generator</a></li>
+  
+  <li><a href="#zero">zero</a></li>
+  
+</ul>
+
 
 
 <h2>Functions</h2>
 <ul>
   
     
-        <li><a href="#min">min</a></li>
+        <li><a href="#compress">compress</a></li>
 
       
   
     
-        <li><a href="#max">max</a></li>
+        <li><a href="#decompress">decompress</a></li>
 
       
   
     
-        <li><a href="#gcd">gcd</a></li>
+        <li><a href="#equal">equal</a></li>
+
+      
+  
+    
+        <li><a href="#add">add</a></li>
+
+      
+  
+    
+        <li><a href="#sub">sub</a></li>
+
+      
+  
+    
+        <li><a href="#scale">scale</a></li>
+
+      
+  
+    
+        <li><a href="#hash_to_group">hash_to_group</a></li>
 
       
   
@@ -223,7 +254,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/address.html">
+	      <li data-indent="1"><a href="../../../acca/address.html">
 	      address
 	      </a></li>
 	    
@@ -231,7 +262,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/bytearray.html">
+	      <li data-indent="1"><a href="../../../acca/bytearray.html">
 	      bytearray
 	      </a></li>
 	    
@@ -243,7 +274,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../acca/collections/hash_tree.html">
+	      <li data-indent="2"><a href="../../../acca/collections/hash_tree.html">
 	      hash_tree
 	      </a></li>
 	    
@@ -251,7 +282,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../acca/collections/hashed_list.html">
+	      <li data-indent="2"><a href="../../../acca/collections/hashed_list.html">
 	      hashed_list
 	      </a></li>
 	    
@@ -259,7 +290,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../acca/collections/mt.html">
+	      <li data-indent="2"><a href="../../../acca/collections/mt.html">
 	      mt
 	      </a></li>
 	    
@@ -267,7 +298,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../acca/collections/stack.html">
+	      <li data-indent="2"><a href="../../../acca/collections/stack.html">
 	      stack
 	      </a></li>
 	    
@@ -275,7 +306,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/constraint.html">
+	      <li data-indent="1"><a href="../../../acca/constraint.html">
 	      constraint
 	      </a></li>
 	    
@@ -283,7 +314,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/datums.html">
+	      <li data-indent="1"><a href="../../../acca/datums.html">
 	      datums
 	      </a></li>
 	    
@@ -291,7 +322,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/dict.html">
+	      <li data-indent="1"><a href="../../../acca/dict.html">
 	      dict
 	      </a></li>
 	    
@@ -299,7 +330,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/either.html">
+	      <li data-indent="1"><a href="../../../acca/either.html">
 	      either
 	      </a></li>
 	    
@@ -307,7 +338,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/hash.html">
+	      <li data-indent="1"><a href="../../../acca/hash.html">
 	      hash
 	      </a></li>
 	    
@@ -315,7 +346,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/list.html">
+	      <li data-indent="1"><a href="../../../acca/list.html">
 	      list
 	      </a></li>
 	    
@@ -323,15 +354,15 @@
         
 	  
 	    
-	      <li data-indent="1" data-current><a href="../acca/math.html">
-	      <strong>math</strong>
+	      <li data-indent="1"><a href="../../../acca/math.html">
+	      math
 	      </a></li>
 	    
 	  
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/option.html">
+	      <li data-indent="1"><a href="../../../acca/option.html">
 	      option
 	      </a></li>
 	    
@@ -339,7 +370,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/ordering.html">
+	      <li data-indent="1"><a href="../../../acca/ordering.html">
 	      ordering
 	      </a></li>
 	    
@@ -347,7 +378,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/predicate.html">
+	      <li data-indent="1"><a href="../../../acca/predicate.html">
 	      predicate
 	      </a></li>
 	    
@@ -355,7 +386,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/string.html">
+	      <li data-indent="1"><a href="../../../acca/string.html">
 	      string
 	      </a></li>
 	    
@@ -363,7 +394,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/time.html">
+	      <li data-indent="1"><a href="../../../acca/time.html">
 	      time
 	      </a></li>
 	    
@@ -371,7 +402,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/validators.html">
+	      <li data-indent="1"><a href="../../../acca/validators.html">
 	      validators
 	      </a></li>
 	    
@@ -379,7 +410,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../acca/value.html">
+	      <li data-indent="1"><a href="../../../acca/value.html">
 	      value
 	      </a></li>
 	    
@@ -391,7 +422,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../aiken/cbor.html">
+	      <li data-indent="1"><a href="../../../aiken/cbor.html">
 	      cbor
 	      </a></li>
 	    
@@ -399,7 +430,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../aiken/collection.html">
+	      <li data-indent="1"><a href="../../../aiken/collection.html">
 	      collection
 	      </a></li>
 	    
@@ -407,7 +438,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/collection/dict.html">
+	      <li data-indent="2"><a href="../../../aiken/collection/dict.html">
 	      dict
 	      </a></li>
 	    
@@ -415,7 +446,7 @@
         
 	  
 	    
-	      <li data-indent="3"><a href="../aiken/collection/dict/strategy.html">
+	      <li data-indent="3"><a href="../../../aiken/collection/dict/strategy.html">
 	      strategy
 	      </a></li>
 	    
@@ -423,7 +454,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/collection/list.html">
+	      <li data-indent="2"><a href="../../../aiken/collection/list.html">
 	      list
 	      </a></li>
 	    
@@ -431,7 +462,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/collection/pairs.html">
+	      <li data-indent="2"><a href="../../../aiken/collection/pairs.html">
 	      pairs
 	      </a></li>
 	    
@@ -439,7 +470,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../aiken/crypto.html">
+	      <li data-indent="1"><a href="../../../aiken/crypto.html">
 	      crypto
 	      </a></li>
 	    
@@ -451,7 +482,7 @@
         
 	  
 	    
-	      <li data-indent="3"><a href="../aiken/crypto/bls12_381/g1.html">
+	      <li data-indent="3"><a href="../../../aiken/crypto/bls12_381/g1.html">
 	      g1
 	      </a></li>
 	    
@@ -459,15 +490,15 @@
         
 	  
 	    
-	      <li data-indent="3"><a href="../aiken/crypto/bls12_381/g2.html">
-	      g2
+	      <li data-indent="3" data-current><a href="../../../aiken/crypto/bls12_381/g2.html">
+	      <strong>g2</strong>
 	      </a></li>
 	    
 	  
         
 	  
 	    
-	      <li data-indent="3"><a href="../aiken/crypto/bls12_381/pairing.html">
+	      <li data-indent="3"><a href="../../../aiken/crypto/bls12_381/pairing.html">
 	      pairing
 	      </a></li>
 	    
@@ -475,7 +506,7 @@
         
 	  
 	    
-	      <li data-indent="3"><a href="../aiken/crypto/bls12_381/scalar.html">
+	      <li data-indent="3"><a href="../../../aiken/crypto/bls12_381/scalar.html">
 	      scalar
 	      </a></li>
 	    
@@ -483,7 +514,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/crypto/int224.html">
+	      <li data-indent="2"><a href="../../../aiken/crypto/int224.html">
 	      int224
 	      </a></li>
 	    
@@ -491,7 +522,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/crypto/int256.html">
+	      <li data-indent="2"><a href="../../../aiken/crypto/int256.html">
 	      int256
 	      </a></li>
 	    
@@ -499,7 +530,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../aiken/interval.html">
+	      <li data-indent="1"><a href="../../../aiken/interval.html">
 	      interval
 	      </a></li>
 	    
@@ -507,7 +538,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../aiken/math.html">
+	      <li data-indent="1"><a href="../../../aiken/math.html">
 	      math
 	      </a></li>
 	    
@@ -515,7 +546,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/math/rational.html">
+	      <li data-indent="2"><a href="../../../aiken/math/rational.html">
 	      rational
 	      </a></li>
 	    
@@ -523,7 +554,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../aiken/option.html">
+	      <li data-indent="1"><a href="../../../aiken/option.html">
 	      option
 	      </a></li>
 	    
@@ -535,7 +566,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/primitive/bytearray.html">
+	      <li data-indent="2"><a href="../../../aiken/primitive/bytearray.html">
 	      bytearray
 	      </a></li>
 	    
@@ -543,7 +574,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/primitive/int.html">
+	      <li data-indent="2"><a href="../../../aiken/primitive/int.html">
 	      int
 	      </a></li>
 	    
@@ -551,7 +582,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../aiken/primitive/string.html">
+	      <li data-indent="2"><a href="../../../aiken/primitive/string.html">
 	      string
 	      </a></li>
 	    
@@ -563,7 +594,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/address.html">
+	      <li data-indent="1"><a href="../../../cardano/address.html">
 	      address
 	      </a></li>
 	    
@@ -571,7 +602,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../cardano/address/credential.html">
+	      <li data-indent="2"><a href="../../../cardano/address/credential.html">
 	      credential
 	      </a></li>
 	    
@@ -579,7 +610,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/assets.html">
+	      <li data-indent="1"><a href="../../../cardano/assets.html">
 	      assets
 	      </a></li>
 	    
@@ -587,7 +618,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../cardano/assets/strategy.html">
+	      <li data-indent="2"><a href="../../../cardano/assets/strategy.html">
 	      strategy
 	      </a></li>
 	    
@@ -595,7 +626,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/certificate.html">
+	      <li data-indent="1"><a href="../../../cardano/certificate.html">
 	      certificate
 	      </a></li>
 	    
@@ -603,7 +634,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/governance.html">
+	      <li data-indent="1"><a href="../../../cardano/governance.html">
 	      governance
 	      </a></li>
 	    
@@ -611,7 +642,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../cardano/governance/protocol_parameters.html">
+	      <li data-indent="2"><a href="../../../cardano/governance/protocol_parameters.html">
 	      protocol_parameters
 	      </a></li>
 	    
@@ -619,7 +650,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../cardano/governance/voter.html">
+	      <li data-indent="2"><a href="../../../cardano/governance/voter.html">
 	      voter
 	      </a></li>
 	    
@@ -627,7 +658,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/script_context.html">
+	      <li data-indent="1"><a href="../../../cardano/script_context.html">
 	      script_context
 	      </a></li>
 	    
@@ -635,7 +666,7 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/transaction.html">
+	      <li data-indent="1"><a href="../../../cardano/transaction.html">
 	      transaction
 	      </a></li>
 	    
@@ -643,7 +674,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../cardano/transaction/output_reference.html">
+	      <li data-indent="2"><a href="../../../cardano/transaction/output_reference.html">
 	      output_reference
 	      </a></li>
 	    
@@ -651,7 +682,7 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../cardano/transaction/script_purpose.html">
+	      <li data-indent="2"><a href="../../../cardano/transaction/script_purpose.html">
 	      script_purpose
 	      </a></li>
 	    
@@ -663,12 +694,69 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/math</a>
+  <a href="#module-name">aiken/crypto/bls12_381/g2</a>
 </h1>
+<p>This module is designed for cryptographic operations involving the BLS12-381 elliptic curve, particularly focusing on the G2 group of the curve.</p>
+<p>The key functionalities provided by this module include:</p>
+<ul>
+<li>Defining the generator of the G2 group, which is a fixed base point on the elliptic curve used for various cryptographic computations.</li>
+<li>Implementing the additive identity (zero) in the G2 group, which plays a crucial role in elliptic curve arithmetic.</li>
+<li>Providing functions to compress and decompress points in the G2 group. Compression reduces the size of the point representation, which is useful for efficient storage and transmission. Decompression restores the original point from its compressed form.</li>
+<li>Implementing basic arithmetic operations on the points in the G2 group, such as addition and subtraction.</li>
+<li>Enabling the exponentiation of a point in the G2 group with a scalar, which is a fundamental operation in elliptic curve cryptography.</li>
+<li>Offering a function to hash arbitrary data to a point in the G2 group, a process important in several cryptographic protocols.</li>
+</ul>
+<p>This module ensures that all operations respect the properties of the BLS12-381 curve and the mathematical structure of the G2 group.</p>
 
 
 
 
+
+<section class="module-members">
+  <h1 id="module-constants" class="module-member-kind">
+    <a href="#module-constants">Constants</a>
+  </h1>
+
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="domain_separation_tag_basic"><pre class="hljs language-aiken">domain_separation_tag_basic: ByteArray = &quot;BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_NUL_&quot;</pre></h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L25-L26"></a>
+      
+    </div>
+    <div class="rendered-markdown"><p>Basic Domain Separation Tag as per the <a href="https://www.ietf.org/archive/id/draft-irtf-cfrg-bls-signature-05.html#section-4.2.1">IETF</a>.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="generator"><pre class="hljs language-aiken">generator: G2Element = #&lt;Bls12_381, G2&gt;&quot;93e02b6052719f607dacd3a088274f65596bd0d09920b61ab5da61bbdc7f5049334cf11213945d57e5ac7d055d042b7e024aa2b2f08f0a91260805272dc51051c6e47ad4fa403b02b4510b647ae3d1770bac0326a805bbefd48056c8c121bdb8&quot;</pre></h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L21-L22"></a>
+      
+    </div>
+    <div class="rendered-markdown"><p>The compressed generator of the G2 group of the BLS12-381 curve.
+This constant represents a fixed base point on the elliptic curve.
+Note that flat encoded plutus does not allow for the direct usage of BLS12-381 points.
+More explicit, any points in plutus data or scripts must be decompressed before usage onchain.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="zero"><pre class="hljs language-aiken">zero: G2Element = #&lt;Bls12_381, G2&gt;&quot;c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;</pre></h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L35-L36"></a>
+      
+    </div>
+    <div class="rendered-markdown"><p>Represents the additive identity (zero) in the G2 group.
+Note that flat encoded plutus does not allow for the direct usage of BLS12-381 points.
+More explicit, any points in plutus data or scripts must be decompressed before usage onchain.</p>
+</div>
+  </div>
+  
+</section>
 
 
 
@@ -680,15 +768,23 @@
   
       <div class="member">
         <div class="member-name">
-          <h2 id="min"><pre class="hljs language-aiken">min(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="compress"><pre class="hljs language-aiken">compress(point: G2Element) -&gt; ByteArray</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L10-L15"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L64-L66"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a min of two elements.</p>
-<pre><code class="language-aiken">amath.min(3, 9, int.compare) == 3
-amath.min(-1, 5, int.compare) == -1
-</code></pre>
+        <div class="rendered-markdown"><p>Compresses a point in the G2 group into a more compact representation.
+The compressed representation is the concatenation of two 48-byte strings, corresponding to a modified and complexified <code>x</code> coordinate.
+The leading most significant 3 bits of this string indicate how to reconstruct the <code>y</code> coordinate.</p>
+<blockquote class="markdown-alert-note">
+<p>More explicitly via <a href="https://github.com/supranational/blst#serialization-format">Zcash’s spec</a>:</p>
+<p><i>The most-significant three bits of a G1 or G2 encoding should be masked away before the coordinate(s) are interpreted. These bits are used to unambiguously represent the underlying element:</p>
+<ul>
+<li>The most significant bit, when set, indicates that the point is in compressed form. Otherwise, the point is in uncompressed form.</li>
+<li>The second-most significant bit indicates that the point is at infinity. If this bit is set, the remaining bits of the group element’s encoding should be set to zero.</li>
+<li>The third-most significant bit is set if (and only if) this point is in compressed form and it is not the point at infinity and its y-coordinate is the lexicographically largest of the two associated with the encoded x-coordinate.</i></li>
+</ul>
+</blockquote>
 </div>
       </div>
     
@@ -696,15 +792,12 @@ amath.min(-1, 5, int.compare) == -1
   
       <div class="member">
         <div class="member-name">
-          <h2 id="max"><pre class="hljs language-aiken">max(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="decompress"><pre class="hljs language-aiken">decompress(bytes: ByteArray) -&gt; G2Element</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L39-L44"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L75-L77"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a max of two elements.</p>
-<pre><code class="language-aiken">amath.max(3, 9, int.compare) == 9
-amath.max(-1, 5, int.compare) == 5
-</code></pre>
+        <div class="rendered-markdown"><p>Decompresses a point in the G2 group from its compressed form.</p>
 </div>
       </div>
     
@@ -712,16 +805,65 @@ amath.max(-1, 5, int.compare) == 5
   
       <div class="member">
         <div class="member-name">
-          <h2 id="gcd"><pre class="hljs language-aiken">gcd(a: Int, b: Int) -&gt; Int</pre></h2>
+          <h2 id="equal"><pre class="hljs language-aiken">equal(left: G2Element, right: G2Element) -&gt; Bool</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L69-L74"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L85-L87"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Computes greatest common divisor of two numbers
-https://en.wikipedia.org/wiki/Greatest_common_divisor</p>
-<pre><code class="language-aiken">amath.gcd(20, 15) == 5
-amath.gcd(54, 24) == 6
-</code></pre>
+        <div class="rendered-markdown"></div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="add"><pre class="hljs language-aiken">add(left: G2Element, right: G2Element) -&gt; G2Element</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L97-L99"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Adds two points in the G2 group.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="sub"><pre class="hljs language-aiken">sub(left: G2Element, right: G2Element) -&gt; G2Element</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L102-L104"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Subtracts one point in the G2 group from another.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="scale"><pre class="hljs language-aiken">scale(point: G2Element, e: State&lt;Scalar&gt;) -&gt; G2Element</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L112-L114"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Exponentiates a point in the G2 group with a <code>scalar</code>.
+This operation is equivalent to the repeated addition of the point with itself <code>e</code> times.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="hash_to_group"><pre class="hljs language-aiken">hash_to_group(bytes: ByteArray, domain_separation_tag: ByteArray) -&gt; G2Element</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/aiken/crypto/bls12_381/g2.ak#L123-L125"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Hashes arbitrary data to a point in the G2 group.
+You can use the <code>domain_separation_tag</code> parameter to cryptographically separate different uses of the hash function between applications.</p>
 </div>
       </div>
     
@@ -804,8 +946,8 @@ amath.gcd(54, 24) == 6
       </defs>
     </svg>
 
-    <script src="../js/highlight.min.js?v=1.1.21"></script>
-    <script src="../js/highlightjs-aiken.js?v=1.1.21"></script>
+    <script src="../../../js/highlight.min.js?v=1.1.21"></script>
+    <script src="../../../js/highlightjs-aiken.js?v=1.1.21"></script>
     <script>
       document.querySelectorAll("pre code").forEach((elem) => {
         if (elem.className === "") {
@@ -847,10 +989,10 @@ amath.gcd(54, 24) == 6
     </script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <script src="../js/lunr.min.js?v=1.1.21"></script>
-    <script src="../js/index.js?v=1770829697"></script>
+    <script src="../../../js/lunr.min.js?v=1.1.21"></script>
+    <script src="../../../js/index.js?v=1770829697"></script>
     <!-- Load the search index using JSONP to avoid CORS issues -->
-    <script src="../search-data.js?v=1770829697"></script>
+    <script src="../../../search-data.js?v=1770829697"></script>
     <script>
       void function() {
         if (typeof tippy !== "undefined") {

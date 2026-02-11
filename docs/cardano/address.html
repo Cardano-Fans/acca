@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/math - Cardano-Fans/acca</title>
+    <title>cardano/address - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
@@ -188,6 +188,21 @@
 
         
 
+<h2>Types</h2>
+<ul>
+  
+  <li><a href="#Address">Address</a></li>
+  
+  <li><a href="#Credential">Credential</a></li>
+  
+  <li><a href="#PaymentCredential">PaymentCredential</a></li>
+  
+  <li><a href="#Referenced">Referenced</a></li>
+  
+  <li><a href="#StakeCredential">StakeCredential</a></li>
+  
+</ul>
+
 
 
 
@@ -196,17 +211,26 @@
 <ul>
   
     
-        <li><a href="#min">min</a></li>
+        <li data-heading="2"><a href="#Constructing">Constructing</a></li>
+    
+  
+    
+        <li><a href="#from_script">from_script</a></li>
 
       
   
     
-        <li><a href="#max">max</a></li>
+        <li><a href="#from_verification_key">from_verification_key</a></li>
 
       
   
     
-        <li><a href="#gcd">gcd</a></li>
+        <li><a href="#with_delegation_key">with_delegation_key</a></li>
+
+      
+  
+    
+        <li><a href="#with_delegation_script">with_delegation_script</a></li>
 
       
   
@@ -323,8 +347,8 @@
         
 	  
 	    
-	      <li data-indent="1" data-current><a href="../acca/math.html">
-	      <strong>math</strong>
+	      <li data-indent="1"><a href="../acca/math.html">
+	      math
 	      </a></li>
 	    
 	  
@@ -563,8 +587,8 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/address.html">
-	      address
+	      <li data-indent="1" data-current><a href="../cardano/address.html">
+	      <strong>address</strong>
 	      </a></li>
 	    
 	  
@@ -663,10 +687,196 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/math</a>
+  <a href="#module-name">cardano/address</a>
 </h1>
 
 
+
+<section class="module-members">
+  <h1 id="module-types" class="module-member-kind">
+    <a href="#module-types">Types</a>
+  </h1>
+
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Address">
+        <a href="#Address">
+	  Address
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L22-L25"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A Cardano <code>Address</code> typically holding one or two credential references.</p>
+<p>Note that legacy bootstrap addresses (a.k.a. ‘Byron addresses’) are
+completely excluded from Plutus contexts. Thus, from an on-chain
+perspective only exists addresses of type 00, 01, …, 07 as detailed
+in <a href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-0019/#shelley-addresses">CIP-0019 :: Shelley Addresses</a>.</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Address {
+  payment_credential: PaymentCredential,
+  stake_credential: Option&lt;StakeCredential&gt;,
+}</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Credential">
+        <a href="#Credential">
+	  Credential
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L9-L12"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A general structure for representing an on-chain <code>Credential</code>.</p>
+<p>Credentials are always one of two kinds: a direct public/private key
+pair, or a script (native or Plutus).</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">VerificationKey(VerificationKeyHash)</code></pre>
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Script(ScriptHash)</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="PaymentCredential">
+        <a href="#PaymentCredential">
+	  PaymentCredential
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L85-L86"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A ‘PaymentCredential’ represents the spending conditions associated with
+some output. Hence,</p>
+<ul>
+<li>a <code>VerificationKey</code> captures an output locked by a public/private key pair;</li>
+<li>and a <code>Script</code> captures an output locked by a native or Plutus script.</li>
+</ul>
+</div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">PaymentCredential = Credential</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Referenced">
+        <a href="#Referenced">
+	  Referenced&lt;a&gt;
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L64-L67"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>Represent a type of object that can be represented either inline (by hash)
+or via a reference (i.e. a pointer to an on-chain location).</p>
+<p>This is mainly use for capturing pointers to a stake credential
+registration certificate in the case of so-called pointer addresses.</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Inline(a)</code></pre>
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Pointer { slot_number: Int, transaction_index: Int, certificate_index: Int }</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="StakeCredential">
+        <a href="#StakeCredential">
+	  StakeCredential
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L76-L77"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A <code>StakeCredential</code> represents the delegation and rewards withdrawal conditions
+associated with some stake address / account.</p>
+<p>A <code>StakeCredential</code> is either provided inline, or, by reference using an
+on-chain pointer.</p>
+<p>Read more about pointers in <a href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-0019/#pointers">CIP-0019 :: Pointers</a>.</p>
+</div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">StakeCredential = Referenced&lt;Credential&gt;</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+</section>
 
 
 
@@ -678,17 +888,20 @@
   </h1>
   
   
+      
+        <h2 id="Constructing" class="module-heading"><a href="#Constructing">Constructing</a></h3>
+      
+  
+  
+  
       <div class="member">
         <div class="member-name">
-          <h2 id="min"><pre class="hljs language-aiken">min(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="from_script"><pre class="hljs language-aiken">from_script(script: Hash&lt;Blake2b_224, Script&gt;) -&gt; Address</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L10-L15"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L28-L30"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a min of two elements.</p>
-<pre><code class="language-aiken">amath.min(3, 9, int.compare) == 3
-amath.min(-1, 5, int.compare) == -1
-</code></pre>
+        <div class="rendered-markdown"><p>Smart-constructor for an <a href="#Address">Address</a> from a <a href="#Script">script</a> hash. The address has no delegation rights whatsoever.</p>
 </div>
       </div>
     
@@ -696,15 +909,12 @@ amath.min(-1, 5, int.compare) == -1
   
       <div class="member">
         <div class="member-name">
-          <h2 id="max"><pre class="hljs language-aiken">max(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="from_verification_key"><pre class="hljs language-aiken">from_verification_key(vk: Hash&lt;Blake2b_224, VerificationKey&gt;) -&gt; Address</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L39-L44"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L33-L35"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a max of two elements.</p>
-<pre><code class="language-aiken">amath.max(3, 9, int.compare) == 9
-amath.max(-1, 5, int.compare) == 5
-</code></pre>
+        <div class="rendered-markdown"><p>Smart-constructor for an <a href="#Address">Address</a> from a <a href="#VerificationKey">verification key</a> hash. The resulting address has no delegation rights whatsoever.</p>
 </div>
       </div>
     
@@ -712,16 +922,31 @@ amath.max(-1, 5, int.compare) == 5
   
       <div class="member">
         <div class="member-name">
-          <h2 id="gcd"><pre class="hljs language-aiken">gcd(a: Int, b: Int) -&gt; Int</pre></h2>
+          <h2 id="with_delegation_key"><pre class="hljs language-aiken">with_delegation_key(
+  self: Address,
+  vk: Hash&lt;Blake2b_224, VerificationKey&gt;,
+) -&gt; Address</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L69-L74"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L38-L46"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Computes greatest common divisor of two numbers
-https://en.wikipedia.org/wiki/Greatest_common_divisor</p>
-<pre><code class="language-aiken">amath.gcd(20, 15) == 5
-amath.gcd(54, 24) == 6
-</code></pre>
+        <div class="rendered-markdown"><p>Set (or reset) the delegation part of an <a href="#Address">Address</a> using a <a href="#VerificationKey">verification key</a> hash. This is useful when combined with <a href="#from_verification_key"><code>from_verification_key</code></a> and/or <a href="#from_script"><code>from_script</code></a>.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="with_delegation_script"><pre class="hljs language-aiken">with_delegation_script(
+  self: Address,
+  script: Hash&lt;Blake2b_224, Script&gt;,
+) -&gt; Address</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/address.ak#L49-L57"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Set (or reset) the delegation part of an <a href="#Address">Address</a> using a <a href="#Script">script</a> hash. This is useful when combined with <a href="#from_verification_key"><code>from_verification_key</code></a> and/or <a href="#from_script"><code>from_script</code></a>.</p>
 </div>
       </div>
     

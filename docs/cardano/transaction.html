@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/math - Cardano-Fans/acca</title>
+    <title>cardano/transaction - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
@@ -188,7 +188,37 @@
 
         
 
+<h2>Types</h2>
+<ul>
+  
+  <li><a href="#Datum">Datum</a></li>
+  
+  <li><a href="#Input">Input</a></li>
+  
+  <li><a href="#Output">Output</a></li>
+  
+  <li><a href="#OutputReference">OutputReference</a></li>
+  
+  <li><a href="#Redeemer">Redeemer</a></li>
+  
+  <li><a href="#ScriptPurpose">ScriptPurpose</a></li>
+  
+  <li><a href="#Transaction">Transaction</a></li>
+  
+  <li><a href="#TransactionId">TransactionId</a></li>
+  
+  <li><a href="#ValidityRange">ValidityRange</a></li>
+  
+</ul>
 
+
+
+<h2>Constants</h2>
+<ul>
+  
+  <li><a href="#placeholder">placeholder</a></li>
+  
+</ul>
 
 
 
@@ -196,17 +226,26 @@
 <ul>
   
     
-        <li><a href="#min">min</a></li>
+        <li data-heading="2"><a href="#Querying">Querying</a></li>
+    
+  
+    
+        <li><a href="#find_input">find_input</a></li>
 
       
   
     
-        <li><a href="#max">max</a></li>
+        <li><a href="#resolve_input">resolve_input</a></li>
 
       
   
     
-        <li><a href="#gcd">gcd</a></li>
+        <li><a href="#find_datum">find_datum</a></li>
+
+      
+  
+    
+        <li><a href="#find_script_outputs">find_script_outputs</a></li>
 
       
   
@@ -323,8 +362,8 @@
         
 	  
 	    
-	      <li data-indent="1" data-current><a href="../acca/math.html">
-	      <strong>math</strong>
+	      <li data-indent="1"><a href="../acca/math.html">
+	      math
 	      </a></li>
 	    
 	  
@@ -635,8 +674,8 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/transaction.html">
-	      transaction
+	      <li data-indent="1" data-current><a href="../cardano/transaction.html">
+	      <strong>transaction</strong>
 	      </a></li>
 	    
 	  
@@ -663,12 +702,464 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/math</a>
+  <a href="#module-name">cardano/transaction</a>
 </h1>
 
 
 
+<section class="module-members">
+  <h1 id="module-types" class="module-member-kind">
+    <a href="#module-types">Types</a>
+  </h1>
 
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Datum">
+        <a href="#Datum">
+	  Datum
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L107-L113"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>An output <code>Datum</code>.</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">NoDatum</code></pre>
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">DatumHash(DataHash)</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <p>A datum referenced by its hash digest.</p>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">InlineDatum(Data)</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <p>A datum completely inlined in the output.</p>
+
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Input">
+        <a href="#Input">
+	  Input
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L85-L88"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>An <code>Input</code> made of an output reference and, the resolved value associated with that output.</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Input { output_reference: OutputReference, output: Output }</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Output">
+        <a href="#Output">
+	  Output
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L99-L104"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A transaction <code>Output</code>, with an address, a value and optional datums and script references.</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Output {
+  address: Address,
+  value: Value,
+  datum: Datum,
+  reference_script: Option&lt;ScriptHash&gt;,
+}</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="OutputReference">
+        <a href="#OutputReference">
+	  OutputReference
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L93-L96"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>An <code>OutputReference</code> is a unique reference to an output on-chain. The <code>output_index</code>
+corresponds to the position in the output list of the transaction (identified by its id)
+that produced that output</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">OutputReference {
+  transaction_id: Hash&lt;Blake2b_256, Transaction&gt;,
+  output_index: Int,
+}</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Redeemer">
+        <a href="#Redeemer">
+	  Redeemer
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L118-L119"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A type-alias for Redeemers, passed to scripts for validation. The <code>Data</code> is
+opaque because it is user-defined and it is the script’s responsibility to
+parse it into its expected form.</p>
+</div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">Redeemer = Data</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ScriptPurpose">
+        <a href="#ScriptPurpose">
+	  ScriptPurpose
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L19-L47"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>Characterizes the script purpose.</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Mint(PolicyId)</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <p>For scripts executed as minting/burning policies, to insert
+or remove assets from circulation. It’s parameterized by the identifier
+of the associated policy.</p>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Spend(OutputReference)</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <p>For scripts that are used as payment credentials for addresses in
+transaction outputs. They govern the rule by which the output they
+reference can be spent.</p>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Withdraw(Credential)</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <p>For scripts that validate reward withdrawals from a reward account.</p>
+<p>The argument identifies the target reward account.</p>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Publish { at: Index, certificate: Certificate }</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <p>Needed when delegating to a pool using stake credentials defined as a
+custom script. This purpose is also triggered when de-registering such
+stake credentials.</p>
+<p>The Int is a 0-based index of the given <code>Certificate</code> in <code>certificates</code>.</p>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Vote(Voter)</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <p>Voting for a type of voter using a governance action id to vote
+yes / no / abstain inside a transaction.</p>
+<p>The voter is who is doing the governance action.</p>
+
+          </div>
+	  
+        </li>
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Propose { at: Index, proposal_procedure: ProposalProcedure }</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <p>Used to propose a governance action.</p>
+<p>A 0-based index of the given <code>ProposalProcedure</code> in <code>proposal_procedures</code>.</p>
+
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Transaction">
+        <a href="#Transaction">
+	  Transaction
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L55-L78"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A Cardano <code>Transaction</code>, as seen by on-chain scripts.</p>
+<p>Note that this is a representation of a transaction, and not the 1:1
+translation of the transaction as seen by the ledger. In particular,
+on-chain scripts can’t see inputs locked by bootstrap addresses, outputs
+to bootstrap addresses or just transaction metadata.</p>
+</div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">Transaction {
+  inputs: List&lt;Input&gt;,
+  reference_inputs: List&lt;Input&gt;,
+  outputs: List&lt;Output&gt;,
+  fee: Lovelace,
+  mint: Value,
+  certificates: List&lt;Certificate&gt;,
+  withdrawals: Pairs&lt;Credential, Lovelace&gt;,
+  validity_range: ValidityRange,
+  extra_signatories: List&lt;VerificationKeyHash&gt;,
+  redeemers: Pairs&lt;ScriptPurpose, Redeemer&gt;,
+  datums: Dict&lt;DataHash, Data&gt;,
+  id: TransactionId,
+  votes: Pairs&lt;Voter, Pairs&lt;GovernanceActionId, Vote&gt;&gt;,
+  proposal_procedures: List&lt;ProposalProcedure&gt;,
+  current_treasury_amount: Option&lt;Lovelace&gt;,
+  treasury_donation: Option&lt;Lovelace&gt;,
+}</code></pre>
+          </div>
+	  
+          <div class="constructor-item-docs">
+            <h4><code>.withdrawals</code></h4>
+<blockquote class="markdown-alert-important">
+<p>Withdrawals are ordered by ascending <a href="./credential.html#Credential">Credential</a>. Yet, note that <a href="./credential.html#Credential"><code>Script</code></a> credentials are treated as <strong>lower values</strong> than <a href="./credential.html#Credential"><code>VerificationKey</code></a> credentials.</p>
+</blockquote>
+<hr/>
+<h4><code>.redeemers</code></h4>
+<blockquote class="markdown-alert-important">
+<p>Redeemers are ordered by ascending <a href="./transaction.html#ScriptPurpose">ScriptPurpose</a>.</p>
+</blockquote>
+<hr/>
+<h4><code>.votes</code></h4>
+<blockquote class="markdown-alert-important">
+<p>Votes are ordered by ascending <a href="./governance.html#Voter">Voter</a> and <a href="./governance.html#GovernanceActionId">GovernanceActionId</a>.<br/>First constructor variants in a type are treated as lower indices; except for <a href="./credential.html#Credential">Credential</a> where <a href="./credential.html#Credential"><code>Script</code></a> credentials are treated as <strong>lower values</strong> than <a href="./credential.html#Credential"><code>VerificationKey</code></a> credentials.</p>
+</blockquote>
+<hr/>
+
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="TransactionId">
+        <a href="#TransactionId">
+	  TransactionId
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L15-L16"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">TransactionId = Hash&lt;Blake2b_256, Transaction&gt;</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ValidityRange">
+        <a href="#ValidityRange">
+	  ValidityRange
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L81-L82"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>An interval of POSIX time, measured in <strong>number of milliseconds</strong> since 1970-01-01T00:00:00Z.</p>
+</div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">ValidityRange = Interval</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+</section>
+
+
+
+<section class="module-members">
+  <h1 id="module-constants" class="module-member-kind">
+    <a href="#module-constants">Constants</a>
+  </h1>
+
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="placeholder"><pre class="hljs language-aiken">placeholder: Transaction</pre></h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L231-L249"></a>
+      
+    </div>
+    <div class="rendered-markdown"><p>A placeholder / empty <code>Transaction</code> to serve as a base in a transaction
+builder. This is particularly useful for constructing test transactions.</p>
+<p>Every field is empty or null, and we have in particular:</p>
+<pre><code class="language-aiken">use aiken/interval
+
+transaction.placeholder.id ==
+  #"0000000000000000000000000000000000000000000000000000000000000000"
+
+transaction.placeholder.validity_range == interval.everything
+</code></pre>
+</div>
+  </div>
+  
+</section>
 
 
 
@@ -678,16 +1169,31 @@
   </h1>
   
   
+      
+        <h2 id="Querying" class="module-heading"><a href="#Querying">Querying</a></h3>
+      
+  
+  
+  
       <div class="member">
         <div class="member-name">
-          <h2 id="min"><pre class="hljs language-aiken">min(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="find_input"><pre class="hljs language-aiken">find_input(
+  inputs: List&lt;Input&gt;,
+  output_reference: OutputReference,
+) -&gt; Option&lt;Input&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L10-L15"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L135-L141"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a min of two elements.</p>
-<pre><code class="language-aiken">amath.min(3, 9, int.compare) == 3
-amath.min(-1, 5, int.compare) == -1
+        <div class="rendered-markdown"><p>Find an input by its <a href="#OutputReference"><code>OutputReference</code></a>. This is typically used in
+combination with the <code>Spend</code> <a href="#ScriptPurpose"><code>ScriptPurpose</code></a> to find a script’s own
+input.</p>
+<pre><code class="language-aiken">validator {
+  spend(datum, redeemer, my_output_reference, self) {
+    expect Some(input) =
+      self.inputs |&gt; transaction.find_input(my_output_reference)
+  }
+}
 </code></pre>
 </div>
       </div>
@@ -696,14 +1202,19 @@ amath.min(-1, 5, int.compare) == -1
   
       <div class="member">
         <div class="member-name">
-          <h2 id="max"><pre class="hljs language-aiken">max(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="resolve_input"><pre class="hljs language-aiken">resolve_input(inputs: List&lt;Input&gt;, output_reference: OutputReference) -&gt; Output</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L39-L44"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L154-L167"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a max of two elements.</p>
-<pre><code class="language-aiken">amath.max(3, 9, int.compare) == 9
-amath.max(-1, 5, int.compare) == 5
+        <div class="rendered-markdown"><p>Find the output corresponding to an output reference in a list of inputs.
+<strong>Fails</strong> when no matching output is found.</p>
+<pre><code class="language-aiken">validator {
+  spend(datum, redeemer, my_output_reference, self) {
+    let output =
+      self.inputs |&gt; transaction.resolve_input(my_output_reference)
+  }
+}
 </code></pre>
 </div>
       </div>
@@ -712,16 +1223,35 @@ amath.max(-1, 5, int.compare) == 5
   
       <div class="member">
         <div class="member-name">
-          <h2 id="gcd"><pre class="hljs language-aiken">gcd(a: Int, b: Int) -&gt; Int</pre></h2>
+          <h2 id="find_datum"><pre class="hljs language-aiken">find_datum(
+  outputs: List&lt;Output&gt;,
+  datums: Dict&lt;DataHash, Data&gt;,
+  datum_hash: DataHash,
+) -&gt; Option&lt;Data&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L69-L74"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L172-L197"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Computes greatest common divisor of two numbers
-https://en.wikipedia.org/wiki/Greatest_common_divisor</p>
-<pre><code class="language-aiken">amath.gcd(20, 15) == 5
-amath.gcd(54, 24) == 6
-</code></pre>
+        <div class="rendered-markdown"><p>Find a <a href="#Datum"><code>Datum</code></a> by its hash, if present. The function looks first for
+datums in the witness set, and then for inline datums if it doesn’t find any in
+witnesses.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="find_script_outputs"><pre class="hljs language-aiken">find_script_outputs(
+  outputs: List&lt;Output&gt;,
+  script_hash: ScriptHash,
+) -&gt; List&lt;Output&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/transaction.ak#L201-L214"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Find all outputs that are paying into the given script hash, if any. This is useful for
+contracts running over multiple transactions.</p>
 </div>
       </div>
     

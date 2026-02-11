@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/math - Cardano-Fans/acca</title>
+    <title>cardano/assets - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg"/>
@@ -188,7 +188,31 @@
 
         
 
+<h2>Types</h2>
+<ul>
+  
+  <li><a href="#AssetName">AssetName</a></li>
+  
+  <li><a href="#Lovelace">Lovelace</a></li>
+  
+  <li><a href="#PolicyId">PolicyId</a></li>
+  
+  <li><a href="#Value">Value</a></li>
+  
+</ul>
 
+
+
+<h2>Constants</h2>
+<ul>
+  
+  <li><a href="#ada_asset_name">ada_asset_name</a></li>
+  
+  <li><a href="#ada_policy_id">ada_policy_id</a></li>
+  
+  <li><a href="#zero">zero</a></li>
+  
+</ul>
 
 
 
@@ -196,17 +220,128 @@
 <ul>
   
     
-        <li><a href="#min">min</a></li>
+        <li data-heading="2"><a href="#Constructing">Constructing</a></li>
+    
+  
+    
+        <li><a href="#from_asset">from_asset</a></li>
 
       
   
     
-        <li><a href="#max">max</a></li>
+        <li><a href="#from_asset_list">from_asset_list</a></li>
 
       
   
     
-        <li><a href="#gcd">gcd</a></li>
+        <li><a href="#from_lovelace">from_lovelace</a></li>
+
+      
+  
+    
+        <li data-heading="2"><a href="#Inspecting">Inspecting</a></li>
+    
+  
+    
+        <li><a href="#has_any_nft">has_any_nft</a></li>
+
+      
+  
+    
+        <li><a href="#has_any_nft_strict">has_any_nft_strict</a></li>
+
+      
+  
+    
+        <li><a href="#has_nft">has_nft</a></li>
+
+      
+  
+    
+        <li><a href="#has_nft_strict">has_nft_strict</a></li>
+
+      
+  
+    
+        <li><a href="#is_zero">is_zero</a></li>
+
+      
+  
+    
+        <li><a href="#match">match</a></li>
+
+      
+  
+    
+        <li><a href="#lovelace_of">lovelace_of</a></li>
+
+      
+  
+    
+        <li><a href="#policies">policies</a></li>
+
+      
+  
+    
+        <li><a href="#quantity_of">quantity_of</a></li>
+
+      
+  
+    
+        <li><a href="#tokens">tokens</a></li>
+
+      
+  
+    
+        <li data-heading="2"><a href="#Combining">Combining</a></li>
+    
+  
+    
+        <li><a href="#add">add</a></li>
+
+      
+  
+    
+        <li><a href="#merge">merge</a></li>
+
+      
+  
+    
+        <li><a href="#negate">negate</a></li>
+
+      
+  
+    
+        <li><a href="#restricted_to">restricted_to</a></li>
+
+      
+  
+    
+        <li><a href="#without_lovelace">without_lovelace</a></li>
+
+      
+  
+    
+        <li data-heading="2"><a href="#Transforming">Transforming</a></li>
+    
+  
+    
+        <li><a href="#flatten">flatten</a></li>
+
+      
+  
+    
+        <li><a href="#flatten_with">flatten_with</a></li>
+
+      
+  
+    
+        <li><a href="#reduce">reduce</a></li>
+
+      
+  
+    
+        <li><a href="#to_dict">to_dict</a></li>
 
       
   
@@ -323,8 +458,8 @@
         
 	  
 	    
-	      <li data-indent="1" data-current><a href="../acca/math.html">
-	      <strong>math</strong>
+	      <li data-indent="1"><a href="../acca/math.html">
+	      math
 	      </a></li>
 	    
 	  
@@ -579,8 +714,8 @@
         
 	  
 	    
-	      <li data-indent="1"><a href="../cardano/assets.html">
-	      assets
+	      <li data-indent="1" data-current><a href="../cardano/assets.html">
+	      <strong>assets</strong>
 	      </a></li>
 	    
 	  
@@ -663,12 +798,160 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/math</a>
+  <a href="#module-name">cardano/assets</a>
 </h1>
 
 
 
+<section class="module-members">
+  <h1 id="module-types" class="module-member-kind">
+    <a href="#module-types">Types</a>
+  </h1>
 
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="AssetName">
+        <a href="#AssetName">
+	  AssetName
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L24-L25"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A type-alias for ’AssetName`, which are free-form byte-arrays between
+0 and 32 bytes.</p>
+</div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">AssetName = ByteArray</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Lovelace">
+        <a href="#Lovelace">
+	  Lovelace
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L9-L10"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>Lovelace is now a type wrapper for Int.</p>
+</div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">Lovelace = Int</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="PolicyId">
+        <a href="#PolicyId">
+	  PolicyId
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L13-L14"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A type-alias for a <code>PolicyId</code>. A <code>PolicyId</code> is always 28-byte long</p>
+</div>
+      
+      <h3>Alias</h3>
+      <div class="constructor-row">
+        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
+        <pre class="constructor-name"><code class="hljs aiken">PolicyId = Hash&lt;Blake2b_224, Script&gt;</code></pre>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="Value">
+        <a href="#Value">
+	  Value
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L38-L40"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"><p>A multi-asset output <code>Value</code>. Contains tokens indexed by <a href="#PolicyId">PolicyId</a> and <a href="#AssetName">AssetName</a>.</p>
+<blockquote class="markdown-alert-important">
+<p>This type maintain some invariants by construction; in particular, a <code>Value</code> will never contain a
+zero quantity of a particular token.</p>
+</blockquote>
+</div>
+      
+    </div>
+  </div>
+  
+</section>
+
+
+
+<section class="module-members">
+  <h1 id="module-constants" class="module-member-kind">
+    <a href="#module-constants">Constants</a>
+  </h1>
+
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ada_asset_name"><pre class="hljs language-aiken">ada_asset_name: ByteArray = &quot;&quot;</pre></h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L31-L31"></a>
+      
+    </div>
+    <div class="rendered-markdown"><p>Ada, the native currency, isn’t associated with any <code>AssetName</code> (it’s not
+possible to mint Ada!).</p>
+<p>By convention, it is an empty <code>ByteArray</code>.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ada_policy_id"><pre class="hljs language-aiken">ada_policy_id: ByteArray = &quot;&quot;</pre></h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L20-L20"></a>
+      
+    </div>
+    <div class="rendered-markdown"><p>Ada, the native currency, isn’t associated with any <code>PolicyId</code> (it’s not
+possible to mint Ada!).</p>
+<p>By convention, it is an empty <code>ByteArray</code>.</p>
+</div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="zero"><pre class="hljs language-aiken">zero: Value</pre></h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L168-L168"></a>
+      
+    </div>
+    <div class="rendered-markdown"><p>Construct an empty <code>Value</code> with nothing in it.</p>
+</div>
+  </div>
+  
+</section>
 
 
 
@@ -678,16 +961,83 @@
   </h1>
   
   
+      
+        <h2 id="Constructing" class="module-heading"><a href="#Constructing">Constructing</a></h3>
+      
+  
+  
+  
       <div class="member">
         <div class="member-name">
-          <h2 id="min"><pre class="hljs language-aiken">min(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="from_asset"><pre class="hljs language-aiken">from_asset(policy_id: PolicyId, asset_name: AssetName, quantity: Int) -&gt; Value</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L10-L15"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L46-L61"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a min of two elements.</p>
-<pre><code class="language-aiken">amath.min(3, 9, int.compare) == 3
-amath.min(-1, 5, int.compare) == -1
+        <div class="rendered-markdown"><p>Construct a <code>Value</code> from an asset identifier (i.e. <code>PolicyId</code> + <code>AssetName</code>)
+and a given quantity.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="from_asset_list"><pre class="hljs language-aiken">from_asset_list(xs: Pairs&lt;PolicyId, Pairs&lt;AssetName, Int&gt;&gt;) -&gt; Value</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L73-L85"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Promote an arbitrary list of assets into a <code>Value</code>. This function fails
+(i.e. halts the program execution) if:</p>
+<ul>
+<li>there’s any duplicate amongst <code>PolicyId</code>;</li>
+<li>there’s any duplicate amongst <code>AssetName</code>;</li>
+<li>the <code>AssetName</code> aren’t sorted in ascending lexicographic order; or</li>
+<li>any asset quantity is null.</li>
+</ul>
+<p>This function is meant to turn arbitrary user-defined <code>Data</code> into safe <code>Value</code>,
+while checking for internal invariants.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="from_lovelace"><pre class="hljs language-aiken">from_lovelace(quantity: Int) -&gt; Value</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L163-L165"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Construct a <code>Value</code> from a lovelace quantity.</p>
+<p>Friendly reminder: 1 Ada = 1.000.000 Lovelace</p>
+</div>
+      </div>
+    
+  
+  
+      
+        <h2 id="Inspecting" class="module-heading"><a href="#Inspecting">Inspecting</a></h3>
+      
+  
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="has_any_nft"><pre class="hljs language-aiken">has_any_nft(self: Value, policy: PolicyId) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L183-L186"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Check whether a <code>Value</code> carries any NFT from the given policy. Other assets are tolerated.</p>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+   |&gt; assets.add("bar", "asset#2", 14)
+
+assets.has_any_nft(value, "foo") == True
+assets.has_any_nft(value, "bar") == False
+assets.has_any_nft(value, "baz") == False
 </code></pre>
 </div>
       </div>
@@ -696,14 +1046,34 @@ amath.min(-1, 5, int.compare) == -1
   
       <div class="member">
         <div class="member-name">
-          <h2 id="max"><pre class="hljs language-aiken">max(left: a, right: a, compare: fn(a, a) -&gt; Ordering) -&gt; a</pre></h2>
+          <h2 id="has_any_nft_strict"><pre class="hljs language-aiken">has_any_nft_strict(self: Value, policy: PolicyId) -&gt; Bool</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L39-L44"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L218-L240"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a max of two elements.</p>
-<pre><code class="language-aiken">amath.max(3, 9, int.compare) == 9
-amath.max(-1, 5, int.compare) == 5
+        <div class="rendered-markdown"><p>Check whether a <code>Value</code> carries any NFT from the given policy. Other assets (other than
+Ada) aren’t tolerated. Said differently, the check succeeds if and only if
+the value contains no assets other than the expected NFT or Ada.</p>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+   |&gt; assets.add("bar", "asset#2", 14)
+
+assets.has_any_nft_strict(value, "foo") == False
+assets.has_any_nft_strict(value, "bar") == False
+assets.has_any_nft_strict(value, "baz") == False
+</code></pre>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+
+assets.has_any_nft_strict(value, "foo") == True
+assets.has_any_nft_strict(value, "bar") == False
+</code></pre>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+   |&gt; assets.add("foo", "asset#2", 1)
+
+assets.has_any_nft_strict(value, "foo") == False
+assets.has_any_nft_strict(value, "bar") == False
 </code></pre>
 </div>
       </div>
@@ -712,16 +1082,326 @@ amath.max(-1, 5, int.compare) == 5
   
       <div class="member">
         <div class="member-name">
-          <h2 id="gcd"><pre class="hljs language-aiken">gcd(a: Int, b: Int) -&gt; Int</pre></h2>
+          <h2 id="has_nft"><pre class="hljs language-aiken">has_nft(self: Value, policy: PolicyId, asset_name: AssetName) -&gt; Bool</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/math.ak#L69-L74"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L264-L266"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Computes greatest common divisor of two numbers
-https://en.wikipedia.org/wiki/Greatest_common_divisor</p>
-<pre><code class="language-aiken">amath.gcd(20, 15) == 5
-amath.gcd(54, 24) == 6
+        <div class="rendered-markdown"><p>Check whether a <code>Value</code> carries a specific NFT. Other assets are tolerated.</p>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+   |&gt; assets.add("bar", "asset#2", 14)
+
+assets.has_nft(value, "foo", "asset#1") == True
+assets.has_nft(value, "foo", "asset#2") == False
+assets.has_nft(value, "bar", "asset#2") == False
+assets.has_nft(value, "baz", "asset#3") == False
 </code></pre>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+   |&gt; assets.add("foo", "asset#2", 1)
+
+assets.has_nft(value, "foo", "asset#1") == True
+assets.has_nft(value, "foo", "asset#2") == True
+assets.has_nft(value, "bar", "asset#2") == False
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="has_nft_strict"><pre class="hljs language-aiken">has_nft_strict(self: Value, policy: PolicyId, asset_name: AssetName) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L299-L316"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Check whether a <code>Value</code> carries a specific NFT. Other assets (other than
+Ada) aren’t tolerated. Said differently, the check succeeds if and only if
+the value contains no assets other than the expected NFT or Ada.</p>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+   |&gt; assets.add("bar", "asset#2", 14)
+
+assets.has_nft_strict(value1, "foo", "asset#1") == False
+assets.has_nft_strict(value1, "bar", "asset#2") == False
+assets.has_nft_strict(value1, "baz", "asset#3") == False
+</code></pre>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+
+assets.has_nft_strict(value, "foo", "asset#1") == True
+assets.has_nft_strict(value, "foo", "asset#2") == False
+assets.has_nft_strict(value, "bar", "asset#2") == False
+</code></pre>
+<pre><code class="language-aiken">let value = assets.from_lovelace(42)
+   |&gt; assets.add("foo", "asset#1", 1)
+   |&gt; assets.add("foo", "asset#2", 1)
+
+assets.has_nft_strict(value3, "foo", "asset#1") == False
+assets.has_nft_strict(value3, "foo", "asset#2") == False
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="is_zero"><pre class="hljs language-aiken">is_zero(self: Value) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L475-L477"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Check is a <code>Value</code> is zero. That is, it has no assets and holds no Ada/Lovelace.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="match"><pre class="hljs language-aiken">match(
+  left: Value,
+  right: Data,
+  assert_lovelace: fn(Lovelace, Lovelace) -&gt; Bool,
+) -&gt; Bool</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L507-L548"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Efficiently compare two values together, allowing a custom behaviour for Ada/Lovelace.
+The second parameter is provided as <code>Data</code>, allowing to conveniently compare serialized
+datums or similar structurually equivalent types (such as <code>Pairs&lt;PolicyId, Pairs&lt;AssetName, Lovelace&gt;&gt;</code>).</p>
+<p>The third argument is a callback function to assert the left and right lovelace
+quantities. Its first argument refers to the quantity of the first argument of
+<code>match</code>, and the second argument of the callback to the quantity of the second
+argument of <code>match</code>. In the absence of lovelace in any value, it defaults to <code>0</code>.</p>
+<pre><code class="language-aiken">const value: Value =
+  assets.from_lovelace(30)
+    |&gt; assets.add("foo", "bar", 1)
+    |&gt; assets.add("foo", "baz", 42)
+
+const datum: Data =
+  assets.from_lovelace(20)
+    |&gt; assets.add("foo", "bar", 1)
+    |&gt; assets.add("foo", "baz", 42)
+
+True == assets.match(value, datum, &gt;=)
+
+False == assets.match(value, datum, ==)
+
+True == assets.match(value, datum, fn(value_lovelace, datum_lovelace) {
+  2 * datum_lovelace &gt;= value_lovelace
+})
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="lovelace_of"><pre class="hljs language-aiken">lovelace_of(self: Value) -&gt; Int</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L812-L814"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>A specialized version of <code>quantity_of</code> for the Ada currency.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="policies"><pre class="hljs language-aiken">policies(self: Value) -&gt; List&lt;PolicyId&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L817-L819"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>A list of all token policies in that Value with non-zero tokens.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="quantity_of"><pre class="hljs language-aiken">quantity_of(self: Value, policy_id: PolicyId, asset_name: AssetName) -&gt; Int</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L822-L829"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Extract the quantity of a given asset.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="tokens"><pre class="hljs language-aiken">tokens(self: Value, policy_id: PolicyId) -&gt; Dict&lt;AssetName, Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L832-L835"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Get all tokens associated with a given policy.</p>
+</div>
+      </div>
+    
+  
+  
+      
+        <h2 id="Combining" class="module-heading"><a href="#Combining">Combining</a></h3>
+      
+  
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="add"><pre class="hljs language-aiken">add(
+  self: Value,
+  policy_id: PolicyId,
+  asset_name: AssetName,
+  quantity: Int,
+) -&gt; Value</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L841-L876"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Add a (positive or negative) quantity of a single token to a assets.
+This is more efficient than <a href="#merge"><code>merge</code></a> for a single asset.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="merge"><pre class="hljs language-aiken">merge(left: Value, right: Value) -&gt; Value</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L918-L933"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Combine two <code>Value</code> together.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="negate"><pre class="hljs language-aiken">negate(self: Value) -&gt; Value</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L994-L997"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Negates quantities of all tokens (including Ada) in that <code>Value</code>.</p>
+<pre><code>v1
+  |&gt; assets.negate
+  |&gt; assets.merge(v1)
+  |&gt; assets.is_zero
+// True
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="restricted_to"><pre class="hljs language-aiken">restricted_to(self: Value, mask: List&lt;PolicyId&gt;) -&gt; Value</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L1000-L1018"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Get a subset of the assets restricted to the given policies.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="without_lovelace"><pre class="hljs language-aiken">without_lovelace(self: Value) -&gt; Value</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L1046-L1049"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Get a <code>Value</code> excluding Ada.</p>
+</div>
+      </div>
+    
+  
+  
+      
+        <h2 id="Transforming" class="module-heading"><a href="#Transforming">Transforming</a></h3>
+      
+  
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="flatten"><pre class="hljs language-aiken">flatten(self: Value) -&gt; List&lt;(PolicyId, AssetName, Int)&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L1075-L1089"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Flatten a <code>Value</code> as list of 3-tuple <code>(PolicyId, AssetName, Quantity)</code>.</p>
+<p>Handy to manipulate values as uniform lists.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="flatten_with"><pre class="hljs language-aiken">flatten_with(self: Value, with: FlattenStrategy&lt;result&gt;) -&gt; List&lt;result&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L1096-L1116"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Flatten a <code>Value</code> as a list of results, possibly discarding some along the way. In particular, we have:</p>
+<pre><code class="language-aiken">flatten(value) === flatten_with(value, strategy.triple())
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="reduce"><pre class="hljs language-aiken">reduce(
+  self: Value,
+  start: result,
+  with: fn(PolicyId, AssetName, Int, result) -&gt; result,
+) -&gt; result</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L1150-L1162"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Reduce a value into a single result</p>
+<pre><code>assets.zero
+ |&gt; assets.add("a", "1", 10)
+ |&gt; assets.add("b", "2", 20)
+ |&gt; assets.reduce(v, 0, fn(_, _, quantity, acc) { acc + quantity })
+// 30
+</code></pre>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="to_dict"><pre class="hljs language-aiken">to_dict(self: Value) -&gt; Dict&lt;PolicyId, Dict&lt;AssetName, Int&gt;&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/assets.ak#L1195-L1197"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Convert the value into a dictionary of dictionaries.</p>
 </div>
       </div>
     

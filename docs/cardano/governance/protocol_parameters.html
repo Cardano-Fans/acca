@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>acca/collections/mt - Cardano-Fans/acca</title>
+    <title>cardano/governance/protocol_parameters - Cardano-Fans/acca</title>
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)"/>
     <link rel="icon" type="image/svg+xml" sizes="any" href="../../favicon.svg"/>
@@ -191,13 +191,19 @@
 <h2>Types</h2>
 <ul>
   
-  <li><a href="#MerkleTree">MerkleTree</a></li>
+  <li><a href="#ConstitutionalCommitteeThresholds">ConstitutionalCommitteeThresholds</a></li>
   
-  <li><a href="#Proof">Proof</a></li>
+  <li><a href="#DelegateRepresentativeVotingThresholds">DelegateRepresentativeVotingThresholds</a></li>
   
-  <li><a href="#ProofItem">ProofItem</a></li>
+  <li><a href="#ExecutionUnits">ExecutionUnits</a></li>
   
-  <li><a href="#Root">Root</a></li>
+  <li><a href="#ProtocolParametersThresholds">ProtocolParametersThresholds</a></li>
+  
+  <li><a href="#ProtocolParametersUpdate">ProtocolParametersUpdate</a></li>
+  
+  <li><a href="#ScriptExecutionPrices">ScriptExecutionPrices</a></li>
+  
+  <li><a href="#StakePoolOperatorVotingThresholds">StakePoolOperatorVotingThresholds</a></li>
   
 </ul>
 
@@ -209,57 +215,152 @@
 <ul>
   
     
-        <li><a href="#to_hash">to_hash</a></li>
+        <li><a href="#min_fee_coefficient">min_fee_coefficient</a></li>
 
       
   
     
-        <li><a href="#from_hash">from_hash</a></li>
+        <li><a href="#min_fee_constant">min_fee_constant</a></li>
 
       
   
     
-        <li><a href="#to_list">to_list</a></li>
+        <li><a href="#max_block_body_size">max_block_body_size</a></li>
 
       
   
     
-        <li><a href="#root">root</a></li>
+        <li><a href="#max_transaction_size">max_transaction_size</a></li>
 
       
   
     
-        <li><a href="#equals">equals</a></li>
+        <li><a href="#max_block_header_size">max_block_header_size</a></li>
 
       
   
     
-        <li><a href="#size">size</a></li>
+        <li><a href="#stake_credential_deposit">stake_credential_deposit</a></li>
 
       
   
     
-        <li><a href="#is_empty">is_empty</a></li>
+        <li><a href="#stake_pool_deposit">stake_pool_deposit</a></li>
 
       
   
     
-        <li><a href="#get_proof">get_proof</a></li>
+        <li><a href="#stake_pool_retirement_horizon">stake_pool_retirement_horizon</a></li>
 
       
   
     
-        <li><a href="#from_list">from_list</a></li>
+        <li><a href="#desired_number_of_stake_pools">desired_number_of_stake_pools</a></li>
 
       
   
     
-        <li><a href="#is_member">is_member</a></li>
+        <li><a href="#stake_pool_pledge_influence">stake_pool_pledge_influence</a></li>
 
       
   
     
-        <li><a href="#verify_proof">verify_proof</a></li>
+        <li><a href="#monetary_expansion">monetary_expansion</a></li>
+
+      
+  
+    
+        <li><a href="#treasury_expansion">treasury_expansion</a></li>
+
+      
+  
+    
+        <li><a href="#min_stake_pool_cost">min_stake_pool_cost</a></li>
+
+      
+  
+    
+        <li><a href="#min_utxo_deposit_coefficient">min_utxo_deposit_coefficient</a></li>
+
+      
+  
+    
+        <li><a href="#cost_models">cost_models</a></li>
+
+      
+  
+    
+        <li><a href="#script_execution_prices">script_execution_prices</a></li>
+
+      
+  
+    
+        <li><a href="#max_transaction_execution_units">max_transaction_execution_units</a></li>
+
+      
+  
+    
+        <li><a href="#max_block_execution_units">max_block_execution_units</a></li>
+
+      
+  
+    
+        <li><a href="#max_value_size">max_value_size</a></li>
+
+      
+  
+    
+        <li><a href="#collateral_percentage">collateral_percentage</a></li>
+
+      
+  
+    
+        <li><a href="#max_collateral_inputs">max_collateral_inputs</a></li>
+
+      
+  
+    
+        <li><a href="#stake_pool_operator_voting_thresholds">stake_pool_operator_voting_thresholds</a></li>
+
+      
+  
+    
+        <li><a href="#delegate_representative_voting_thresholds">delegate_representative_voting_thresholds</a></li>
+
+      
+  
+    
+        <li><a href="#min_constitutional_committee_size">min_constitutional_committee_size</a></li>
+
+      
+  
+    
+        <li><a href="#max_constitutional_committee_mandate">max_constitutional_committee_mandate</a></li>
+
+      
+  
+    
+        <li><a href="#governance_proposal_lifetime">governance_proposal_lifetime</a></li>
+
+      
+  
+    
+        <li><a href="#governance_proposal_deposit">governance_proposal_deposit</a></li>
+
+      
+  
+    
+        <li><a href="#delegate_representative_deposit">delegate_representative_deposit</a></li>
+
+      
+  
+    
+        <li><a href="#delegate_representative_max_idle_time">delegate_representative_max_idle_time</a></li>
+
+      
+  
+    
+        <li><a href="#reference_scripts_tier_fee_initial_factor">reference_scripts_tier_fee_initial_factor</a></li>
 
       
   
@@ -312,8 +413,8 @@
         
 	  
 	    
-	      <li data-indent="2" data-current><a href="../../acca/collections/mt.html">
-	      <strong>mt</strong>
+	      <li data-indent="2"><a href="../../acca/collections/mt.html">
+	      mt
 	      </a></li>
 	    
 	  
@@ -664,8 +765,8 @@
         
 	  
 	    
-	      <li data-indent="2"><a href="../../cardano/governance/protocol_parameters.html">
-	      protocol_parameters
+	      <li data-indent="2" data-current><a href="../../cardano/governance/protocol_parameters.html">
+	      <strong>protocol_parameters</strong>
 	      </a></li>
 	    
 	  
@@ -716,14 +817,8 @@
       <main class="content">
         
 <h1 id="module-name" class="module-name">
-  <a href="#module-name">acca/collections/mt</a>
+  <a href="#module-name">cardano/governance/protocol_parameters</a>
 </h1>
-<p>A purely functional implementation of MerkleTrees that is suitable for
-usage on-chain. Note, however, that the construction of ‘MerkleTree’ and
-membership proofs are still expected to happen <em>off-chain</em> while only the
-proof verification should be done on-chain.</p>
-<p>This implementation uses exclusively SHA-256 as a hashing algorithm.</p>
-<p>The code ported to Aiken from <a href="https://github.com/input-output-hk/hydra/blob/master/plutus-merkle-tree/src/Plutus/MerkleTree.hs">Hydra</a></p>
 
 
 
@@ -735,86 +830,230 @@ proof verification should be done on-chain.</p>
   
   <div class="member">
     <div class="member-name">
-      <h2 id="MerkleTree">
-        <a href="#MerkleTree">
-	  MerkleTree&lt;a&gt;
+      <h2 id="ConstitutionalCommitteeThresholds">
+        <a href="#ConstitutionalCommitteeThresholds">
+	  ConstitutionalCommitteeThresholds
         </a>
       </h2>
       
-        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L17-L21"></a>
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L60-L63"></a>
       
     </div>
     <div class="custom-type-constructors">
-      <div class="rendered-markdown"><p>An opaque representation of a <a href="#MerkleTree">MerkleTree</a>. See
-<a href="#from_list">from_list</a> to construct a tree from a list of elements.</p>
-</div>
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ConstitutionalCommitteeThresholds {
+  default: Rational,
+  under_no_confidence: Rational,
+}</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
       
     </div>
   </div>
   
   <div class="member">
     <div class="member-name">
-      <h2 id="Proof">
-        <a href="#Proof">
-	  Proof&lt;a&gt;
+      <h2 id="DelegateRepresentativeVotingThresholds">
+        <a href="#DelegateRepresentativeVotingThresholds">
+	  DelegateRepresentativeVotingThresholds
         </a>
       </h2>
       
-        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L28-L29"></a>
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L31-L44"></a>
       
     </div>
     <div class="custom-type-constructors">
-      <div class="rendered-markdown"><p>A proof of existence in the tree. See:</p>
-<ul>
-<li><a href="#get_proof"><code>get_proof</code></a> to construct a proof from a given element.</li>
-<li><a href="#is_member"><code>is_member</code></a> to verify a given proof against a known root.</li>
-</ul>
-</div>
+      <div class="rendered-markdown"></div>
       
-      <h3>Alias</h3>
-      <div class="constructor-row">
-        <svg class="icon icon-at"><use xlink:href="#icon-at"></use></svg>
-        <pre class="constructor-name"><code class="hljs aiken">Proof&lt;a&gt; = List&lt;ProofItem&lt;a&gt;&gt;</code></pre>
-      </div>
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">DelegateRepresentativeVotingThresholds {
+  motion_of_no_confidence: Rational,
+  constitutional_committee: ConstitutionalCommitteeThresholds,
+  constitution: Rational,
+  hard_fork: Rational,
+  protocol_parameters: ProtocolParametersThresholds&lt;
+    Void,
+    Rational,
+    Rational,
+    Rational,
+    Rational,
+  &gt;,
+  treasury_withdrawal: Rational,
+}</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
       
     </div>
   </div>
   
   <div class="member">
     <div class="member-name">
-      <h2 id="ProofItem">
-        <a href="#ProofItem">
-	  ProofItem&lt;a&gt;
+      <h2 id="ExecutionUnits">
+        <a href="#ExecutionUnits">
+	  ExecutionUnits
         </a>
       </h2>
       
-        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L32-L35"></a>
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L13-L16"></a>
       
     </div>
     <div class="custom-type-constructors">
-      <div class="rendered-markdown"><p>An opaque proof element.</p>
-</div>
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ExecutionUnits { memory: Int, cpu: Int }</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
       
     </div>
   </div>
   
   <div class="member">
     <div class="member-name">
-      <h2 id="Root">
-        <a href="#Root">
-	  Root
+      <h2 id="ProtocolParametersThresholds">
+        <a href="#ProtocolParametersThresholds">
+	  ProtocolParametersThresholds&lt;security, network, economic, technical, governance&gt;
         </a>
       </h2>
       
-        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L41-L43"></a>
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L46-L58"></a>
       
     </div>
     <div class="custom-type-constructors">
-      <div class="rendered-markdown"><p>An opaque root. Use <a href="#to_hash">to_hash</a> and
-<a href="#from_hash">from_hash</a> to convert back-and-forth between this and
-classic hashes. This type exists mainly to disambiguate between standard
-value (leaf) hash from tree hashes.</p>
-</div>
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ProtocolParametersThresholds {
+  security_group: security,
+  network_group: network,
+  economic_group: economic,
+  technical_group: technical,
+  governance_group: governance,
+}</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ProtocolParametersUpdate">
+        <a href="#ProtocolParametersUpdate">
+	  ProtocolParametersUpdate
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L4-L6"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="ScriptExecutionPrices">
+        <a href="#ScriptExecutionPrices">
+	  ScriptExecutionPrices
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L8-L11"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">ScriptExecutionPrices { memory: Rational, cpu: Rational }</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
+      
+    </div>
+  </div>
+  
+  <div class="member">
+    <div class="member-name">
+      <h2 id="StakePoolOperatorVotingThresholds">
+        <a href="#StakePoolOperatorVotingThresholds">
+	  StakePoolOperatorVotingThresholds
+        </a>
+      </h2>
+      
+        <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L18-L29"></a>
+      
+    </div>
+    <div class="custom-type-constructors">
+      <div class="rendered-markdown"></div>
+      
+      <h3>Constructors</h3>
+      <ul class="constructor-list">
+        
+        <li class="constructor-item">
+          <div class="constructor-row">
+            <svg class="icon icon-box"><use xlink:href="#icon-box"></use></svg>
+            <pre class="constructor-name"><code class="hljs aiken">StakePoolOperatorVotingThresholds {
+  motion_of_no_confidence: Rational,
+  constitutional_committee: ConstitutionalCommitteeThresholds,
+  hard_fork: Rational,
+  protocol_parameters: ProtocolParametersThresholds&lt;
+    Rational,
+    Void,
+    Void,
+    Void,
+    Void,
+  &gt;,
+}</code></pre>
+          </div>
+	  
+        </li>
+        
+      </ul>
       
     </div>
   </div>
@@ -833,13 +1072,13 @@ value (leaf) hash from tree hashes.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="to_hash"><pre class="hljs language-aiken">to_hash(self: Root) -&gt; Option&lt;Hash&lt;Sha2_256, a&gt;&gt;</pre></h2>
+          <h2 id="min_fee_coefficient"><pre class="hljs language-aiken">min_fee_coefficient(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L48-L54"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L67-L69"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Convert a <a href="#Root">Root</a> into a simple <a href="https://aiken-lang.github.io/stdlib/aiken/hash.html#Hash">Hash</a>, when possible.</p>
-<p>Roots from empty trees have no hash whatsoever.</p>
+        <div class="rendered-markdown"><p>The linear coefficient that intervenes in the transaction fee calculation.
+It is multiplied by the size of the transaction in bytes to obtain a Lovelace value.</p>
 </div>
       </div>
     
@@ -847,13 +1086,13 @@ value (leaf) hash from tree hashes.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="from_hash"><pre class="hljs language-aiken">from_hash(hash: Hash&lt;alg, a&gt;) -&gt; Root</pre></h2>
+          <h2 id="min_fee_constant"><pre class="hljs language-aiken">min_fee_constant(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L59-L61"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L73-L75"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Convert any <a href="https://aiken-lang.github.io/stdlib/aiken/hash.html#Hash">Hash</a> into a merkle <a href="#Root">Root</a>.</p>
-<p>This operation is <em>unsafe</em> unless you are sure that the given hash digest was produced from a valid merkle tree.</p>
+        <div class="rendered-markdown"><p>The constant factor that intervenes in the transaction fee calculation. It is
+a flat cost of lovelace that is added to every fee calculation.</p>
 </div>
       </div>
     
@@ -861,12 +1100,12 @@ value (leaf) hash from tree hashes.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="to_list"><pre class="hljs language-aiken">to_list(self: MerkleTree&lt;a&gt;) -&gt; List&lt;a&gt;</pre></h2>
+          <h2 id="max_block_body_size"><pre class="hljs language-aiken">max_block_body_size(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L64-L70"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L78-L80"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Deconstruct a <a href="#MerkleTree">MerkleTree</a> back to a list of elements.</p>
+        <div class="rendered-markdown"><p>The maximum size of a serialized block body, expressed in bytes.</p>
 </div>
       </div>
     
@@ -874,12 +1113,12 @@ value (leaf) hash from tree hashes.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="root"><pre class="hljs language-aiken">root(self: MerkleTree&lt;a&gt;) -&gt; Root</pre></h2>
+          <h2 id="max_transaction_size"><pre class="hljs language-aiken">max_transaction_size(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L88-L94"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L83-L85"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns the <a href="#Root">Root</a> of a given <a href="#MerkleTree">MerkleTree</a>.</p>
+        <div class="rendered-markdown"><p>The maximum size of a serialized transaction (body + witnesses), expressed in bytes.</p>
 </div>
       </div>
     
@@ -887,13 +1126,12 @@ value (leaf) hash from tree hashes.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="equals"><pre class="hljs language-aiken">equals(left: MerkleTree&lt;a&gt;, right: MerkleTree&lt;a&gt;) -&gt; Bool</pre></h2>
+          <h2 id="max_block_header_size"><pre class="hljs language-aiken">max_block_header_size(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L127-L129"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L88-L90"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Cheap equality of two <a href="#MerkleTree">MerkleTrees</a> by comparing their root
-hashes. For large trees, this is much faster than using <code>==</code>.</p>
+        <div class="rendered-markdown"><p>The maximum size of a serialized block header, expressed in bytes.</p>
 </div>
       </div>
     
@@ -901,12 +1139,12 @@ hashes. For large trees, this is much faster than using <code>==</code>.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="size"><pre class="hljs language-aiken">size(self: MerkleTree&lt;a&gt;) -&gt; Int</pre></h2>
+          <h2 id="stake_credential_deposit"><pre class="hljs language-aiken">stake_credential_deposit(self: ProtocolParametersUpdate) -&gt; Option&lt;Lovelace&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L132-L138"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L93-L97"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns a total numbers of elements in the tree.</p>
+        <div class="rendered-markdown"><p>The required deposit amount when registering stake credentials, expressed in Lovelace.</p>
 </div>
       </div>
     
@@ -914,12 +1152,12 @@ hashes. For large trees, this is much faster than using <code>==</code>.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="is_empty"><pre class="hljs language-aiken">is_empty(self: MerkleTree&lt;a&gt;) -&gt; Bool</pre></h2>
+          <h2 id="stake_pool_deposit"><pre class="hljs language-aiken">stake_pool_deposit(self: ProtocolParametersUpdate) -&gt; Option&lt;Lovelace&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L156-L161"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L100-L102"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Returns <code>True</code> when the tree has no elements. False otherwise.</p>
+        <div class="rendered-markdown"><p>The required deposit amount when registering a stake pool, expressed in Lovelace.</p>
 </div>
       </div>
     
@@ -927,18 +1165,12 @@ hashes. For large trees, this is much faster than using <code>==</code>.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="get_proof"><pre class="hljs language-aiken">get_proof(
-  self: MerkleTree&lt;a&gt;,
-  item: a,
-  serialise: fn(a) -&gt; ByteArray,
-) -&gt; Option&lt;Proof&lt;a&gt;&gt;</pre></h2>
+          <h2 id="stake_pool_retirement_horizon"><pre class="hljs language-aiken">stake_pool_retirement_horizon(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L176-L182"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L105-L109"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Construct a membership <a href="#Proof">Proof</a> from an element and a <a href="#MerkleTree">MerkleTree</a>.</p>
-<p>Returns ‘None’ when the element isn’t a member of the tree to begin with.</p>
-<p>Note that the proof is empty (i.e. []) for trees that have a single element.</p>
+        <div class="rendered-markdown"><p>The maximum number of epoch in the future allowed for a stake pool retirement to be scheduled.</p>
 </div>
       </div>
     
@@ -946,14 +1178,12 @@ hashes. For large trees, this is much faster than using <code>==</code>.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="from_list"><pre class="hljs language-aiken">from_list(items: List&lt;a&gt;, serialise: fn(a) -&gt; ByteArray) -&gt; MerkleTree&lt;a&gt;</pre></h2>
+          <h2 id="desired_number_of_stake_pools"><pre class="hljs language-aiken">desired_number_of_stake_pools(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L253-L255"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L112-L116"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Construct a ‘MerkleTree’ from a list of values.</p>
-<p>Note that, while this operation is doable on-chain, it is expensive and
-preferably done off-chain.</p>
+        <div class="rendered-markdown"><p>The desired/optimal number of fully saturated stake pools in the system. Also known as the <em>‘k-parameter’</em>.</p>
 </div>
       </div>
     
@@ -961,20 +1191,12 @@ preferably done off-chain.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="is_member"><pre class="hljs language-aiken">is_member(
-  root: Root,
-  item: a,
-  proof: Proof&lt;a&gt;,
-  serialise: fn(a) -&gt; ByteArray,
-) -&gt; Bool</pre></h2>
+          <h2 id="stake_pool_pledge_influence"><pre class="hljs language-aiken">stake_pool_pledge_influence(self: ProtocolParametersUpdate) -&gt; Option&lt;Rational&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L297-L304"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L119-L123"></a>
           
         </div>
-        <div class="rendered-markdown"><p>Check whether an element is part of a <a href="#MerkleTree">MerkleTree</a> using only
-its <a href="#root_hash">root_hash</a> and a <a href="#Proof">Proof</a>.</p>
-<p>The proof (and verification) is guaranteed to be in log(n) of the size of
-the tree, which is / why such data-structures are interesting.</p>
+        <div class="rendered-markdown"><p>A parameter controlling the influence of an pool owner’s pledge on the rewards. Also known as <em>‘a0’</em>.</p>
 </div>
       </div>
     
@@ -982,17 +1204,286 @@ the tree, which is / why such data-structures are interesting.</p>
   
       <div class="member">
         <div class="member-name">
-          <h2 id="verify_proof"><pre class="hljs language-aiken">verify_proof(root: Root, item_hash: Hash&lt;Sha2_256, a&gt;, proof: Proof&lt;a&gt;) -&gt; Bool</pre></h2>
+          <h2 id="monetary_expansion"><pre class="hljs language-aiken">monetary_expansion(self: ProtocolParametersUpdate) -&gt; Option&lt;Rational&gt;</pre></h2>
           
-      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/acca/collections/mt.ak#L313-L328"></a>
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L126-L128"></a>
           
         </div>
-        <div class="rendered-markdown"><p>An alternative version of <a href="#is_member">is_member</a> where the element to
-check is directly provided as hash. This assumes the hash preimage was
-produced using same serialization method as for constructing the tree.</p>
-<p>Returns <code>True</code> when the <code>Proof</code> is valid for the provided element hash
-digest and tree root. Said differently, returns <code>True</code> when the
-original element is indeed part of the tree. Returns <code>False</code> otherwise.</p>
+        <div class="rendered-markdown"><p>The monetary expansion parameter, controlling the fraction of Ada put in circulation on every epoch through the incentivies model. Also known as <em>‘ρ’</em>.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="treasury_expansion"><pre class="hljs language-aiken">treasury_expansion(self: ProtocolParametersUpdate) -&gt; Option&lt;Rational&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L131-L133"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The parameter controlling what fraction (%) of available rewards is sent to the treasury on every epoch. Also known as <em>‘τ’</em>.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="min_stake_pool_cost"><pre class="hljs language-aiken">min_stake_pool_cost(self: ProtocolParametersUpdate) -&gt; Option&lt;Lovelace&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L136-L138"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>Minimum authorized constant cost that stake pools can declare when registering, expressed in Lovelace.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="min_utxo_deposit_coefficient"><pre class="hljs language-aiken">min_utxo_deposit_coefficient(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L141-L145"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The linear coefficient that intervenes in the calculation of the minimum Ada value that any UTxO must hold. It is expressed in Lovelace per Byte, and is also known as the ‘coins per utxo byte’ parameter.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="cost_models"><pre class="hljs language-aiken">cost_models(self: ProtocolParametersUpdate) -&gt; Option&lt;Data&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L148-L150"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The costs associated with the various operations of the Plutus Virtual Machine, which can be different for each Plutus version.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="script_execution_prices"><pre class="hljs language-aiken">script_execution_prices(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;ScriptExecutionPrices&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L153-L157"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The price, in Lovelace per unit, of the execution units corresponding to cpu and memory usage of on-chain scripts.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="max_transaction_execution_units"><pre class="hljs language-aiken">max_transaction_execution_units(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;ExecutionUnits&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L160-L164"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The maximum execution units allowed for a single transaction.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="max_block_execution_units"><pre class="hljs language-aiken">max_block_execution_units(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;ExecutionUnits&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L167-L171"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The maximum execution units allowed for a single block.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="max_value_size"><pre class="hljs language-aiken">max_value_size(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L175-L177"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The maximum size of a serialized value in a transaction output. This effectively limits
+the maximum kinds of assets that can be sent in a single output. It is expressed in bytes.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="collateral_percentage"><pre class="hljs language-aiken">collateral_percentage(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L181-L183"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The scaling factor applied to the transaction cost for defining the minimum collateral
+amount. It is expressed in percent points (so 100 = 100%).</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="max_collateral_inputs"><pre class="hljs language-aiken">max_collateral_inputs(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L186-L188"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The maximum number of collateral inputs allowed in the transaction.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="stake_pool_operator_voting_thresholds"><pre class="hljs language-aiken">stake_pool_operator_voting_thresholds(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;StakePoolOperatorVotingThresholds&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L191-L195"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The various governance voting thresholds pertaining to stake pool operators.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="delegate_representative_voting_thresholds"><pre class="hljs language-aiken">delegate_representative_voting_thresholds(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;DelegateRepresentativeVotingThresholds&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L199-L203"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The various governance voting thresholds pertaining to delegate representatives
+(a.k.a DReps).</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="min_constitutional_committee_size"><pre class="hljs language-aiken">min_constitutional_committee_size(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L207-L211"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The minimum number of members in the constitutional committee. Any updates of the committee
+must leave at least this number of members.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="max_constitutional_committee_mandate"><pre class="hljs language-aiken">max_constitutional_committee_mandate(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L214-L218"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The maximum length of a constitutional committee member, expressed in number of epochs.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="governance_proposal_lifetime"><pre class="hljs language-aiken">governance_proposal_lifetime(self: ProtocolParametersUpdate) -&gt; Option&lt;Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L222-L226"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The lifetime of any governance proposal. An action that hasn’t been approved beyond that
+period is considered inactive and discarded. It is expressed in number of epochs.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="governance_proposal_deposit"><pre class="hljs language-aiken">governance_proposal_deposit(self: ProtocolParametersUpdate) -&gt; Option&lt;Lovelace&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L229-L233"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The required deposit amount for governance proposal procedures, expressed in Lovelace.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="delegate_representative_deposit"><pre class="hljs language-aiken">delegate_representative_deposit(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;Lovelace&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L237-L241"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The required deposit amount when registering as a delegate representative, expressed in
+Lovelace.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="delegate_representative_max_idle_time"><pre class="hljs language-aiken">delegate_representative_max_idle_time(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;Int&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L245-L249"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The maximum number of epochs that a delegate representative can stay inactive (i.e. no
+voting) without becoming <em>inactive</em> and removed from thresholds calculations.</p>
+</div>
+      </div>
+    
+  
+  
+      <div class="member">
+        <div class="member-name">
+          <h2 id="reference_scripts_tier_fee_initial_factor"><pre class="hljs language-aiken">reference_scripts_tier_fee_initial_factor(
+  self: ProtocolParametersUpdate,
+) -&gt; Option&lt;Rational&gt;</pre></h2>
+          
+      	    <a class="member-source" alt="view source" title="view source" target="_blank" href="https://github.com/Cardano-Fans/acca/blob/0.0.4/lib/cardano/governance/protocol_parameters.ak#L254-L258"></a>
+          
+        </div>
+        <div class="rendered-markdown"><p>The base tier fee coefficient for reference scripts. Reference scripts gets increasingly
+more expensives every ~24KB, the base coefficient is a multiplicating factor which grows
+exponentially with each tier.</p>
 </div>
       </div>
     
